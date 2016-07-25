@@ -2,8 +2,8 @@ Gem::Specification.new do |the|
   the.name          = 'corals'
   the.version       = '0.0.1'
   the.date          = '2016-07-24'
-  the.summary       = 'smarter than hashes, simpler than objects'
-  the.description   = 'self reductive hashes'
+  the.summary       = 'sentient data structures'
+  the.description   = 'smarter than hashes, simpler than objects'
   the.authors       = ['limadelic']
   the.email         = 'limadelic@gmail.com'
   the.files = ['lib\corals.rb']
