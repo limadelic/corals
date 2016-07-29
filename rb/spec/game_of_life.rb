@@ -14,8 +14,8 @@ describe 'Game of Life' do
     {
       given: {
         delta: -> (x, y) { (x - y) ** 2 },
-        distance: -> (other) { delta(x, other.x) + delta(y, other.y) },
-        is_neighbor?: -> (other) { distance(other) == 0 }
+        distance: -> (other) { [delta(x, other.x), delta(y, other.y)].max },
+        is_neighbor?: -> (other) { distance(other) == 1  }
       },
       neighbors: -> { count is_neighbor? },
     },
@@ -41,42 +41,6 @@ describe 'Game of Life' do
       when: -> { center? },
       then: -> { expect.to be_dead }
     }
-
-  end
-
-  xit 'Dead cell with 1 neighbor stays dead' do
-
-    subject << [
-      0, 1, 0,
-      0, 0, 0,
-      0, 0, 0
-    ]
-
-    expect(center).to be_dead
-
-  end
-
-  xit 'Dead cell with 2 neighbors stays dead' do
-
-    subject << [
-      0, 1, 0,
-      0, 0, 1,
-      0, 0, 0
-    ]
-
-    expect(center).to be_dead
-
-  end
-
-  xit 'Dead cell with 3 neighbors comes to life' do
-
-    subject << [
-      0, 1, 0,
-      0, 0, 1,
-      0, 0, 0
-    ]
-
-    expect(center).to be_dead
 
   end
 
