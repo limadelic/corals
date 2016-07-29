@@ -14,11 +14,11 @@ describe 'Game of Life' do
     {
       given: {
         delta: -> (x, y) { (x - y) ** 2 },
-        distance: -> (x, y) { delta(x.x, y.x) + delta(x.y, y.y) },
-        is_neighbor?: -> (x) { distance(self, x) == 0 }
+        distance: -> (other) { delta(x, other.x) + delta(y, other.y) },
+        is_neighbor?: -> (other) { distance(other) == 0 }
       },
       neighbors: -> { count is_neighbor? },
-      center?: -> { distance(self, first) == distance(self, last) }
+      center?: -> { distance(first) == distance(last) }
     },
     { when: -> { dead? and neighbors < 3 }, dead?: true },
     { when: -> { dead? and neighbors > 3 }, alive?: true }
