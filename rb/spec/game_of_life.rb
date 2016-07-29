@@ -18,10 +18,16 @@ describe 'Game of Life' do
         is_neighbor?: -> (other) { distance(other) == 0 }
       },
       neighbors: -> { count is_neighbor? },
-      center?: -> { distance(first) == distance(last) }
     },
-    { when: -> { dead? and neighbors < 3 }, dead?: true },
-    { when: -> { dead? and neighbors > 3 }, alive?: true }
+    {
+      given: {
+        in_solitude?: -> { neighbors < 2 },
+        overpopulated?: -> { neighbors > 3 },
+        could_spawn?: -> { neighbors == 3 }
+      },
+      dead?: -> { alive? && (in_solitude? || overpopulated?) },
+      alive?: -> { dead? && could_spawn? }
+    }
   ]}
 
   it 'Dead cell with 0 neighbors stays dead' do
