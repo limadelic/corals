@@ -1,2 +1,4 @@
-# corals
-simple, structured, intelligent, living code 
+#  ___  ___  ___   __  _  ___
+#  ))   )) ) ))_) /_`) )) ))_
+# ((__ ((_( ((`\ (( ( ((___((
+>    sentient data structures
