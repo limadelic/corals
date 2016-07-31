@@ -1,0 +1,5 @@
+source :rubygems
+
+gem 'hashie'
+gem 'rr'
+gem 'rspec'

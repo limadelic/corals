@@ -6,4 +6,8 @@ class Corals
     @corals = corals
   end
 
+  def << _
+
+  end
+
 end
