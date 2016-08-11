@@ -8,8 +8,7 @@ describe 'Game of Life', ->
     { when: 0, dead: true  }
     { when: 1, alive: true }
     {
-      given:
-        size: -> Math.sqrt count
+      given: size: -> Math.sqrt count
       x: -> @ / size
       y: -> @ % size
     }

@@ -1,4 +1,5 @@
-module.exports = ->
-
-  given: ->
-
+module.exports = (x) ->
+  given: (y) ->
+    x = y
+    @
+  then: -> x

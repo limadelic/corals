@@ -6,8 +6,7 @@ Gem::Specification.new do |the|
   the.description   = 'smarter than hashes, simpler than objects'
   the.authors       = ['limadelic']
   the.email         = 'limadelic@gmail.com'
-  the.files = ['lib\corals.rb']
-  #the.files         = `git ls-files -- lib/*`.split("\n").sort
+  the.files         = `git ls-files -- lib/*`.split("\n").sort
   the.require_paths = ['lib']
   the.homepage      = 'https://github.com/limadelic/corals'
 end
