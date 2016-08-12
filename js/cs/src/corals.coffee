@@ -1,5 +1,13 @@
-module.exports = (x) ->
-  given: (y) ->
-    x = y
+_ = require 'lodash'
+
+module.exports = (corals=[]) ->
+  corals = array_of corals
+
+  given: (new_corals=[]) ->
+    corals = _.merge corals, array_of new_corals
     @
-  then: -> x
+
+  then: -> _.last corals
+
+array_of = (x) -> _.isArray(x) and x or [x]
+

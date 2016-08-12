@@ -12,3 +12,8 @@ describe 'Corals', ->
     corals()
     .given 42
     .then().should.eql 42
+
+  it 'remembers', ->
+
+    corals [42, 2, true, 'that']
+    .then().should.eql 'that'
