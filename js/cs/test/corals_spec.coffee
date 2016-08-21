@@ -21,7 +21,13 @@ describe 'Corals', ->
     corals [42, 2, true, 'that']
     .then().should.eql 'that'
 
-  it 'it makes choices', ->
+  it 'makes choices', ->
 
     corals when: 0, then: 'dead'
     .when(0).should.eql 'dead'
+
+  it 'builds knowledge', ->
+
+    corals given: dead: -> when: 0
+    .when 0, then: -> dead.should.be.true()
+

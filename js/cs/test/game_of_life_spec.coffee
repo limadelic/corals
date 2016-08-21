@@ -5,8 +5,11 @@ describe 'Game of Life', ->
 
   sut = corals [
     []
-    { when: 0, dead: true  }
-    { when: 1, alive: true }
+    {
+      given:
+        dead: -> when: 0
+        alive: -> when: 1
+    }
     {
       given: size: -> Math.sqrt count
       x: -> @ / size
