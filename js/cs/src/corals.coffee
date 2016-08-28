@@ -1,21 +1,27 @@
 _ = require 'lodash'
 
-module.exports = (corals=[]) ->
-  corals = array_of corals
+module.exports = (defaults, events=[]) ->
+  new Corals defaults, events
 
-  given: (more=[]) ->
-    corals = _.concat corals, array_of more
+class Corals
+
+  constructor: (@defaults, @events) ->
+
+  given: (events=[]) =>
+    @events = _.concat @events, array_of events
     @
 
-  when: (events=[]) -> @then _.concat array_of(events), corals
+  when: (events=[]) ->
+    @then _.concat array_of(events), @events
 
-  then: (all=corals) -> _.reduce all, reducer
+  then: (events=@events) ->
+    _.reduce events, reducer, @defaults
 
 array_of = (x) -> _.isArray(x) and x or [x]
 
 reducer = (result, x) ->
 
-  conditional = -> if x.when? then x.then
+  conditional = -> if x?.when? then x.then
 
   conditional() ? x
 

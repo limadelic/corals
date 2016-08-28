@@ -1,6 +1,16 @@
 describe 'Values (numbers, bools, strings ...)', ->
 
-  it 'default'
+  values = [0, true, '42']
+
+  it 'default', ->
+    values.forEach (x) ->
+      corals(x).then().should.eql x
+
+  describe 'Given', ->
+
+    it 'value'
+
+    it 'hash'
 
   describe 'Whens', ->
 

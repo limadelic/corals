@@ -2,20 +2,26 @@ describe 'Arrays', ->
 
   it 'default'
 
-  describe 'Whens', ->
+  describe 'Given', ->
 
-    describe 'Maps each', ->
+    describe 'Values', ->
+
+      it 'xx'
+
+  describe 'When', ->
+
+    describe 'Values', ->
 
       it 'value'
       it 'array'
       it 'lambda'
       it 'self'
 
-    describe 'Whole', ->,
+    describe 'Array', ->
 
-    it 'array of values to'
-    it 'lambda'
-    it 'self in lambda'
+      it 'array'
+      it 'lambda'
+      it 'self'
 
   describe 'Then', ->
 

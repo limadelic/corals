@@ -1,8 +1,9 @@
-describe 'Grow (given)', ->
+describe 'Setup (given)', ->
 
-  it 'one at a time'
-  it 'many'
+  sut = corals 0
 
-describe 'Deduction helper', ->
+  it 'value', ->
+    sut.given 42
+    .then().should.eql 42
 
-  it 'is not in the outcome'
+  it 'array'

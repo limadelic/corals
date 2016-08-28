@@ -1,5 +1,9 @@
+should = require 'should'
+
 describe 'Corals', ->
 
-  it 'has a default value'
-  it 'defaults to undefined'
-  it 'has a memory of events'
+  it 'undefined', ->
+    should.not.exist corals().then()
+
+  it 'default', ->
+    corals(42).then().should.eql 42
