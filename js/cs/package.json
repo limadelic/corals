@@ -1,0 +1,30 @@
+{
+  "name": "corals",
+  "version": "0.0.1",
+  "description": "sentient data structures",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/limadelic/corals.git"
+  },
+  "keywords": [
+    "reducer"
+  ],
+  "author": "limadelic <limadelic@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/limadelic/corals/issues"
+  },
+  "homepage": "https://github.com/limadelic/corals#readme",
+  "devDependencies": {
+    "coffee-script": "^1.10.0",
+    "mocha": "^2.5.3",
+    "should": "^10.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.14.2"
+  }
+}

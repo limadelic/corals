@@ -1,5 +1,5 @@
 
-corals = require '../src/corals'
+corals = require '../../src/corals'
 
 describe 'Game of Life', ->
 
@@ -34,7 +34,7 @@ describe 'Game of Life', ->
     }
   ]
 
-  it 'Dead cell with 0 neighbors stays dead', ->
+  it.skip 'Dead cell with 0 neighbors stays dead', ->
 
     sut.given [
 
