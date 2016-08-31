@@ -27,3 +27,6 @@ describe 'Corals', ->
       corals 0, [1, 2, 42]
       .events.should.eql [1, 2, 42]
 
+    it 'many of many', ->
+      corals 0, [[1, 2]], [{}, 42], {x: true}
+      .events.should.eql [[[1, 2]], [{}, 42], {x: true}]
