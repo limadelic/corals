@@ -15,6 +15,10 @@ describe 'Values (numbers, bools, strings ...)', ->
   describe 'Whens', ->
 
     it 'value'
+#      corals 0, [
+#        {when: 42, }
+#      ]
+
     it 'array'
     it 'lambda'
     it 'self'

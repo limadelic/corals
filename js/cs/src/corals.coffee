@@ -1,6 +1,6 @@
 _ = require 'lodash'
 
-module.exports = (defaults, events=[]) ->
+module.exports = (defaults, events...) ->
   new Corals defaults, events
 
 class Corals
