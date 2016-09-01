@@ -15,8 +15,10 @@ describe 'Values (numbers, bools, strings ...)', ->
   describe 'Whens', ->
 
     it 'value', ->
-      corals 0, { when: 0, then: true }
+      corals 0, when: 0, then: true
       .then().should.be.true()
+      corals 0, when: 1, then: true
+      .then().should.eql 0
 
     it 'array'
     it 'lambda'
@@ -24,6 +26,9 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   describe 'Then', ->
 
-    it 'value'
+    it 'value', ->
+      corals 0, when: 0, then: true
+      .then().should.be.true()
+
     it 'lambda'
     it 'self'

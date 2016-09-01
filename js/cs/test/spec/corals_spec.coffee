@@ -2,7 +2,7 @@ should = require 'should'
 
 describe 'Corals', ->
 
-  describe 'defaults', ->
+  describe 'Defaults', ->
 
     it 'undefined', ->
       should.not.exist corals().then()
