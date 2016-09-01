@@ -7,7 +7,6 @@ module.exports =
   reducer: (context, event) ->
     return context unless event?
     return event unless event.when?
-
     _.when(event, context) and _.then(event, context) or context
 
   array_of: (x) ->

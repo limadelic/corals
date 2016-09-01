@@ -14,13 +14,18 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   describe 'Whens', ->
 
-    it 'value', ->
-      corals 0, when: 0, then: true
-      .then().should.be.true()
-      corals 0, when: 1, then: true
-      .then().should.eql 0
+    match = (outcome, context, _when) ->
+      corals context, when: _when, then: outcome
+      .then().should.eql outcome or context
 
-    it 'array'
+    it 'value', ->
+      match true, 0, 0
+      match false, 0, 1
+
+    it 'array', ->
+      match true, 0, [0, 1]
+      match false, 0, [1, 2]
+
     it 'lambda'
     it 'self'
 
