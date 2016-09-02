@@ -7,7 +7,7 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   describe 'Given', ->
 
-    it 'value'
+    it 'value', ->
 
     it 'hash'
 
@@ -22,7 +22,7 @@ describe 'Values (numbers, bools, strings ...)', ->
       match false, x, 42
 
     it 'array', -> _.each values, (x) ->
-      match true, x, [x, 1]
+      match true, x, [x, 'more', 'stuff']
       match false, x, ['wat?', false]
 
     it 'func', -> _.each values, (x) ->
@@ -34,9 +34,12 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   describe 'Then', ->
 
-    it 'value', ->
-      corals 0, when: 0, then: true
-      .then().should.be.true()
+    it 'value', -> _.each values, (x) ->
+      corals 0, when: 0, then: x
+      .then().should.eql x
 
-    it 'func'
+    it 'func', -> _.each values, (x) ->
+      corals 0, { when: 0, 'then': -> x }
+      .then().should.eql x
+
     it 'this'

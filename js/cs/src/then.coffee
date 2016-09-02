@@ -1,2 +1,5 @@
-module.exports = (event) ->
-  event['then']
+_ = require 'lodash'
+
+module.exports = (result) ->
+  return result() if _.isFunction result
+  result
