@@ -4,10 +4,10 @@ _.then = require './then'
 
 module.exports =
 
-  reducer: (context, event) ->
-    return context unless event?
-    return event unless event.when?
-    _.when(event, context) and _.then(event, context) or context
+  reducer: (current, next) ->
+    return current unless next?
+    return next unless next.when?
+    _.when(next.when, current) and _.then(next, current) or current
 
   array_of: (x) ->
     return x[0] if _.isArray(x) and x.length == 1 and _.isArray(x[0])

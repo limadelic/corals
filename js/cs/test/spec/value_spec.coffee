@@ -26,9 +26,9 @@ describe 'Values (numbers, bools, strings ...)', ->
       match true, x, [x, 1]
       match false, x, ['wat?', false]
 
-    it.skip 'lambda', ->
-      match true, 0, -> { 0 }
-      match false, 0, -> { 1 }
+    it 'lambda', -> values.forEach (x) ->
+      match true, x, -> x
+      match false, x, -> 1
 
     it 'self'
 
