@@ -2,7 +2,7 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   values = [0, true, '42']
 
-  it 'default', ->
+  it "default", ->
     values.forEach (x) ->
       corals(x).then().should.eql x
 
@@ -18,15 +18,18 @@ describe 'Values (numbers, bools, strings ...)', ->
       corals context, when: _when, then: outcome
       .then().should.eql outcome or context
 
-    it 'value', ->
-      match true, 0, 0
-      match false, 0, 1
+    it 'value', -> values.forEach (x) ->
+      match true, x, x
+      match false, x, 42
 
-    it 'array', ->
-      match true, 0, [0, 1]
-      match false, 0, [1, 2]
+    it 'array', -> values.forEach (x) ->
+      match true, x, [x, 1]
+      match false, x, ['wat?', false]
 
-    it 'lambda'
+    it.skip 'lambda', ->
+      match true, 0, -> { 0 }
+      match false, 0, -> { 1 }
+
     it 'self'
 
   describe 'Then', ->
