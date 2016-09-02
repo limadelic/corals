@@ -25,7 +25,7 @@ describe 'Values (numbers, bools, strings ...)', ->
       match true, x, [x, 'more', 'stuff']
       match false, x, ['wat?', false]
 
-    it 'func', -> _.each values, (x) ->
+    it 'fun', -> _.each values, (x) ->
       match true, x, -> x
       match false, x, -> 1
 
@@ -38,8 +38,10 @@ describe 'Values (numbers, bools, strings ...)', ->
       corals 0, when: 0, then: x
       .then().should.eql x
 
-    it 'func', -> _.each values, (x) ->
-      corals 0, { when: 0, 'then': -> x }
+    it 'fun', -> _.each values, (x) ->
+      corals 0, { when: 0, then: -> x }
       .then().should.eql x
 
-    it 'this'
+    it 'this', -> _.each values, (x) ->
+      corals x, { when: x, then: -> @ }
+      .then().should.eql x
