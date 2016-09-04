@@ -6,8 +6,8 @@ module.exports =
 
   reducer: (current, next) ->
     return current unless next?
-    return next unless next.when?
-    return _.then next.then, current if _.when next.when, current
+    return _.then next, current unless next.when?
+    return _.then next, current if _.when next.when, current
     current
 
   array_of: (x) ->
