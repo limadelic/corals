@@ -1,6 +1,7 @@
 _ = require 'lodash'
 
-module.exports = (condition, current) ->
-  return current in condition if _.isArray condition
-  return current is condition.apply(current).valueOf() if _.isFunction condition
-  current is condition
+module.exports = ->
+  filter = @event.when
+  return @result in filter if _.isArray filter
+  return @result is filter.apply(@result).valueOf() if _.isFunction filter
+  @result is filter
