@@ -7,8 +7,8 @@ module.exports =
     return x if _.isArray x
     [x]
 
-  bind_helpers: ->
+  bind_helpers: (to) ->
     helpers = ['given', 'when', 'then']
-    methods = _.map helpers, (x) -> require("./#{x}").bind @
+    methods = _.map helpers, (x) -> require("./#{x}").bind to
     _.zipObject helpers, methods
 

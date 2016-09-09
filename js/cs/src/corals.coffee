@@ -7,9 +7,9 @@ module.exports = (defaults, events...) ->
 class Corals
 
   constructor: (@defaults, @events) ->
-    @do = bind_helpers.call @
+    @do = bind_helpers @
 
-  given: (events...) =>
+  given: (events...) ->
     @events = _.concat @events, array_of events
     @
 
@@ -20,11 +20,7 @@ class Corals
     _.reduce events, @reducer, @defaults
 
   reducer: (@result, @event) =>
-    @do.given()
     if @on_event() then @do.then() else @result
 
-  on_event: -> @event? and not @event.when? or @do.when()
-
-
-
-
+  on_event: ->
+    @event? and not @event.when? or @do.when()

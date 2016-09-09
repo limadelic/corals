@@ -1,6 +1,6 @@
-{ _ } = require './helpers'
+_ = require 'lodash'
 
 module.exports = ->
-  _.given.call @
-  return result.apply(@current).valueOf() if _.isFunction result
+  result = @event.then ? @event
+  return result.apply(@result).valueOf() if _.isFunction result
   result
