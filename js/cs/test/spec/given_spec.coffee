@@ -1,42 +1,47 @@
-describe 'Setup (static given)', ->
-# It's used to append events
-# does not lead to a conclusion
-# just appends to the events
+describe 'Given', ->
+# It's got 2 uses static/dynamic
+# static: builds up the chain of events
+# dynamic: used to keep temp/helper info
 
-  sut = {}
+  describe 'Static', ->
+  # It's used to append events
+  # does not lead to a conclusion
+  # just appends to the events
 
-  beforeEach (done) ->
-    sut = corals 0
-    done()
+    sut = {}
 
-  it 'value', ->
+    beforeEach (done) ->
+      sut = corals 0
+      done()
 
-    sut.given 42
-    .then().should.eql 42
+    it 'value', ->
 
-    sut.events.should.eql [42]
+      sut.given 42
+      .then().should.eql 42
 
-  it 'many values', ->
+      sut.events.should.eql [42]
 
-    sut.given 4, 42, 420
-    .then().should.eql 420
+    it 'many values', ->
 
-    sut.events.should.eql [4, 42, 420]
+      sut.given 4, 42, 420
+      .then().should.eql 420
 
-  it 'array', ->
+      sut.events.should.eql [4, 42, 420]
 
-    sut.given [42, true, 'that']
-    .then().should.eql 'that'
+    it 'array', ->
 
-    sut.events.should.eql [42, true, 'that']
+      sut.given [42, true, 'that']
+      .then().should.eql 'that'
 
-  it 'many calls', ->
+      sut.events.should.eql [42, true, 'that']
 
-    sut
-    .given 4, 42, 420
-    .given [42, true, 'that']
-    .then().should.eql 'that'
+    it 'many calls', ->
 
-    sut.events.should.eql [4, 42, 420, 42, true, 'that']
+      sut
+      .given 4, 42, 420
+      .given [42, true, 'that']
+      .then().should.eql 'that'
 
-describe 'Helpers (dynamic given)', ->
+      sut.events.should.eql [4, 42, 420, 42, true, 'that']
+
+  describe 'Helpers (dynamic given)', ->
