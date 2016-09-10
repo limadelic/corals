@@ -19,21 +19,21 @@ describe 'Given', ->
       sut.given 42
       .then().should.eql 42
 
-      sut.events.should.eql [42]
+      sut.corals.should.eql [42]
 
     it 'many values', ->
 
       sut.given 4, 42, 420
       .then().should.eql 420
 
-      sut.events.should.eql [4, 42, 420]
+      sut.corals.should.eql [4, 42, 420]
 
     it 'array', ->
 
       sut.given [42, true, 'that']
       .then().should.eql 'that'
 
-      sut.events.should.eql [42, true, 'that']
+      sut.corals.should.eql [42, true, 'that']
 
     it 'many calls', ->
 
@@ -42,6 +42,6 @@ describe 'Given', ->
       .given [42, true, 'that']
       .then().should.eql 'that'
 
-      sut.events.should.eql [4, 42, 420, 42, true, 'that']
+      sut.corals.should.eql [4, 42, 420, 42, true, 'that']
 
   describe 'Helpers (dynamic given)', ->

@@ -20,7 +20,4 @@ class Corals
     _.reduce corals, @reducer, @core
 
   reducer: (@result, @coral) =>
-    if @on_event() then @do.then() else @result
-
-  on_event: ->
-    @coral? and not @coral.when? or @do.when()
+    if @do.when() then @do.then() else @result

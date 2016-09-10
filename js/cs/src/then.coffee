@@ -1,6 +1,6 @@
 _ = require 'lodash'
 
 module.exports = ->
-  result = @event.then ? @event
+  result = @coral.then ? @coral
   return result.apply(@result).valueOf() if _.isFunction result
   result
