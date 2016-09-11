@@ -1,10 +1,12 @@
+should = require 'should'
+
 describe 'Given', ->
 # It's got 2 uses static/dynamic
-# static: builds up the chain of events
+# static: builds up the chain of corals
 # dynamic: used to keep temp/helper info
 
   describe 'Static', ->
-  # It's used to append events
+  # appends to corals
   # does not lead to a conclusion
   # just appends to the events
 
@@ -44,4 +46,15 @@ describe 'Given', ->
 
       sut.corals.should.eql [4, 42, 420, 42, true, 'that']
 
-  describe 'Helpers (dynamic given)', ->
+  describe 'Dynamic', ->
+  # builds up temp info during then()
+  # it becomes part of this but not of value
+  # use to extract methods/calculations
+  # it obey's the when rules
+  # precedes then()
+
+    it 'value', ->
+
+      sut = corals given: alive: true
+      should.not.exist sut.then().alive
+      sut.alive.should.be.true()
