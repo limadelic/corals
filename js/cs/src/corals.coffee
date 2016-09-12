@@ -17,7 +17,7 @@ class Corals
     @then _.concat array_of(corals), @corals
 
   then: (corals=@corals) ->
-    _.reduce corals, @reducer, @core
+    _.reduce corals, @reduce, @core
 
-  reducer: (@result, @coral) =>
+  reduce: (@result, @coral) =>
     if @do.when() then @do.then() else @result
