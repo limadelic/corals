@@ -48,12 +48,12 @@ describe 'Given', ->
 
   describe 'Dynamic', ->
   # builds up temp info during then()
-  # it becomes part of this but not of value
+  # it becomes part of this but not of result
   # use to extract methods/calculations
   # it obey's the when rules
   # precedes then()
 
-    it 'value', ->
+    it.skip 'value', ->
 
       sut = corals given: alive: true
       should.not.exist sut.then().alive
