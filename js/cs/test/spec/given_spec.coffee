@@ -53,17 +53,22 @@ describe 'Given', ->
   # or setup before then
   # it obey's the when rules
   # precedes then
-
     beforeEach (done) ->
-      sut = corals undefined, given: 42
+      sut = corals()
       done()
 
     it 'is not returned', ->
-      should.not.exist sut.then()
+      should.not.exist sut.when given: 42
 
-    it 'is or has it', ->
-
-      sut.then()
+    it 'is and has it', ->
+      sut.when given: 42
       (sut.is is sut.has is 42).should.be.true()
+
+    it 'depends on when', ->
+      sut.when given: 42, when: -> false
+      should.not.exist sut.is
+
+      sut.when given: 42, when: -> true
+      sut.is.should.eql 42
 
 

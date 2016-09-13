@@ -2,8 +2,15 @@ _ = require 'lodash'
 
 _.when = (filter) ->
   return @result in filter if _.isArray filter
-  return @result is filter.apply(@result).valueOf() if _.isFunction filter
+  return when_fun filter, @result if _.isFunction filter
   @result is filter
+
+when_fun = (filter, result) ->
+  returned = filter.apply(result).valueOf()
+
+  result is returned or (
+    result isnt false and returned is true
+  )
 
 module.exports = ->
   return unless @coral?

@@ -33,6 +33,10 @@ describe 'Values (numbers, bools, strings ...)', ->
       match true, x, -> x
       match false, x, -> 1
 
+    it 'true fun', -> _.each values, (x) ->
+      match true, x, -> true
+      match false, x, -> false
+
     it 'this', -> _.each values, (x) ->
       match true, x, -> @
 
