@@ -51,24 +51,37 @@ describe 'Given', ->
   # it becomes part of this but not of result
   # use to extract methods/calculations
   # or setup before then
+  # or as private
   # it obey's the when rules
   # precedes then
+
     beforeEach (done) ->
       sut = corals()
       done()
 
     it 'is not returned', ->
+
       should.not.exist sut.when given: 42
 
     it 'is and has it', ->
+
       sut.when given: 42
       (sut.is is sut.has is 42).should.be.true()
 
     it 'depends on when', ->
+
       sut.when given: 42, when: -> false
       should.not.exist sut.is
 
       sut.when given: 42, when: -> true
       sut.is.should.eql 42
+
+    it 'is used in when', ->
+
+      sut.when(
+        { given: '53CR3T' }
+        { when: '53CR3T', then: kept: true }
+      ).kept.should.be.true()
+
 
 

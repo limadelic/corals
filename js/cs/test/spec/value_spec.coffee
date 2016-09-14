@@ -7,12 +7,15 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   describe 'Given', ->
 
-    it.skip 'value', ->
+    it 'value', ->
       _.each values, (original) ->
         _.each values, (value) ->
           corals original,
-            given: { value }
-            then: -> value
+            { given: value }
+            {
+              when: value
+              then: value
+            }
           .then().should.eql value
 
   describe 'Whens', ->
