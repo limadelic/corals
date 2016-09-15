@@ -76,13 +76,23 @@ describe 'Given', ->
       sut.when given: 42, when: -> true
       sut.is.should.eql 42
 
-    it 'is used in when', ->
 
-      sut.when(
-        { given: '53CR3T' }
-        {  when: '53CR3T', then: kept: true }
-        {  when: 'secret', then: kept: false }
-      ).kept.should.be.true()
+    describe 'When', ->
 
+      verify = (x) ->
+        sut.when(
+          { given: x.given }
+          {  when: x.when, then: true }
+        ).should.be.true()
 
+      it 'value', -> verify
+        when: 42
+        given: 42
 
+      it 'array', -> verify
+        when: [42, '+', 'stuff']
+        given: 42
+
+      it 'fun', -> verify
+        when: -> 42
+        given: 42

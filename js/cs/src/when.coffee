@@ -1,9 +1,9 @@
 _ = require 'lodash'
 
-_.when = (filter) ->
-  return @result in filter if _.isArray filter
-  return when_fun filter, @result if _.isFunction filter
-  filter in [@is, @result]
+_.when = (filter, result) ->
+  return result in filter if _.isArray filter
+  return when_fun filter, result if _.isFunction filter
+  filter is result
 
 when_fun = (filter, result) ->
   returned = filter.apply(result).valueOf()
@@ -15,5 +15,6 @@ when_fun = (filter, result) ->
 module.exports = ->
   return unless @coral?
   return true unless @coral.when?
-  _.when.call @, @coral.when
+  _.when.call(@, @coral.when, @result) or
+  _.when.call(@, @coral.when, @is)
 
