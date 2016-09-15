@@ -80,7 +80,8 @@ describe 'Given', ->
 
       sut.when(
         { given: '53CR3T' }
-        { when: '53CR3T', then: kept: true }
+        {  when: '53CR3T', then: kept: true }
+        {  when: 'secret', then: kept: false }
       ).kept.should.be.true()
 
 

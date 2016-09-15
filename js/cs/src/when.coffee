@@ -3,7 +3,7 @@ _ = require 'lodash'
 _.when = (filter) ->
   return @result in filter if _.isArray filter
   return when_fun filter, @result if _.isFunction filter
-  @result is filter or @is is filter
+  filter in [@is, @result]
 
 when_fun = (filter, result) ->
   returned = filter.apply(result).valueOf()
