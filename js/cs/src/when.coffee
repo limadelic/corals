@@ -14,4 +14,6 @@ whens =
     fun: (x, y) ->
       y = y.apply(x).valueOf()
       x is y or (x isnt false and y is true)
-
+  array:
+    value: (x, y) -> y in x
+    array: (x, y) ->

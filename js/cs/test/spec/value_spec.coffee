@@ -15,7 +15,7 @@ describe 'Values (numbers, bools, strings ...)', ->
 
     it 'value', -> verify (x) -> x
     it 'fun', -> verify (x) -> x
-    it.skip 'array', -> verify (x) -> [x, 'and', 'stuff']
+    it 'array', -> verify (x) -> [x, 'and', 'stuff']
     it.skip 'fun', -> verify (x) -> -> x
 
   describe 'Whens', ->
