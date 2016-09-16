@@ -1,20 +1,17 @@
 _ = require 'lodash'
-
-_.when = (filter, result) ->
-  return result in filter if _.isArray filter
-  return when_fun filter, result if _.isFunction filter
-  filter is result
-
-when_fun = (filter, result) ->
-  returned = filter.apply(result).valueOf()
-
-  result is returned or (
-    result isnt false and returned is true
-  )
+_.do = require('./helpers').do
 
 module.exports = ->
   return unless @coral?
   return true unless @coral.when?
-  _.when.call(@, @coral.when, @result) or
-  _.when.call(@, @coral.when, @is)
+  _.do(whens, @result, @coral.when) or
+    _.do(whens, @is, @coral.when)
+
+whens =
+  value:
+    value: (x, y) -> x is y
+    array: (x, y) -> x in y
+    fun: (x, y) ->
+      y = y.apply(x).valueOf()
+      x is y or (x isnt false and y is true)
 

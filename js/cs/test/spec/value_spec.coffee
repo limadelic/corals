@@ -2,7 +2,7 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   sut = [0, true, '42']
 
-  it "default", -> _.each sut, (x) ->
+  it 'core', -> _.each sut, (x) ->
     corals(x).then().should.eql x
 
   describe 'Given', ->
