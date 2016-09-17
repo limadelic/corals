@@ -18,6 +18,6 @@ module.exports =
     _.zipObject helpers, methods
 
   do: (strategy, x, y) ->
-    strategy[kind_of x]?[kind_of y]? x, y
+    strategy(x,y)[kind_of x]?[kind_of y]?()
 
 

@@ -14,7 +14,7 @@ describe 'Arrays', ->
 
     it 'array', ->
       corals([4, 42, 420]).when
-        when: 42
+        when: [4, 42, 420]
         then: true
       .should.be.true()
 

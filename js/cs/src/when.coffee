@@ -7,13 +7,15 @@ module.exports = ->
   _.do(whens, @result, @coral.when) or
     _.do(whens, @is, @coral.when)
 
-whens =
+whens = (result, valid) ->
   value:
-    value: (x, y) -> x is y
-    array: (x, y) -> x in y
-    fun: (x, y) ->
-      y = y.apply(x).valueOf()
-      x is y or (x isnt false and y is true)
+    value: -> result is valid
+    array: -> result in valid
+    fun: ->
+      valid = valid.apply(result).valueOf()
+      result is valid or (result isnt false and valid is true)
   array:
-    value: (x, y) -> y in x
-    array: (x, y) ->
+    value: -> valid in result
+    array: -> _.isEqual result, valid
+  fun:
+    value: ->
