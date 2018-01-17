@@ -1,3 +1,3 @@
-module.exports = ->
-  return unless @coral.given?
-  @is = @has = @coral.given
+module.exports = (coral) ->
+  return unless coral.given?
+  @is = @has = coral.given

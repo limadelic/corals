@@ -43,5 +43,5 @@ describe 'Game of Life', ->
        0, 0, 0]
 
       when: -> center
-      then: -> @dead.should.be.true()
+      then: -> dead.should.be.true()
     ]

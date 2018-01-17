@@ -45,14 +45,16 @@ describe 'Values (numbers, bools, strings ...)', ->
 
   describe 'Then', ->
 
-    it 'value', -> _.each sut, (x) ->
-      corals 0, when: 0, then: x
-      .then().should.eql x
+    describe 'Explicit', ->
 
-    it 'fun', -> _.each sut, (x) ->
-      corals 0, { when: 0, then: -> x }
-      .then().should.eql x
+      it 'value', -> _.each sut, (x) ->
+        corals 0, when: 0, then: x
+        .then().should.eql x
 
-    it 'this', -> _.each sut, (x) ->
-      corals x, { when: x, then: -> @ }
-      .then().should.eql x
+      it 'fun', -> _.each sut, (x) ->
+        corals 0, { when: 0, then: -> x }
+        .then().should.eql x
+
+      it 'this', -> _.each sut, (x) ->
+        corals x, { when: x, then: -> @ }
+        .then().should.eql x

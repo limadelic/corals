@@ -17,7 +17,7 @@ module.exports =
     methods = _.map helpers, (x) -> require("./#{x}").bind to
     _.zipObject helpers, methods
 
-  do: (strategy, x, y) ->
-    strategy(x,y)[kind_of x]?[kind_of y]?()
+  do: (strategy, x, y, coral) ->
+    strategy(x,y)[kind_of x]?[kind_of y]? coral
 
 

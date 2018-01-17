@@ -1,14 +1,9 @@
-require 'spec_helper'
-require_relative '../lib/corals'
-
-describe 'Game of Life' do
-
-  subject { Corals.new [
-    [],
+define game_of_life: {
+  rules: [
     { when: 0, dead?: true },
     { when: 1, alive?: true },
     {
-      given: { size: -> { Math.sqrt count }},
+      given: { size: -> { Math.sqrt count } },
       x: -> { self / size },
       y: -> { self % size }
     },
@@ -16,7 +11,7 @@ describe 'Game of Life' do
       given: {
         delta: -> (x, y) { (x - y) ** 2 },
         distance: -> (other) { [delta(x, other.x), delta(y, other.y)].max },
-        is_neighbor?: -> (other) { distance(other) == 1  }
+        is_neighbor?: -> (other) { distance(other) == 1 }
       },
       neighbors: -> { count is_neighbor? },
     },
@@ -29,20 +24,5 @@ describe 'Game of Life' do
       dead?: -> { alive? && (in_solitude? || overpopulated?) },
       alive?: -> { dead? && could_spawn? }
     }
-  ]}
-
-  it 'Dead cell with 0 neighbors stays dead' do
-
-    subject << {
-      given: [
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0
-      ],
-      when: -> { center? },
-      then: -> { expect.to be_dead }
-    }
-
-  end
-
-end
+  ]
+}

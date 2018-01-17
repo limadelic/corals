@@ -1,13 +1,1 @@
-class Corals
-
-  attr_reader :corals
-
-  def initialize corals
-    @corals = corals
-  end
-
-  def << _
-
-  end
-
-end
+require_relative 'corals/corals'

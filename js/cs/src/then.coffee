@@ -1,8 +1,15 @@
 _ = require 'lodash'
+_.do = require('./helpers').do
 
-module.exports = ->
-  return @coral unless _.isObject @coral
-  @do.given()
-  return @result unless @coral.then?
-  return @coral.then.apply(@result).valueOf() if _.isFunction @coral.then
-  @coral['then']
+module.exports = (result, coral) ->
+  return coral unless _.isObject coral
+  @do.given coral
+  return result unless coral.then?
+  _.do(thens, result, coral.then, coral) or coral.then
+
+thens = (current, next)->
+  value:
+    fun: -> next.apply(current).valueOf()
+  array:
+    value: (coral) -> _.map current, (x) => @reduce x, coral
+    fun: -> next.apply(current).valueOf()

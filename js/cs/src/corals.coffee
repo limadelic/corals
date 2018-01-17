@@ -19,5 +19,7 @@ class Corals
   then: (corals=@corals) ->
     _.reduce corals, @reduce, @core
 
-  reduce: (@result, @coral) =>
-    if @do.when() then @do.then() else @result
+  reduce: (result, coral) =>
+    if @do.when result, coral
+    then @do.then result, coral
+    else @result

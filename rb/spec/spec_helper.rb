@@ -23,3 +23,5 @@ def stub_p
 end
 
 def hashie(hash={}); Hashie::Mash.new hash end
+
+require 'corals/global'
