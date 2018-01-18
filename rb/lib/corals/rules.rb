@@ -1,8 +1,10 @@
-module Corals
-  module Given
+require_relative 'extensions'
 
-    def self.the corals
-      corals.each do |name, definition|
+module Corals
+  module Rules
+
+    def self.define rules
+      rules.each do |name, definition|
         add_module "#{name}".camel_case, definition
       end
     end
@@ -10,7 +12,7 @@ module Corals
     def self.add_module name, definition
       new_module = Module.new
       new_module.define_singleton_method(:require) { definition[:require] || [] }
-      new_module.define_singleton_method(:corals) { definition[:corals] || [] }
+      new_module.define_singleton_method(:rules) { definition[:rules] || [] }
       const_set name, new_module
     end
 

@@ -3,22 +3,22 @@ require_relative 'rules'
 module Corals
   class Loader
 
-    def load corals
-      corals ||= []
+    def load rules
+      rules ||= []
 
-      [required(corals) + corals]
+      [required(rules) + rules]
         .flatten.uniq
-        .map { |x| module_of(x).corals }.flatten
+        .map { |x| module_of(x).rules }.flatten
     end
 
-    def required corals
-      corals
+    def required rules
+      rules
         .map { |x| [x, module_of(x)] }
         .map { |x, m| required(m.require) + [x] }
     end
 
-    def module_of corals
-      Given.find corals
+    def module_of rules
+      Rules.find rules
     end
 
   end

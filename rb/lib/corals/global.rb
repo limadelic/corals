@@ -1,5 +1,5 @@
 require_relative 'corals'
 
-def define corals; Corals.define corals end
+def define rules; Corals.define rules end
 
-def resolve opts, corals = nil; Corals.resolve opts, corals end
+def resolve opts, rules = nil; Corals.resolve opts, rules end

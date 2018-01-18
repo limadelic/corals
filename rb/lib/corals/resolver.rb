@@ -1,17 +1,21 @@
+require_relative 'loader'
+require_relative 'parser'
+require_relative 'context'
+
 module Corals
 
-  class Then
+  class Resolver
 
     attr_reader :opts, :user_options, :temp_facts
     attr_reader :loader
 
     def initialize
-      @loader = Engine::Loader.new
+      @loader = Loader.new
     end
 
-    def corals user_options = {}, corals = nil
-      corals = loader.load applicable corals, user_options unless anonymous? corals
-      parse user_options, corals
+    def resolve user_options = {}, rules = nil
+      rules = loader.load applicable rules, user_options unless anonymous? rules
+      parse user_options, rules
       run rules, user_options
     end
 
@@ -20,7 +24,7 @@ module Corals
       return [:rules] if rules == [:rules]
       opts = rules.nil? ? user_options :
         user_options.merge(rules: rules)
-      corals(opts, [:rules])[:rules]
+      resolve(opts, [:rules])[:rules]
     end
 
     def anonymous? rules;
@@ -30,13 +34,11 @@ module Corals
     def parse user_options, rules
       return if user_options.empty?
       Parser.parse user_options, compile(rules)
-      puts "given: #{user_options}"
     end
 
     def run rules, user_options = {}
       with_new_context user_options do
         rules.each { |rule| apply_rule rule, opts, user_options }
-        puts "resolved: #{results}" unless is_compiling?
         return results
       end
     end
