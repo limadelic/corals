@@ -17,13 +17,15 @@ module Corals
       instance_exec &value
     end
 
+    def has? key; scope.key?(key) || opts.key?(key) end
+
     def method_missing(m, *args, &block)
       return scope[m] || opts[m] if respond_to? m
       super
     end
 
     def respond_to?(method_sym, include_private = false)
-      super || scope.key?(method_sym) || opts.key?(method_sym)
+      super || has?(method_sym)
     end
 
   end

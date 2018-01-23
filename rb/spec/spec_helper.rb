@@ -25,3 +25,13 @@ end
 def hashie(hash={}); Hashie::Mash.new hash end
 
 require 'corals/global'
+
+def test rule, test
+  expect(
+    resolve(
+      (test[:given] || {}).merge(test[:when]),
+      [rule]
+    )
+  )
+  .to include test[:then]
+end
