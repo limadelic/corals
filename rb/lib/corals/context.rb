@@ -11,16 +11,17 @@ module Corals
       @user_options = globals.user_options
     end
 
-    def expand value
+    def expand value, scope
       return value unless value.kind_of? Proc
       return if globals.is_compiling?
-      instance_exec &value
+      return instance_exec &value if value.parameters.empty?
+      instance_exec scope, &value
     end
 
-    def has? key; scope.key?(key) || opts.key?(key) end
+    def has? key; (scope.is_a?(Hash) && scope.key?(key)) || opts.key?(key) end
 
     def method_missing(m, *args, &block)
-      return scope[m] || opts[m] if respond_to? m
+      return (scope.is_a?(Hash) && scope[m]) || opts[m] if respond_to? m
       super
     end
 
