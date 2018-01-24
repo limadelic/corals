@@ -23,4 +23,11 @@ describe 'Todo' do
       then: { todos:[], completed: ['todo']}
   end
 
+  it 'undoes it' do
+    test :todos,
+      given: { completed: ['todo']  },
+      when: { undo: 'todo' },
+      then: { todos:['todo'], completed: []}
+  end
+
 end

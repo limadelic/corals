@@ -8,7 +8,12 @@ define todos: {
     {
       when: -> { has? :done },
       todos!: -> { todos - [done] },
-      completed!: -> { completed +  [done] }
+      completed!: -> { completed + [done] }
+    },
+    {
+      when: -> { has? :undo },
+      todos!: -> { todos + [undo] },
+      completed!: -> { completed - [undo] }
     }
   ]
 }
