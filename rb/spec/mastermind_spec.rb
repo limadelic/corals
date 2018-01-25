@@ -13,16 +13,17 @@ describe 'Mastermind' do
     end
   end
 
-  it 'finds solution' do
+  it 'learn the rules' do
 
     mastermind [:yellow, :yellow, :blue, :green],
       [          'guess'             , 'feedback'],
-      [[:red, :red,   :brown, :brown], [        ]],
-      [[:red, :green, :pink,  :brown], [ :white ]]
+      [[:red,   :red, :brown,  :brown ], [        ]],
+      [[:green, :red, :purple, :purple], [ :white ]],
+      [[:red,   :red, :purple, :yellow], [ :white ]]
 
   end
 
-  xit 'matches wiki' do
+  it 'matches wiki' do
 
     mastermind [:green, :blue, :red, :purple],
       [              'guess'               ,            'feedback'             ],
