@@ -24,8 +24,8 @@ module Corals
 
     def with_new_context user_options
       @user_options = user_options.clone
-      @opts = p user_options.clone
-      @temp_facts = ['given', 'when', 'when!']
+      @opts = user_options.clone
+      @temp_facts = ['given', 'when', 'when!', 'then']
       yield
     end
 
@@ -61,11 +61,13 @@ module Corals
       apply_given_rules rules[:given], scope, user_scope
       return unless applicable? rules, scope
 
-      rules.reject { |x| [:given, :when].include? x }.each do |opt, value|
+      rules.reject { |x| [:given, :when, :then].include? x }.each do |opt, value|
         apply_to_array(opt, value, scope, user_scope) or
           apply_recursive(opt, value, scope, user_scope) or
           apply_opt_rule(opt, value, scope, user_scope)
       end
+
+      apply_opt_rule :then, rules[:then], scope, user_scope if rules.key? :then
     end
 
     def apply_given_rules rules_given, scope, user_scope
@@ -89,7 +91,8 @@ module Corals
     def apply_opt_rule opt, value, scope, user_scope
       return if is_compiling? and value.kind_of?(Proc)
       return if user_scope.key? opt
-      scope[overridden opt] = Context.new(scope, self).expand value, scope
+      result = Context.new(scope, self).expand value, scope
+      scope[overridden opt] = result if scope.is_a? Hash
     end
 
     def overridden opt;

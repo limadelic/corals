@@ -3,22 +3,23 @@ require_relative 'corals/mastermind'
 
 describe 'Mastermind' do
 
-  let(:solution) {{ solution: [:yellow, :yellow, :blue, :green] }}
+  def mastermind solution, _, *plays
 
-  it 'finds no match' do
-
-    test :mastermind,
-      given: solution,
-      when: { guess: [:red, :red, :brown, :brown] },
-      then: { feedback: [] }
-
+    plays.each do |guess, feedback|
+      test :mastermind,
+        given: { solution: solution },
+        when: { guess: guess },
+        then: { feedback: feedback }
+    end
   end
 
-  xit 'matches one out of order' do
-    test :mastermind,
-      given: solution,
-      when: { guess: [:red, :green, :pink, :brown] },
-      then: { feedback: [:white] }
+  it 'finds solution' do
+
+    mastermind [:yellow, :yellow, :blue, :green],
+      [          'guess'             , 'feedback'],
+      [[:red, :red,   :brown, :brown], [        ]],
+      [[:red, :green, :pink,  :brown], [ :white ]]
+
   end
 
 end

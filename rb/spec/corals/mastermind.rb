@@ -6,7 +6,7 @@ define mastermind: {
     {
       guess: {
         when: -> (color) { solution.include? color },
-        # then: -> { feedback << :white }
+        then: -> { feedback << :white }
       }
     }
   ]
