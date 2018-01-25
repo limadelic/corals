@@ -22,4 +22,17 @@ describe 'Mastermind' do
 
   end
 
+  xit 'matches wiki' do
+
+    mastermind [:green, :blue, :red, :purple],
+      [              'guess'               ,            'feedback'             ],
+      [[:yellow, :yellow, :blue,   :blue  ], [ :white                         ]]
+      [[:purple, :red,    :red,    :yellow], [ :black, :white                 ]]
+      [[:blue,   :purple, :blue,   :yellow], [ :black, :white                 ]]
+      [[:red,    :red,    :purple, :yellow], [ :white                         ]]
+      [[:blue,   :red,    :green,  :purple], [ :black, :white, :white, :white ]]
+      [[:green,  :blue,   :red,    :purple], [ :black, :black, :black, :black ]]
+
+  end
+
 end
