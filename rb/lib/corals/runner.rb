@@ -24,7 +24,7 @@ module Corals
 
     def with_new_context user_options
       @user_options = user_options.clone
-      @opts = user_options.clone
+      @opts = p user_options.clone
       @temp_facts = ['given', 'when', 'when!']
       yield
     end

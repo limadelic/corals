@@ -2,7 +2,6 @@ define mastermind: {
   rules: [
     {
       feedback: [],
-      guess: []
     },
     {
       guess: {

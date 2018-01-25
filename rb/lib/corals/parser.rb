@@ -2,6 +2,7 @@ module Corals
   class Parser
 
     def self.parse hash, types
+      return unless hash.is_a? Hash
       hash.keys
         .map { |key| [key, types[key]] }
         .reject { |_, type| type.nil? }
@@ -16,7 +17,7 @@ module Corals
     end
 
     def self.parse_hash hash, key, type
-      return unless type.kind_of? Hash
+      return unless type.is_a? Hash
       parse hash[key], type
     end
 
@@ -26,12 +27,12 @@ module Corals
     end
 
     def self.parse_symbol hash, key, type
-      return unless type.kind_of? Symbol
+      return unless type.is_a? Symbol
       hash[key] = hash[key].to_sym
     end
 
     def self.parse_number hash, key, type
-      return unless type.kind_of? Fixnum
+      return unless type.is_a? Fixnum
       hash[key] = hash[key].to_i
     end
 
