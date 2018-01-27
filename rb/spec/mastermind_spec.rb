@@ -13,17 +13,7 @@ describe 'Mastermind' do
     end
   end
 
-  it 'learn the rules' do
-
-    mastermind [:yellow, :yellow, :blue, :green],
-      [          'guess'             , 'feedback'],
-      [[:red,   :red, :brown,  :brown ], [        ]],
-      [[:green, :red, :purple, :purple], [ :white ]],
-      [[:red,   :red, :purple, :yellow], [ :white ]]
-
-  end
-
-  it 'matches wiki' do
+  it 'plays the game' do
 
     mastermind [:green, :blue, :red, :purple],
       [              'guess'               ,            'feedback'             ],
