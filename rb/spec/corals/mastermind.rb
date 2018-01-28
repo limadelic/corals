@@ -3,18 +3,8 @@ define mastermind: {
     {
       given: {
         attempt: -> { guess.zip solution },
-        same: -> { -> x, y { x == y }},
-        diff: -> { -> x, y { x != y }},
-      }
-    },
-    {
-      given: {
-        blacks: -> { attempt.select(&same).count },
-      }
-    },
-    {
-      given: {
-        missed: -> { attempt.select(&diff).transpose },
+        blacks: -> { attempt.select{|x,y|x==y}.count },
+        missed: -> { attempt.select{|x,y|x!=y}.transpose },
         count_per_color: -> { -> color { missed.map {|x| x.count color }.min } },
         whites: -> { missed.reduce(:&).map(&count_per_color).reduce 0, :+},
       }
