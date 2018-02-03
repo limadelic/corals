@@ -27,11 +27,11 @@ def hashie(hash={}); Hashie::Mash.new hash end
 require 'corals/global'
 
 def test rule, test
-  expect(
-    resolve(
-      (test[:given] || {}).merge(test[:when]),
-      [rule]
-    )
-  )
-  .to include test[:then]
+  test = { given:{}, when: {}, then: {}}.merge test
+  actual = resolve({rules: [rule]}.merge(test[:given]).merge(test[:when]))
+  expect(Corals.when? actual, test[:then]).to be true
+end
+
+class Corals::Context
+  include RSpec::Matchers
 end

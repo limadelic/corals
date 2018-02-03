@@ -9,8 +9,8 @@ describe 'Dominoes' do
 
       test :dominoes, then: {
         table: [],
-        players: -> { expect(count).to be 4 },
-        dominoes: -> { expect(count).to be 55 }
+        players: -> { expect(count).to eq 4 },
+        dominoes: -> { expect(count).to eq 55 }
       }
 
     end
@@ -19,14 +19,14 @@ describe 'Dominoes' do
 
   describe 'Start' do
 
-    it 'empty table, each player with 10 dominoes' do
+    xit 'empty table, each player with 10 dominoes' do
 
       test :dominoes,
         when: { on: :start },
         then: {
           table: [],
-          players: -> { each { |_, dominoes| expect(dominoes.count).to be 10 }},
-          dominoes: -> { expect(count).to be 15 }
+          players: -> { all? { |_, dominoes| expect(dominoes.count).to eq 10 }},
+          # dominoes: -> { expect(count).to eq 15 }
         }
 
     end
@@ -35,7 +35,7 @@ describe 'Dominoes' do
 
   describe 'Turn' do
 
-    it 'can play anything if table is empty' do
+    xit 'can play anything if table is empty' do
 
       test :dominoes,
         given: {

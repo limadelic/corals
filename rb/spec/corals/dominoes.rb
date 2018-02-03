@@ -15,7 +15,7 @@ define dominoes: {
       when: { on: :start },
       table: [],
       dominoes: -> { all_dominoes.shuffle },
-      players: -> x { x.map {|k, _| [k, pick.(10)]}}
+      players: -> { map {|k, _| [k, pick.(10)]}}
     }
   ]
 }

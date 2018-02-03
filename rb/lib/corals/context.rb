@@ -11,7 +11,7 @@ module Corals
       @user_options = globals.user_options
     end
 
-    def expand value, scope
+    def expand value, scope=@scope
       return value unless value.kind_of? Proc
       return if globals.is_compiling?
       return instance_exec &value if value.parameters.empty?
@@ -21,12 +21,14 @@ module Corals
     def has? key; (scope.is_a?(Hash) && scope.key?(key)) || opts.key?(key) end
 
     def method_missing(m, *args, &block)
-      return (scope.is_a?(Hash) && scope[m]) || opts[m] if respond_to? m
-      super
+      return super unless respond_to? m
+      return scope[m] if scope.is_a?(Hash) && scope.key?(m)
+      return scope.send m, *args, &block if scope.respond_to? m
+      opts[m]
     end
 
     def respond_to?(method_sym, include_private = false)
-      super || has?(method_sym)
+      super || scope.respond_to?(method_sym, include_private) || has?(method_sym)
     end
 
   end

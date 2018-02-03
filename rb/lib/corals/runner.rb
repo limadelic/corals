@@ -48,7 +48,7 @@ module Corals
 
           (expected_value == current_value) || (!current_value.nil? && (
           (expected_value.kind_of?(Array) && expected_value.include?(current_value)) ||
-            (expected_value.kind_of?(Proc) && Context.new(scope, self).expand(expected_value, scope) == true) ||
+            (expected_value.kind_of?(Proc) && Context.new(current_value, self).expand(expected_value, current_value) == true) ||
             (expected_value.kind_of?(Hash) && matches?(expected_value, current_value))
           ))
         end
@@ -91,7 +91,8 @@ module Corals
     def apply_opt_rule opt, value, scope, user_scope
       return if is_compiling? and value.kind_of?(Proc)
       return if user_scope.key? opt
-      result = Context.new(scope, self).expand value, scope
+      inner_scope = scope.is_a?(Hash) && scope.key?(opt) ? scope[:opt] : scope
+      result = Context.new(inner_scope, self).expand value
       scope[overridden opt] = result if scope.is_a? Hash
     end
 
