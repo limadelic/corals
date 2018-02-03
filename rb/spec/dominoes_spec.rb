@@ -5,34 +5,52 @@ describe 'Dominoes' do
 
   describe 'Game' do
 
-    subject { resolve rules: [:dominoes] }
+    it '1 table 4 players & 55 dominoes' do
 
-    it 'has a table' do
-      expect(subject).to have_key :table
-    end
+      test :dominoes, then: {
+        table: [],
+        players: -> { expect(count).to be 4 },
+        dominoes: -> { expect(count).to be 55 }
+      }
 
-    it '4 players' do
-      expect(subject[:players].count).to be 4
-    end
-
-    it 'has 55 dominoes' do
-      expect(subject[:dominoes].count).to be 55
     end
 
   end
 
   describe 'Start' do
 
-    subject { resolve on: :start, rules: [:dominoes] }
+    it 'empty table, each player with 10 dominoes' do
 
-    it 'table is empty' do
-      expect(subject[:table]).to be_empty
+      test :dominoes,
+        when: { on: :start },
+        then: {
+          table: [],
+          players: -> { each { |_, dominoes| expect(dominoes.count).to be 10 }},
+          dominoes: -> { expect(count).to be 15 }
+        }
+
     end
 
-    it 'each player has 10 dominoes' do
-      subject[:players].each do |_, dominoes|
-        expect(dominoes.count).to be 10
-      end
+  end
+
+  describe 'Turn' do
+
+    it 'can play anything if table is empty' do
+
+      test :dominoes,
+        given: {
+          table:[],
+          players: {
+            player: [[9,9]]
+          }
+        },
+        when: { on: :turn, player: :player },
+        then: {
+          table: [[9,9]],
+          players: {
+            player: []
+          }
+        }
     end
 
   end
