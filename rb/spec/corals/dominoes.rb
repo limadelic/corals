@@ -14,7 +14,8 @@ define dominoes: {
     {
       when: { on: :start },
       table: [],
-      players: -> x { x.map {|k, _| [k, 10]}}
+      dominoes: -> { all_dominoes.shuffle },
+      players: -> x { x.map {|k, _| [k, pick.(10)]}}
     }
   ]
 }
@@ -25,7 +26,7 @@ define helpers: {
     {
       given: {
         all_dominoes: -> { (0..9).map{|x|(x..9).map{|y|[x,y]}}.reduce :+ },
-        # take: -> count { }
+        pick: -> { -> count { (1..count).map { dominoes.pop }}}
       }
     }
   ]

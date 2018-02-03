@@ -29,9 +29,9 @@ describe 'Dominoes' do
       expect(subject[:table]).to be_empty
     end
 
-    it 'each player with 10 dominoes' do
+    it 'each player has 10 dominoes' do
       subject[:players].each do |_, dominoes|
-        expect(dominoes).to be 10
+        expect(dominoes.count).to be 10
       end
     end
 
