@@ -7,11 +7,6 @@ RSpec.configure do |rspec|
   rspec.mock_framework = :rr
 end
 
-def spy(value)
-  p value
-  value
-end
-
 def stub_const class_with_constant, constant, value
   class_with_constant.__send__(:remove_const, constant)
   class_with_constant.const_set(constant, value)
@@ -29,7 +24,7 @@ require 'corals/global'
 def test rule, test
   test = { given:{}, when: {}, then: {}}.merge test
   actual = resolve({rules: [rule]}.merge(test[:given]).merge(test[:when]))
-  expect(Corals.when? actual, test[:then]).to be true
+  expect(Corals.when? actual, test[:then]).to be(true), "expected #{test[:then]} to match #{actual}"
 end
 
 class Corals::Context

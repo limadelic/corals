@@ -91,9 +91,10 @@ module Corals
     def apply_opt_rule opt, value, scope, user_scope
       return if is_compiling? and value.is_a?(Proc)
       return if user_scope.key? opt
+      opt = overridden opt
       inner_scope = (scope.is_a?(Hash) && scope.key?(opt)) ? scope[opt] : scope
       result = Context.new(inner_scope, self).expand value
-      scope[overridden opt] = result if scope.is_a? Hash
+      scope[opt] = result if scope.is_a? Hash
     end
 
     def overridden opt;

@@ -35,7 +35,7 @@ describe 'Dominoes' do
 
   describe 'Turn' do
 
-    xit 'can play anything if table is empty' do
+    it 'can play anything if table is empty' do
 
       test :dominoes,
         given: {

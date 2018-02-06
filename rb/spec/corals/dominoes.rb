@@ -16,6 +16,10 @@ define dominoes: {
       table: [],
       dominoes: -> { all_dominoes.shuffle },
       players: -> { map {|k, _| [k, pick.(10)]}}
+    },
+    {
+      when: { on: :turn },
+      table!: -> { push players[player].pop }
     }
   ]
 }
