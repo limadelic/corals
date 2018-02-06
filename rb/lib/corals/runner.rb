@@ -42,7 +42,7 @@ module Corals
     end
 
     def matches? conditions, scope
-      conditions.kind_of?(Proc) ? Context.new(scope, self).expand(conditions, scope) == true :
+      conditions.kind_of?(Proc) ? Context.new(scope, self).expand(conditions) == true :
         conditions.all? do |setting, expected_value|
           current_value = scope[setting]
 
@@ -78,20 +78,20 @@ module Corals
     end
 
     def apply_to_array opt, rules, scope, user_scope
-      return unless (scope[opt].kind_of?(Array) or user_scope[opt].kind_of?(Array)) and rules.kind_of?(Hash)
+      return unless (scope[opt].is_a?(Array) or user_scope[opt].is_a?(Array)) and rules.is_a?(Hash)
       scope[opt].each { |x| apply_rule rules, x }
     end
 
     def apply_recursive opt, rules, scope, user_scope
-      return unless rules.kind_of? Hash
+      return unless rules.is_a? Hash
       scope[opt] ||= {}
       apply_rule rules, scope[opt], user_scope[opt]
     end
 
     def apply_opt_rule opt, value, scope, user_scope
-      return if is_compiling? and value.kind_of?(Proc)
+      return if is_compiling? and value.is_a?(Proc)
       return if user_scope.key? opt
-      inner_scope = scope.is_a?(Hash) && scope.key?(opt) ? scope[:opt] : scope
+      inner_scope = (scope.is_a?(Hash) && scope.key?(opt)) ? scope[opt] : scope
       result = Context.new(inner_scope, self).expand value
       scope[overridden opt] = result if scope.is_a? Hash
     end

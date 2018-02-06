@@ -19,14 +19,14 @@ describe 'Dominoes' do
 
   describe 'Start' do
 
-    xit 'empty table, each player with 10 dominoes' do
+    it 'empty table, each player with 10 dominoes' do
 
       test :dominoes,
         when: { on: :start },
         then: {
           table: [],
           players: -> { all? { |_, dominoes| expect(dominoes.count).to eq 10 }},
-          # dominoes: -> { expect(count).to eq 15 }
+          dominoes: -> { expect(count).to eq 15 }
         }
 
     end
