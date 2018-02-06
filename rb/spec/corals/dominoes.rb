@@ -4,12 +4,7 @@ define dominoes: {
     {
       dominoes: -> { all_dominoes },
       table: [],
-      players: {
-        front: [],
-        left: [],
-        right: [],
-        player: []
-      }
+      players: -> { Hash[[:front,:left,:right,:player].map {|x|[x,[]]}] }
     },
     {
       when: { on: :start },
@@ -18,9 +13,21 @@ define dominoes: {
       players: -> { map {|k, _| [k, pick.(10)]}}
     },
     {
-      when: { on: :turn },
-      table!: -> { push players[player].pop }
-    }
+      when!: { on: :turn },
+      given: { player!: -> { players[player] }}
+    },
+    {
+      when!: { on: :turn, table: [] },
+      given: { domino: -> { player.pop } }
+    },
+    {
+      when!: { on: :turn, table: -> { count > 0 } },
+      given: {
+        heads: -> { [table.first.first, table.last.last] },
+        domino: -> { player.delete player.find &playable }
+      },
+    },
+    { when: { on: :turn }, table!: -> { push domino }}
   ]
 }
 
@@ -30,7 +37,8 @@ define helpers: {
     {
       given: {
         all_dominoes: -> { (0..9).map{|x|(x..9).map{|y|[x,y]}}.reduce :+ },
-        pick: -> { -> count { (1..count).map { dominoes.pop }}}
+        pick: -> { -> count { (1..count).map { dominoes.pop }}},
+        playable: -> { -> domino { not (domino & heads).empty? }}
       }
     }
   ]

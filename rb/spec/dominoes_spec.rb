@@ -51,6 +51,22 @@ describe 'Dominoes' do
             player: []
           }
         }
+
+    end
+
+    it 'finds a domino to play' do
+
+      test :dominoes,
+        given: {
+          table: [[9,9]],
+          players: { player: [[0,0],[9,8],[8,8]] }
+        },
+        when: { on: :turn, player: :player },
+        then: {
+          table: [[9,9],[9,8]],
+          players: { player: [[0,0],[8,8]] }
+        }
+
     end
 
   end
