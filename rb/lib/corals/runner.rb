@@ -25,16 +25,19 @@ module Corals
     def with_new_context user_options
       @user_options = user_options.clone
       @opts = user_options.clone
-      @temp_facts = ['given', 'when', 'when!', 'then']
+      @temp_facts = ['given', 'when', 'then']
       yield
+    end
+
+    def given_first? rules
+      rules.map do |x, _|
+        return true if x == :given
+        return false if x == :when
+      end
     end
 
     def applicable? rule, scope
       is_compiling? || is_default?(rule) || matches?(rule[:when], scope)
-    end
-
-    def applicable! rule, scope
-      is_compiling? || !rule.key?(:when!) || matches?(rule[:when!], scope)
     end
 
     def is_default? rule
@@ -56,10 +59,11 @@ module Corals
 
     def apply_rule rules, scope, user_scope = {}
       user_scope ||= {}
-      return unless rules && applicable!(rules, scope)
+      return unless rules
 
-      apply_given_rules rules[:given], scope, user_scope
+      apply_given_rules rules[:given], scope, user_scope if given_first? rules
       return unless applicable? rules, scope
+      apply_given_rules rules[:given], scope, user_scope unless given_first? rules
 
       rules.reject { |x| [:given, :when, :then].include? x }.each do |opt, value|
         apply_to_array(opt, value, scope, user_scope) or

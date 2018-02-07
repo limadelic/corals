@@ -13,15 +13,15 @@ define dominoes: {
       players: -> { map {|k, _| [k, pick.(10)]}}
     },
     {
-      when!: { on: :turn },
+      when: { on: :turn },
       given: { player!: -> { players[player] }}
     },
     {
-      when!: { on: :turn, table: [] },
+      when: { on: :turn, table: [] },
       given: { domino: -> { player.pop } }
     },
     {
-      when!: { on: :turn, table: -> { count > 0 } },
+      when: { on: :turn, table: -> { count > 0 } },
       given: {
         heads: -> { [table.first.first, table.last.last] },
         domino: -> { player.delete player.find &playable }
