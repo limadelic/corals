@@ -1,5 +1,5 @@
 define dominoes: {
-  require: [:helpers, :defaults, :start, :turn]
+  require: [:rules]
 }
 
 define defaults: {
@@ -15,7 +15,6 @@ define defaults: {
 define start: {
   rules: [
     {
-      when: { on: :start },
       table: [],
       dominoes: -> { all_dominoes.shuffle },
       players: -> { map {|k, _| [k, pick.(10)]}}
@@ -26,20 +25,19 @@ define start: {
 define turn: {
   rules: [
     {
-      when: { on: :turn },
       given: { player!: -> { players[player] }}
     },
     {
-      when: { on: :turn, table: [] },
+      when: { table: [] },
       domino: -> { player.pop }
     },
     {
-      when: { on: :turn, table: -> { count > 0 } },
+      when: { table: -> { count > 0 } },
       given: { heads: -> { [table.first.first, table.last.last] }},
       domino: -> { player.delete player.find &playable }
     },
-    { when: { on: :turn, domino: -> { not nil? }}, on!: :play },
-    { when: { on: :turn, domino: nil}, on!: :knock }
+    { when: { domino: -> { not nil? }}, on!: :play },
+    { when: { domino: nil}, on!: :knock }
   ]
 }
 
@@ -52,5 +50,12 @@ define helpers: {
         playable: -> { -> domino { not (domino & heads).empty? }}
       }
     }
+  ]
+}
+
+define rules: {
+  rules: [
+    { when: { rules: [:dominoes] }, rules!: [:helpers, :defaults] },
+    { when: { on: [:start, :turn]}, rules!: -> { push on }}
   ]
 }
