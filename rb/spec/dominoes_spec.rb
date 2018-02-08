@@ -46,10 +46,10 @@ describe 'Dominoes' do
         },
         when: { on: :turn, player: :player },
         then: {
-          table: [[9,9]],
-          players: {
-            player: []
-          }
+          on: :play,
+          domino: [9,9],
+          table: [],
+          players: { player: [] }
         }
 
     end
@@ -63,7 +63,25 @@ describe 'Dominoes' do
         },
         when: { on: :turn, player: :player },
         then: {
-          table: [[9,9],[9,8]],
+          on: :play,
+          domino: [9,8],
+          table: [[9,9]],
+          players: { player: [[0,0],[8,8]] }
+        }
+
+    end
+
+    it 'knocks if cannot play' do
+
+      test :dominoes,
+        given: {
+          table: [[9,9]],
+          players: { player: [[0,0],[8,8]] }
+        },
+        when: { on: :turn, player: :player },
+        then: {
+          on: :knock,
+          table: [[9,9]],
           players: { player: [[0,0],[8,8]] }
         }
 
