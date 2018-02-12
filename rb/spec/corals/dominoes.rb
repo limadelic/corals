@@ -1,6 +1,4 @@
-define dominoes: {
-  require: [:rules]
-}
+define dominoes: {}
 
 define defaults: {
   rules: [
@@ -36,8 +34,16 @@ define turn: {
       given: { heads: -> { [table.first.first, table.last.last] }},
       domino: -> { player.delete player.find &playable }
     },
-    { when: { domino: -> { not nil? }}, on!: :play },
-    { when: { domino: nil}, on!: :knock }
+    { when: { domino: -> { not nil? }}, on: :play },
+    { when: { domino: nil}, on: :knock }
+  ]
+}
+
+define play: {
+  rules: [
+    {
+      table!: -> { push domino }
+    }
   ]
 }
 
@@ -55,7 +61,7 @@ define helpers: {
 
 define rules: {
   rules: [
-    { when: { rules: [:dominoes] }, rules!: [:helpers, :defaults] },
-    { when: { on: [:start, :turn]}, rules!: -> { push on }}
+    { when: -> { rules.first == :dominoes }, rules: [:dominoes, :helpers, :defaults] },
+    { when: { on: [:start, :turn, :play]}, rules: -> { push on }}
   ]
 }

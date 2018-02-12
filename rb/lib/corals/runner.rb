@@ -4,9 +4,11 @@ module Corals
 
   class Runner
 
-    attr_reader :opts, :user_options, :temp_facts
+    attr_reader :opts, :temp_facts
 
     def is_compiling?; @is_compiling == true end
+    def on_defaults?; @on_defaults == true end
+    def is_default? rule; rule[:when].nil? end
 
     def compile rules
       @is_compiling = true
@@ -15,16 +17,16 @@ module Corals
       @is_compiling = false
     end
 
-    def run rules, user_options = {}
-      with_new_context user_options do
-        rules.each { |rule| apply_rule rule, opts, user_options }
+    def run rules, opts = {}
+      with_new_context opts do
+        rules.each { |rule| apply_root_rule rule }
         return results
       end
     end
 
-    def with_new_context user_options
-      @user_options = user_options.clone
-      @opts = user_options.clone
+    def with_new_context opts
+      @opts = opts.clone
+      @opts[:user_options] ||= {}
       @temp_facts = ['given', 'when', 'then']
       yield
     end
@@ -37,11 +39,7 @@ module Corals
     end
 
     def applicable? rule, scope
-      is_compiling? || is_default?(rule) || matches?(rule[:when], scope)
-    end
-
-    def is_default? rule
-      rule[:when].nil?
+      is_compiling? || on_defaults? || matches?(rule[:when], scope)
     end
 
     def matches? conditions, scope
@@ -55,6 +53,11 @@ module Corals
             (expected_value.kind_of?(Hash) && matches?(expected_value, current_value))
           ))
         end
+    end
+
+    def apply_root_rule rule
+      @on_defaults = is_default? rule
+      apply_rule rule, opts, opts[:user_options]
     end
 
     def apply_rule rules, scope, user_scope = {}
@@ -96,6 +99,7 @@ module Corals
       return if is_compiling? and value.is_a?(Proc)
       return if user_scope.key? opt
       opt = overridden opt
+      return if on_defaults? and scope.key? opt
       inner_scope = (scope.is_a?(Hash) && scope.key?(opt)) ? scope[opt] : scope
       result = Context.new(inner_scope, self).expand value
       scope[opt] = result if scope.is_a? Hash

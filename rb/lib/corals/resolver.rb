@@ -13,17 +13,17 @@ module Corals
       @runner = Runner.new
     end
 
-    def resolve user_options = {}, rules = nil
-      rules = loader.load applicable rules, user_options unless anonymous? rules
-      parse user_options, rules
-      runner.run rules, user_options
+    def resolve opts = {}, rules = nil
+      rules = loader.load applicable rules, opts unless anonymous? rules
+      parse opts, rules
+      runner.run rules, opts
     end
 
-    def applicable rules, user_options
+    def applicable rules, opts
       return rules if anonymous? rules
       return [:rules] if rules == [:rules]
-      opts = rules.nil? ? user_options :
-        user_options.merge(rules: rules)
+      opts = rules.nil? ? opts :
+        opts.merge(rules: rules)
       resolve(opts, [:rules])[:rules]
     end
 
@@ -31,9 +31,9 @@ module Corals
       rules and rules[0].kind_of?(Hash)
     end
 
-    def parse user_options, rules
-      return if user_options.empty?
-      Parser.parse user_options, runner.compile(rules)
+    def parse opts, rules
+      return if opts.empty?
+      Parser.parse opts, runner.compile(rules)
     end
 
   end

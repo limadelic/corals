@@ -2,13 +2,12 @@ module Corals
 
   class Context
 
-    attr_reader :scope, :globals, :opts, :user_options
+    attr_reader :scope, :globals, :opts
 
     def initialize scope, globals
       @scope = scope
       @globals = globals
       @opts = globals.opts
-      @user_options = globals.user_options
     end
 
     def expand value, scope=@scope
