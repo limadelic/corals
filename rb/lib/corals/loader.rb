@@ -6,9 +6,9 @@ module Corals
     def load rules
       rules ||= []
 
-      [required(rules) + rules]
-        .flatten.uniq
-        .map { |x| module_of x }.flatten
+      required(rules)
+        .uniq
+        .map { |x| module_of x }
         .map { |x| [x.rules, x.defaults]}
         .transpose
     end
@@ -17,6 +17,7 @@ module Corals
       rules
         .map { |x| [x, module_of(x)] }
         .map { |x, m| required(m.require) + [x] }
+        .flatten
     end
 
     def module_of rules
