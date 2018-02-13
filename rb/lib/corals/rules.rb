@@ -3,6 +3,12 @@ require_relative 'extensions'
 module Corals
   module Rules
 
+    ATTRS = {
+      require: [],
+      defaults: {},
+      rules: []
+    }
+
     def self.define rules
       rules.each do |name, definition|
         add_module "#{name}".camel_case, definition
@@ -11,8 +17,13 @@ module Corals
 
     def self.add_module name, definition
       new_module = Module.new
-      new_module.define_singleton_method(:require) { definition[:require] || [] }
-      new_module.define_singleton_method(:rules) { definition[:rules] || [] }
+
+      ATTRS.each do |attr, default|
+        new_module.define_singleton_method attr do
+          definition.key?(attr) ? definition[attr] : default
+        end
+      end
+
       const_set name, new_module
     end
 

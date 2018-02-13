@@ -8,7 +8,9 @@ module Corals
 
       [required(rules) + rules]
         .flatten.uniq
-        .map { |x| module_of(x).rules }.flatten
+        .map { |x| module_of x }.flatten
+        .map { |x| [x.rules, x.defaults]}
+        .transpose
     end
 
     def required rules

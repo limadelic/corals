@@ -1,8 +1,6 @@
 define todos: {
+  defaults: { todos: [], completed: [] },
   rules: [
-    {
-      todos: [], completed: []
-    },
     {
       when: -> { has? :add },
       todos: -> { todos + [add] }
