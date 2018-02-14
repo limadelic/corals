@@ -1,14 +1,8 @@
 require 'spec_helper'
+require_relative '../corals/dominoes'
 
-define loader: {
-  require: [:stuff],
-  defaults: :loader_defaults,
-  rules: :loader_rules
-}
-
-define stuff: {
-  defaults: :stuff_defaults,
-  rules: :stuff_rules
+define dominoes: {
+  require: [:helpers]
 }
 
 describe 'Loader' do
@@ -17,21 +11,21 @@ describe 'Loader' do
 
   it 'finds the dependent rules' do
 
-    expect(subject.required [:loader]).to eq [:stuff, :loader]
+    expect(subject.required [:dominoes]).to eq [:helpers, :dominoes]
 
   end
 
   it 'loads dependent rules' do
 
-    rules, _ = subject.load [:loader]
-    expect(rules).to eq [:stuff_rules, :loader_rules]
+    rules, _ = subject.load [:dominoes]
+    expect(rules).to eq Corals::Rules::Helpers.rules
 
   end
 
   it 'loads default values' do
 
-    _, defaults = subject.load [:loader]
-    expect(defaults).to eq [:stuff_defaults, :loader_defaults]
+    _, defaults = subject.load [:dominoes]
+    expect(defaults.first.keys).to eq [:dominoes, :table, :players]
 
   end
 

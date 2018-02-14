@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'corals/dominoes'
+require_relative '../corals/dominoes'
 
 describe 'Dominoes' do
 

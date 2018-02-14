@@ -11,6 +11,8 @@ module Corals
         .map { |x| module_of x }
         .map { |x| [x.rules, x.defaults]}
         .transpose
+        .map(&:flatten)
+        .map { |x| x.reject &:empty? }
     end
 
     def required rules

@@ -14,7 +14,6 @@ module Corals
     end
 
     def resolve opts={}, rules=nil, defaults={}
-      p "resolve #{opts} #{rules}"
       rules, defaults = loader.load applicable rules, opts unless anonymous? rules
 
       parse opts, rules

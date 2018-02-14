@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'corals/game_of_life'
+require_relative '../corals/game_of_life'
 
 describe 'Game of Life' do
 

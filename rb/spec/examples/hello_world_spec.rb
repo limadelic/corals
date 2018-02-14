@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'corals/hello_world'
+require_relative '../corals/hello_world'
 
 describe 'Hello World' do
 

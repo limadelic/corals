@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'corals/mastermind'
+require_relative '../corals/mastermind'
 
 describe 'Mastermind' do
 

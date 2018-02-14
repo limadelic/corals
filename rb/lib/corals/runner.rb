@@ -56,7 +56,7 @@ module Corals
 
     def apply_rule rules, scope, user_scope = {}
       user_scope ||= {}
-      return unless rules
+      return unless Hash === rules
 
       apply_given_rules rules[:given], scope, user_scope if given_first? rules
       return unless applicable? rules, scope
