@@ -56,8 +56,8 @@ define helpers: {
 }
 
 define rules: {
+  defaults: { rules: [:dominoes, :helpers] },
   rules: [
-    { when: -> { rules.first == :dominoes }, rules: [:dominoes, :helpers] },
     { when: { on: [:start, :turn, :play] }, rules: -> { push on } }
   ]
 }

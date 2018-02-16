@@ -26,6 +26,7 @@ module Corals
       return [:rules] if rules == [:rules]
       opts = rules.nil? ? opts :
         opts.merge(rules: rules)
+
       resolve(opts, [:rules])[:rules]
     end
 
