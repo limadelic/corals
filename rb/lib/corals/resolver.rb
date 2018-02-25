@@ -16,8 +16,7 @@ module Corals
     def resolve opts={}, rules=nil, defaults={}
       rules, defaults = loader.load applicable rules, opts unless anonymous? rules
 
-      parse opts, rules
-      opts = default opts, defaults
+      parse opts, defaults
       runner.run rules, opts
     end
 
@@ -38,12 +37,6 @@ module Corals
       return if opts.empty?
       Parser.parse opts, runner.compile(rules)
     end
-
-    def default opts, defaults
-      deep = -> _, x, y { Hash === x && Hash === y ? x.merge(y, &deep) : y }
-      defaults.reduce(opts) { |all, current| current.merge all, &deep }
-    end
-
 
   end
 

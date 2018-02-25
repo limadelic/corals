@@ -18,14 +18,7 @@ describe 'Loader' do
   it 'loads dependent rules' do
 
     rules, _ = subject.load [:dominoes]
-    expect(rules).to eq Corals::Rules::Helpers.rules
-
-  end
-
-  it 'loads default values' do
-
-    _, defaults = subject.load [:dominoes]
-    expect(defaults.first.keys).to eq [:dominoes, :table, :players]
+    expect(rules).to eq Corals::Rules::Helpers
 
   end
 

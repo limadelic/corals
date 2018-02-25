@@ -9,10 +9,7 @@ module Corals
       required(rules)
         .uniq
         .map { |x| module_of x }
-        .map { |x| [x.rules, x.defaults]}
-        .transpose
-        .map(&:flatten)
-        .map { |x| x.reject &:empty? }
+        .compact
     end
 
     def required rules
