@@ -1,3 +1,5 @@
+require 'hashie'
+
 require_relative 'loader'
 require_relative 'parser'
 require_relative 'runner'
@@ -14,10 +16,18 @@ module Corals
     end
 
     def resolve opts={}, rules=nil, defaults={}
-      rules, defaults = loader.load applicable rules, opts unless anonymous? rules
-
-      parse opts, defaults
+      rules = load opts, rules, defaults
+      parse opts, rules
       runner.run rules, opts
+    end
+
+    def load opts={}, rules=nil, defaults={}
+      anonymous(rules, defaults) or
+      loader.load(applicable(rules, opts))
+    end
+
+    def anonymous rules, defaults
+      Hashie::Mash.new rules: rules, defaults: defaults if anonymous? rules
     end
 
     def applicable rules, opts
@@ -30,7 +40,7 @@ module Corals
     end
 
     def anonymous? rules;
-      rules and rules[0].kind_of?(Hash)
+      rules and rules[0].is_a?(Hash)
     end
 
     def parse opts, rules

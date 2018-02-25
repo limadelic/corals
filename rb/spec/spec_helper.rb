@@ -12,6 +12,10 @@ def stub_const class_with_constant, constant, value
   class_with_constant.const_set(constant, value)
 end
 
+def stub_methods sut=subject, methods
+  methods.map { |x| stub(sut, x).returns x }
+end
+
 def stub_p
   stub($stdout).puts
   stub($stdout).p

@@ -4,27 +4,22 @@ describe 'Resolver' do
 
   subject { Corals::Resolver.new }
 
-  let(:opts) {{}}
+  let(:loader) { hashie load: :loaded_rules }
+  let(:runner) { hashie run: :results }
 
-  describe 'Default' do
+  before do
+    stub(Corals::Loader).new { loader }
+    stub(Corals::Runner).new { runner }
+    stub(subject).applicable { :applicable_rules }
+  end
 
-    def default; subject.default opts, defaults end
+  after { subject.resolve }
 
-    let(:defaults) {[{default: true}]}
+  context 'defaults' do
 
-    it 'are merged with opts' do
-      expect(default[:default]).to be true
-    end
+    it('loads') { mock(loader).load :applicable_rules }
 
-    it 'dont override values' do
-      opts[:default] = false
-      expect(default[:default]).to be false
-    end
-
-    it 'goes deep' do
-      defaults[0] = { default: defaults[0] }
-      expect(default[:default][:default]).to be true
-    end
+    it('runs') { mock(runner).run :loaded_rules, {} }
 
   end
 
