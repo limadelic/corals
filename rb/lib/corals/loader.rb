@@ -1,6 +1,7 @@
 require_relative 'rules'
 
 module Corals
+
   class Loader
 
     def load rules
@@ -19,9 +20,7 @@ module Corals
         .flatten
     end
 
-    def module_of rules
-      Rules.find rules
-    end
+    def module_of rules; Rules.find rules end
 
   end
 end

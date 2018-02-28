@@ -7,11 +7,11 @@ module Corals
 
   def self.when? opts, predicate
     return unless predicate
-    Resolver.new.resolve(opts, [{ when: predicate, return: true }])[:return]
+    Resolver.new(opts, [{ when: predicate, return: true }]).resolve[:return]
   end
 
-  def self.resolve opts, corals = nil
-    Resolver.new.resolve opts, corals
+  def self.resolve opts={}, corals = nil, defaults={}
+    Resolver.new(opts, corals, defaults).resolve
   end
 
 end
