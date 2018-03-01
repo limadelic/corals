@@ -5,7 +5,6 @@ module Corals
 
     ATTRS = {
       require: [],
-      defaults: {},
       rules: []
     }
 
