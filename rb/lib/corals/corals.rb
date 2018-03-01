@@ -10,8 +10,8 @@ module Corals
     Resolver.new(opts, [{ when: predicate, return: true }]).resolve[:return]
   end
 
-  def self.resolve opts={}, corals = nil, defaults={}
-    Resolver.new(opts, corals, defaults).resolve
+  def self.resolve opts={}, rules = nil
+    Resolver.new(opts, rules).resolve
   end
 
 end

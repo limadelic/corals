@@ -1,36 +1,24 @@
-require 'securerandom'
-
-require_relative 'resolver'
-require_relative 'parser'
-require_relative 'runner'
-
 module Corals
 
   class Meta
 
-    attr_reader :scope
-
-    def initialize scope
-      @scope = scope
+    def initialize opts, rules
+      @opts, @rules = opts, rules
     end
 
     def rules
-      return anonymous if anonymous?
-      return [:rules] if rules == [:rules]
-      opts = rules.nil? ? opts :
-        opts.merge(rules: rules)
+      return @rules if anonymous_rules?
+      return meta_rules if meta_rules?
+      opts = @rules.nil? ? @opts :
+        @opts.merge(rules: @rules)
 
-      Corals.resolve(opts, [:rules])[:rules]
+      Corals.resolve(opts, meta_rules)[:rules]
     end
 
-    def anonymous
-      define "rules_#{SecureRandom.hex}".to_sym,
-        defaults: scope.defaults,
-        rules: scope.rules
-    end
+    def meta_rules?; @rules == meta_rules end
+    def meta_rules; [:rules] end
 
-    def anonymous? rules; rules and rules[0].is_a?(Hash) end
-
+    def anonymous_rules?; @rules and @rules[0].is_a?(Hash) end
 
   end
 

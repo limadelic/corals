@@ -4,26 +4,33 @@ module Corals
 
   class Runner
 
-    attr_reader :opts, :temp_facts
+    attr_reader :opts, :rules, :temp_facts
+
+    def initialize opts, rules
+      @opts, @rules = opts, rules
+    end
 
     def is_compiling?; @is_compiling == true end
     def is_default? rule; rule[:when].nil? end
 
-    def compile rules
+    def compile
       @is_compiling = true
-      run rules
+      run
     ensure
       @is_compiling = false
     end
 
-    def run rules, opts = {}
-      with_new_context opts do
-        rules.each { |rule| apply_rule rule, @opts, @opts[:user_options] }
+    def run
+      with_new_context do
+        rules.each do |rule|
+          apply_rule rule, opts, opts[:user_options]
+        end
+
         return results
       end
     end
 
-    def with_new_context opts
+    def with_new_context
       @opts = opts.clone
       @opts[:user_options] ||= {}
       @temp_facts = ['given', 'when', 'then']

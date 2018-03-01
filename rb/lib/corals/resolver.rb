@@ -2,38 +2,29 @@ require_relative 'loader'
 require_relative 'parser'
 require_relative 'runner'
 require_relative 'meta'
-require_relative 'anonymous'
 
 module Corals
 
   class Resolver
 
-    include Anonymous
+    attr_reader :opts, :rules
 
-    attr_reader :loader, :parser, :runner, :meta
-    attr_accessor :opts, :rules, :defaults
-
-    def initialize opts={}, rules=nil, defaults={}
-      @opts, @rules, @defaults = opts, rules, defaults
-      @loader = Loader.new
-      @parser = Parser.new
-      @runner = Loader.new
-      @meta = Meta.new self
+    def initialize opts={}, rules=nil
+      @opts, @rules = opts, rules
     end
+
+    def loader; Loader.new end
+    def meta; Meta.new opts, rules end
+    def parser; Parser.new end
+    def runner; Runner.new opts, rules end
 
     def resolve; load; parse; run end
 
-    def load
-      @rules = loader.load meta.rules
-    end
+    def load; @rules = loader.load meta.rules end
 
-    def parse
+    def parse; parser.parse opts, runner.compile unless opts.empty? end
 
-    end
-
-    def run
-      runner.run rules, opts
-    end
+    def run; runner.run end
 
   end
 

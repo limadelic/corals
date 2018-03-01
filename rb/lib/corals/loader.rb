@@ -9,8 +9,8 @@ module Corals
 
       required(rules)
         .uniq
-        .map { |x| module_of x }
-        .compact
+        .map { |x| module_of(x).rules }
+        .flatten.compact
     end
 
     def required rules
