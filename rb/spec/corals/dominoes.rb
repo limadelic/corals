@@ -1,9 +1,9 @@
 define dominoes: {
-  defaults: {
-    dominoes: -> { all_dominoes },
-    table: [],
-    players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }
-  }
+  rules: [
+    { when: { dominoes: nil }, dominoes: -> { all_dominoes }},
+    { when: { table: nil}, table: []},
+    { when: { players: nil }, players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }}
+  ]
 }
 
 define start: {
@@ -38,7 +38,7 @@ define turn: {
 define play: {
   rules: [
     {
-      table!: -> { push domino }
+      table: -> { push domino }
     }
   ]
 }
@@ -56,8 +56,8 @@ define helpers: {
 }
 
 define rules: {
-  defaults: { rules: [:dominoes, :helpers] },
   rules: [
+    { when: { rules: [:dominoes] }, rules: [:helpers, :dominoes] },
     { when: { on: [:start, :turn, :play] }, rules: -> { push on } }
   ]
 }
