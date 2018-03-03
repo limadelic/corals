@@ -16,10 +16,10 @@ describe 'Loader' do
   end
 
   it 'loads dependent rules' do
+    rules = subject.load [:dominoes]
+    helper_rules = Corals::Rules::Helpers.rules
 
-    rules, _ = subject.load [:dominoes]
-    expect(rules).to eq Corals::Rules::Helpers
-
+    helper_rules.each { |x| expect(rules).to include x }
   end
 
 end

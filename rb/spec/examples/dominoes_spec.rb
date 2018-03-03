@@ -91,7 +91,7 @@ describe 'Dominoes' do
 
   describe 'Play' do
 
-    xit 'the domino goes on the table' do
+    it 'the domino goes on the table' do
 
       test :dominoes,
         when: { on: :play, domino: [9,9] },

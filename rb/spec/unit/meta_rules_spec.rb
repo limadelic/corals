@@ -5,7 +5,8 @@ describe 'Meta Rules' do
 
   it 'can be inferred' do
 
-    expect(resolve({}, [:rules])[:rules]).to eq [:dominoes, :helpers]
+    expect(resolve({rules: [:dominoes], on: :play}, [:rules])[:rules])
+      .to eq [:helpers, :dominoes, :play]
 
   end
 
