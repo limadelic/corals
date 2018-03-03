@@ -19,7 +19,7 @@ define start: {
 define turn: {
   rules: [
     {
-      given: { player!: -> { players[player] } }
+      given: { player: -> { players[player] } }
     },
     {
       when: { table: [] },
@@ -57,7 +57,7 @@ define helpers: {
 
 define rules: {
   rules: [
-    { when: { rules: [:dominoes] }, rules: [:helpers, :dominoes] },
+    { when: { rules: [:dominoes] }, rules: -> {[:helpers, :dominoes]} },
     { when: { on: [:start, :turn, :play] }, rules: -> { push on } }
   ]
 }
