@@ -99,6 +99,24 @@ describe 'Dominoes' do
 
     end
 
+    it 'either before' do
+
+      test :dominoes,
+        given: { table: [[9,9]] },
+        when: { on: :play, domino: [8,9] },
+        then: { table: [[8,9],[9,9]] }
+
+    end
+
+    it 'or after' do
+
+      test :dominoes,
+        given: { table: [[8,9]] },
+        when: { on: :play, domino: [9,9] },
+        then: { table: [[8,9],[9,9]] }
+
+    end
+
   end
 
 end

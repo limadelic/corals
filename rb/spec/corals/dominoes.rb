@@ -27,7 +27,6 @@ define turn: {
     },
     {
       when: { table: -> { count > 0 } },
-      given: { heads: -> { [table.first.first, table.last.last] } },
       domino: -> { player.delete player.find &playable }
     },
     { when: { domino: -> { not nil? } }, on: :play },
@@ -36,11 +35,24 @@ define turn: {
 }
 
 define play: {
-  rules: [
+  rules: [[
     {
-      table: -> { push domino }
+      when: -> { head(domino) == head(table) },
+      table: -> { [domino.reverse] + table }
+    },
+    {
+      when: -> { head(domino) == tail(table) },
+      table: -> { table + [domino] }
+    },
+    {
+      when: -> { tail(domino) == head(table) },
+      table: -> { [domino] + table }
+    },
+    {
+      when: -> { tail(domino) == tail(table) },
+      table: -> { table + [domino] }
     }
-  ]
+  ]]
 }
 
 define helpers: {
@@ -49,7 +61,10 @@ define helpers: {
       given: {
         all_dominoes: -> { (0..9).map { |x| (x..9).map { |y| [x, y] } }.reduce :+ },
         pick: -> { -> count { (1..count).map { dominoes.pop } } },
-        playable: -> { -> domino { not (domino & heads).empty? } }
+        playable: -> { -> domino { not (domino & heads).empty? } },
+        heads: -> { -> { [head, tail] } },
+        head: -> { -> { table.first.first } },
+        tail: -> { -> { table.last.last } },
       }
     }
   ]
