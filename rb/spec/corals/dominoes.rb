@@ -27,6 +27,7 @@ define turn: {
     },
     {
       when: { table: -> { count > 0 } },
+      given: { heads: -> { [table.first.first, table.last.last] } },
       domino: -> { player.delete player.find &playable }
     },
     { when: { domino: -> { not nil? } }, on: :play },
@@ -35,23 +36,27 @@ define turn: {
 }
 
 define play: {
-  rules!: [
+  rules: [
     {
-      when: -> { domino.first == table.first.first },
+      when!: -> { table.empty? },
+      table: -> { [domino] }
+    },
+    {
+      when!: -> { domino.first == table.first.first },
       table: -> { [domino.reverse] + table }
     },
     {
-      when: -> { domino.first == table.last.last },
+      when!: -> { domino.first == table.last.last },
       table: -> { table + [domino] }
     },
     {
-      when: -> { domino.last == table.first.first },
+      when!: -> { domino.last == table.first.first },
       table: -> { [domino] + table }
     },
     {
-      when: -> { domino.last == table.last.last },
+      when!: -> { domino.last == table.last.last },
       table: -> { table + [domino.reverse] }
-    }
+    },
   ]
 }
 

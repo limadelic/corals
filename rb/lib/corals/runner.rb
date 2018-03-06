@@ -11,7 +11,7 @@ module Corals
     end
 
     def is_compiling?; @is_compiling == true end
-    def is_default? rule; rule[:when].nil? end
+    def is_default? rule; (rule.keys & [:when, :when!]).empty? end
 
     def compile
       @is_compiling = true
@@ -33,7 +33,7 @@ module Corals
     def with_new_context
       @opts = opts.clone
       @opts[:user_options] ||= {}
-      @temp_facts = ['given', 'when', 'then']
+      @temp_facts = ['given', 'when', 'then', 'when!']
       yield
     end
 
@@ -45,7 +45,20 @@ module Corals
     end
 
     def applicable? rule, scope
-      is_compiling? || is_default?(rule) || matches?(rule[:when], scope)
+      return true if is_compiling? or is_default? rule
+      return !is_shorted?(rule[:when!], scope) if on_short? rule
+      matches? rule[:when], scope
+    end
+
+    def on_short? rule
+      return @is_shorted = false unless rule.key? :when!
+      true
+    end
+
+    def is_shorted? conditions, scope
+      return true if @is_shorted
+      @is_shorted = matches? conditions, scope
+      false
     end
 
     def matches? conditions, scope
