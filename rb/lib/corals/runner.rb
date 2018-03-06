@@ -57,7 +57,7 @@ module Corals
 
     def is_shorted? conditions, scope
       return true if @is_shorted
-      @is_shorted = matches? conditions, scope
+      return true unless @is_shorted = matches?(conditions, scope)
       false
     end
 
