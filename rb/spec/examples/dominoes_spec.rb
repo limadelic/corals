@@ -99,21 +99,31 @@ describe 'Dominoes' do
 
     end
 
-    it 'either before' do
+    it 'the head indicates preference' do
 
       test :dominoes,
-        given: { table: [[9,9]] },
-        when: { on: :play, domino: [8,9] },
-        then: { table: [[8,9],[9,9]] }
+        given: { table: [[9,9],[9,8],[8,7]] },
+        when: { on: :play, domino: [9,7] },
+        then: { table: [[7,9],[9,9],[9,8],[8,7]] }
+
+      test :dominoes,
+        given: { table: [[9,9],[9,8],[8,7]] },
+        when: { on: :play, domino: [7,9] },
+        then: { table: [[9,9],[9,8],[8,7],[7,9]] }
 
     end
 
-    it 'or after' do
+    it 'the tail is an afterthought' do
 
       test :dominoes,
-        given: { table: [[8,9]] },
-        when: { on: :play, domino: [9,9] },
-        then: { table: [[8,9],[9,9]] }
+        given: { table: [[9,9]] },
+        when: { on: :play, domino: [7,9] },
+        then: { table: [[7,9],[9,9]] }
+
+      test :dominoes,
+        given: { table: [[9,9],[9,8]] },
+        when: { on: :play, domino: [7,8] },
+        then: { table: [[9,9],[9,8],[8,7]] }
 
     end
 

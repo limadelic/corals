@@ -35,24 +35,24 @@ define turn: {
 }
 
 define play: {
-  rules: [[
+  rules!: [
     {
-      when: -> { head(domino) == head(table) },
+      when: -> { domino.first == table.first.first },
       table: -> { [domino.reverse] + table }
     },
     {
-      when: -> { head(domino) == tail(table) },
+      when: -> { domino.first == table.last.last },
       table: -> { table + [domino] }
     },
     {
-      when: -> { tail(domino) == head(table) },
+      when: -> { domino.last == table.first.first },
       table: -> { [domino] + table }
     },
     {
-      when: -> { tail(domino) == tail(table) },
-      table: -> { table + [domino] }
+      when: -> { domino.last == table.last.last },
+      table: -> { table + [domino.reverse] }
     }
-  ]]
+  ]
 }
 
 define helpers: {
@@ -61,10 +61,7 @@ define helpers: {
       given: {
         all_dominoes: -> { (0..9).map { |x| (x..9).map { |y| [x, y] } }.reduce :+ },
         pick: -> { -> count { (1..count).map { dominoes.pop } } },
-        playable: -> { -> domino { not (domino & heads).empty? } },
-        heads: -> { -> { [head, tail] } },
-        head: -> { -> { table.first.first } },
-        tail: -> { -> { table.last.last } },
+        playable: -> { -> domino { not (domino & heads).empty? } }
       }
     }
   ]
