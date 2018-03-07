@@ -2,7 +2,8 @@ define dominoes: {
   rules: [
     { when: { dominoes: nil }, dominoes: -> { all_dominoes }},
     { when: { table: nil}, table: []},
-    { when: { players: nil }, players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }}
+    { when: { players: nil }, players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }},
+    { when: { player: nil }, player: :player }
   ]
 }
 
@@ -18,9 +19,7 @@ define start: {
 
 define turn: {
   rules: [
-    {
-      given: { player: -> { players[player] } }
-    },
+    { given: { player: -> { players[player] } } },
     {
       when: { table: [] },
       domino: -> { player.pop }
@@ -57,6 +56,13 @@ define play: {
       when!: -> { domino.last == table.last.last },
       table: -> { table + [domino.reverse] }
     },
+    {
+      given: {
+        order_of_play: [:player, :right, :front, :left, :player],
+        next_player: -> { order_of_play[order_of_play.find_index(player) + 1] }
+      },
+      on: :turn, player: -> { next_player }
+    }
   ]
 }
 

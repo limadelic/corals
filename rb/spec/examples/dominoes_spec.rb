@@ -127,6 +127,18 @@ describe 'Dominoes' do
 
     end
 
+    it 'is turn for the next player' do
+
+      test :dominoes,
+        when: { on: :play, player: :player, domino: :domino },
+        then: { on: :turn, player: :right }
+
+      test :dominoes,
+        when: { on: :play, player: :left, domino: :domino },
+        then: { on: :turn, player: :player }
+
+    end
+
   end
 
 end
