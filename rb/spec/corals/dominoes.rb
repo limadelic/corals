@@ -3,7 +3,6 @@ define dominoes: {
     { when: { dominoes: nil }, dominoes: -> { all_dominoes }},
     { when: { table: nil}, table: []},
     { when: { players: nil }, players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }},
-    { when: { player: nil }, player: :player }
   ]
 }
 
@@ -29,7 +28,7 @@ define turn: {
       given: { heads: -> { [table.first.first, table.last.last] } },
       domino: -> { player.delete player.find &playable }
     },
-    { when: { domino: -> { not nil? } }, on: :play },
+    { when: -> { !domino.nil? }, on: :play },
     { when: { domino: nil }, on: :knock }
   ]
 }
@@ -55,13 +54,20 @@ define play: {
     {
       when!: -> { domino.last == table.last.last },
       table: -> { table + [domino.reverse] }
-    },
+    }
+  ]
+}
+
+define controller: {
+  rules: [
+    { when: { on: nil }, on: :start },
     {
-      given: {
-        order_of_play: [:player, :right, :front, :left, :player],
-        next_player: -> { order_of_play[order_of_play.find_index(player) + 1] }
-      },
-      on: :turn, player: -> { next_player }
+      # when: { on: :play },
+      # given: {
+      #   order_of_play: [:player, :right, :front, :left, :player],
+      #   next_player: -> { order_of_play[order_of_play.find_index(player) + 1] }
+      # },
+      # on: :turn, player: -> { next_player }
     }
   ]
 }
@@ -81,6 +87,7 @@ define helpers: {
 define rules: {
   rules: [
     { when: { rules: [:dominoes] }, rules: [:helpers, :dominoes] },
-    { when: { on: [:start, :turn, :play] }, rules: -> { rules + [on] } }
+    { when: { on: [:start, :turn, :play] }, rules: -> { rules + [on] } },
+    { when: { rules: -> { include? :dominoes } }, rules: -> { rules + [:controller]}}
   ]
 }

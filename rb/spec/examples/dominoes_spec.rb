@@ -127,17 +127,22 @@ describe 'Dominoes' do
 
     end
 
-    it 'is turn for the next player' do
+  end
 
-      test :dominoes,
-        when: { on: :play, player: :player, domino: :domino },
-        then: { on: :turn, player: :right }
+  describe 'Controller' do
 
-      test :dominoes,
-        when: { on: :play, player: :left, domino: :domino },
-        then: { on: :turn, player: :player }
+    it 'starts the game' do
+
+      test :dominoes, then: { on: :start }
 
     end
+
+    it 'stops the game when stuck'
+    it 'calls the winner'
+    it 'winner has the first turn'
+    it 'otherwise player has the first turn'
+    it 'finds next player after play'
+    it 'finds next player after knock'
 
   end
 
