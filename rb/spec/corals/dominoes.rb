@@ -35,6 +35,7 @@ define turn: {
 
 define play: {
   rules: [
+    { when!: { domino: nil }},
     {
       when!: -> { table.empty? },
       table: -> { [domino] }
@@ -63,12 +64,12 @@ define controller: {
     { when!: { on: nil }, on: :start },
     { when!: { on: :start }, on: :turn, player: :player },
     {
-      # when: { on: :play },
-      # given: {
-      #   order_of_play: [:player, :right, :front, :left, :player],
-      #   next_player: -> { order_of_play[order_of_play.find_index(player) + 1] }
-      # },
-      # on: :turn, player: -> { next_player }
+      when!: { on: :play },
+      given: {
+        order_of_play: [:player, :right, :front, :left, :player],
+        next_player: -> { order_of_play[order_of_play.find_index(player) + 1] }
+      },
+      on: :turn, player: -> { next_player }
     }
   ]
 }
