@@ -137,10 +137,17 @@ describe 'Dominoes' do
 
     end
 
+    it 'player has the first turn' do
+
+      test :dominoes,
+        when: { on: :start },
+        then: { on: :turn, player: :player }
+
+    end
+
     it 'stops the game when stuck'
     it 'calls the winner'
     it 'winner has the first turn'
-    it 'otherwise player has the first turn'
     it 'finds next player after play'
     it 'finds next player after knock'
 

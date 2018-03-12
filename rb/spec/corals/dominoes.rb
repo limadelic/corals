@@ -60,7 +60,8 @@ define play: {
 
 define controller: {
   rules: [
-    { when: { on: nil }, on: :start },
+    { when!: { on: nil }, on: :start },
+    { when!: { on: :start }, on: :turn, player: :player },
     {
       # when: { on: :play },
       # given: {
