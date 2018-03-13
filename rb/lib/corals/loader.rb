@@ -4,12 +4,14 @@ module Corals
 
   class Loader
 
+    SPACER = { when: -> { true }}
+
     def load rules
       rules ||= []
 
       required(rules)
         .uniq
-        .map { |x| module_of(x).rules }
+        .map { |x| module_of(x).rules + [SPACER] }
         .flatten.compact
     end
 

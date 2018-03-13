@@ -18,24 +18,21 @@ define start: {
 
 define turn: {
   rules: [
-    { given: { player: -> { players[player] } } },
+    { given: { _player: -> { players[player] } } },
     {
       when: { table: [] },
-      domino: -> { player.pop }
+      domino: -> { _player.pop }
     },
     {
       when: { table: -> { count > 0 } },
       given: { heads: -> { [table.first.first, table.last.last] } },
-      domino: -> { player.delete player.find &playable }
+      domino: -> { _player.delete _player.find &playable }
     },
-    { when: -> { !domino.nil? }, on: :play },
-    { when: { domino: nil }, on: :knock }
   ]
 }
 
 define play: {
   rules: [
-    { when!: { domino: nil }},
     {
       when!: -> { table.empty? },
       table: -> { [domino] }
@@ -61,8 +58,11 @@ define play: {
 
 define controller: {
   rules: [
+    { when: { player: nil }, player: :player },
     { when!: { on: nil }, on: :start },
-    { when!: { on: :start }, on: :turn, player: :player },
+    { when!: { on: :start }, on: :turn },
+    { when!: { on: :turn, domino: nil }, on: :knock },
+    { when!: { on: :turn }, on: :play },
     {
       when!: { on: :play },
       given: {

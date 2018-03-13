@@ -63,7 +63,6 @@ describe 'Dominoes' do
         },
         when: { on: :turn, player: :player },
         then: {
-          on: :play,
           domino: [9,8],
           table: [[9,9]],
           players: { player: [[0,0],[8,8]] }
@@ -71,7 +70,7 @@ describe 'Dominoes' do
 
     end
 
-    it 'knocks if cannot play' do
+    it 'finds nothing if cannot play' do
 
       test :dominoes,
         given: {
@@ -80,7 +79,6 @@ describe 'Dominoes' do
         },
         when: { on: :turn, player: :player },
         then: {
-          on: :knock,
           table: [[9,9]],
           players: { player: [[0,0],[8,8]] }
         }
@@ -145,10 +143,27 @@ describe 'Dominoes' do
 
     end
 
+    it 'plays the domino' do
+
+      test :dominoes,
+        given: { players: { player:[:domino] } },
+        when: { on: :turn, player: :player },
+        then: { on: :play }
+
+    end
+
+    it 'knocks' do
+
+      test :dominoes,
+        when: { on: :turn, player: :player },
+        then: { on: :knock }
+
+    end
+
     it 'finds next player after play' do
 
       test :dominoes,
-        when: { on: :play, player: :player },
+        when: { on: :play, player: :player, domino: :domino },
         then: { on: :turn, player: :right }
 
     end

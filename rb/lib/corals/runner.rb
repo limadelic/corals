@@ -62,16 +62,17 @@ module Corals
     end
 
     def matches? conditions, scope
-      conditions.kind_of?(Proc) ? Context.new(scope, self).expand(conditions) == true :
-        conditions.all? do |setting, expected_value|
-          current_value = scope[setting]
+      return Context.new(scope, self).expand(conditions) == true if Proc === conditions
 
-          (expected_value == current_value) || (!current_value.nil? && (
-          (expected_value.kind_of?(Array) && expected_value.include?(current_value)) ||
-            (expected_value.kind_of?(Proc) && Context.new(current_value, self).expand(expected_value, current_value) == true) ||
-            (expected_value.kind_of?(Hash) && matches?(expected_value, current_value))
-          ))
-        end
+      conditions.all? do |setting, expected_value|
+        current_value = scope[setting]
+
+        (expected_value == current_value) || (!current_value.nil? && (
+        (expected_value.kind_of?(Array) && expected_value.include?(current_value)) ||
+          (expected_value.kind_of?(Proc) && Context.new(current_value, self).expand(expected_value, current_value) == true) ||
+          (expected_value.kind_of?(Hash) && matches?(expected_value, current_value))
+        ))
+      end
     end
 
     def apply_rule rules, scope, user_scope = {}
