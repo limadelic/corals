@@ -63,14 +63,7 @@ define controller: {
     { when!: { on: :start }, on: :turn },
     { when!: { on: :turn, domino: nil }, on: :knock },
     { when!: { on: :turn }, on: :play },
-    {
-      when!: { on: :play },
-      given: {
-        order_of_play: [:player, :right, :front, :left, :player],
-        next_player: -> { order_of_play[order_of_play.find_index(player) + 1] }
-      },
-      on: :turn, player: -> { next_player }
-    }
+    { when!: { on: [:play, :knock] }, on: :turn, player: -> { next_player.call }},
   ]
 }
 
@@ -80,7 +73,9 @@ define helpers: {
       given: {
         all_dominoes: -> { (0..9).map { |x| (x..9).map { |y| [x, y] } }.reduce :+ },
         pick: -> { -> count { (1..count).map { dominoes.pop } } },
-        playable: -> { -> domino { not (domino & heads).empty? } }
+        playable: -> { -> domino { not (domino & heads).empty? } },
+        order_of_play: [:player, :right, :front, :left, :player],
+        next_player: -> { -> { order_of_play[order_of_play.find_index(player) + 1] }}
       }
     }
   ]
