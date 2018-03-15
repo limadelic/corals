@@ -3,7 +3,7 @@ require_relative '../corals/dominoes'
 
 describe 'Dominoes' do
 
-  describe 'Game' do
+  describe 'Defaults' do
 
     it '1 table 4 players & 55 dominoes' do
 
@@ -171,8 +171,12 @@ describe 'Dominoes' do
 
     end
 
-    it 'winner has the first turn'
+  end
 
+  let(:game) {{}}
+
+  it 'plays a game' do
+     game = resolve game, [:dominoes] until game[:winner]
   end
 
 end
