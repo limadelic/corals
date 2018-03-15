@@ -1,8 +1,11 @@
-define dominoes: {
+define defaults: {
   rules: [
     { when: { dominoes: nil }, dominoes: -> { all_dominoes }},
     { when: { table: nil}, table: []},
     { when: { players: nil }, players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }},
+    { when: { player: nil }, player: :player },
+    { when: { knocked: nil }, knocked: [] },
+    { given: { _player: -> { players[player] } } },
   ]
 }
 
@@ -18,7 +21,6 @@ define start: {
 
 define turn: {
   rules: [
-    { given: { _player: -> { players[player] } } },
     {
       when: { table: [] },
       domino: -> { _player.pop }
@@ -58,11 +60,12 @@ define play: {
 
 define controller: {
   rules: [
-    { when: { player: nil }, player: :player },
     { when!: { on: nil }, on: :start },
     { when!: { on: :start }, on: :turn },
-    { when!: { on: :turn, domino: nil }, on: :knock },
+    { when!: { on: :turn, domino: nil }, on: :knock, knocked: -> { knocked + [player]}},
     { when!: { on: :turn }, on: :play },
+    { when!: { on: :knock, knocked: -> { count == players.count }}, on: :stuck },
+    { when!: { on: :play, _player: []}, on: :won },
     { when!: { on: [:play, :knock] }, on: :turn, player: -> { next_player.call }},
   ]
 }
@@ -83,8 +86,9 @@ define helpers: {
 
 define rules: {
   rules: [
-    { when: { rules: [:dominoes] }, rules: [:helpers, :dominoes] },
+    { when: { rules: [:dominoes] }, dominoes: true },
+    { when: { dominoes: true }, rules: [:helpers, :defaults] },
     { when: { on: [:start, :turn, :play] }, rules: -> { rules + [on] } },
-    { when: { rules: -> { include? :dominoes } }, rules: -> { rules + [:controller]}}
+    { when: { dominoes: true }, rules: -> { rules + [:controller]}}
   ]
 }

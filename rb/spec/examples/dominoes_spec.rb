@@ -38,50 +38,27 @@ describe 'Dominoes' do
     it 'can play anything if table is empty' do
 
       test :dominoes,
-        given: {
-          table:[],
-          players: {
-            player: [[9,9]]
-          }
-        },
-        when: { on: :turn, player: :player },
-        then: {
-          on: :play,
-          domino: [9,9],
-          table: [],
-          players: { player: [] }
-        }
+        given: { players: { player: [[9,9]] } },
+        when: { on: :turn },
+        then: { domino: [9,9], players: { player: [] }}
 
     end
 
     it 'finds a domino to play' do
 
       test :dominoes,
-        given: {
-          table: [[9,9]],
-          players: { player: [[0,0],[9,8],[8,8]] }
-        },
-        when: { on: :turn, player: :player },
-        then: {
-          domino: [9,8],
-          table: [[9,9]],
-          players: { player: [[0,0],[8,8]] }
-        }
+        given: { table: [[9,9]], players: { player: [[0,0],[9,8],[8,8]] }},
+        when: { on: :turn },
+        then: { domino: [9,8], players: { player: [[0,0],[8,8]] }}
 
     end
 
     it 'finds nothing if cannot play' do
 
       test :dominoes,
-        given: {
-          table: [[9,9]],
-          players: { player: [[0,0],[8,8]] }
-        },
-        when: { on: :turn, player: :player },
-        then: {
-          table: [[9,9]],
-          players: { player: [[0,0],[8,8]] }
-        }
+        given: { table: [[9,9]], players: { player: [[0,0],[8,8]] }},
+        when: { on: :turn },
+        then: { domino: nil, players: { player: [[0,0],[8,8]] }}
 
     end
 
@@ -156,14 +133,15 @@ describe 'Dominoes' do
 
       test :dominoes,
         when: { on: :turn, player: :player },
-        then: { on: :knock }
+        then: { on: :knock, knocked: [:player] }
 
     end
 
     it 'finds next player after play' do
 
       test :dominoes,
-        when: { on: :play, player: :player, domino: :domino },
+        given: { players: { player: [:more_dominoes]}},
+        when: { on: :play, domino: :domino },
         then: { on: :turn, player: :right }
 
     end
@@ -176,8 +154,23 @@ describe 'Dominoes' do
 
     end
 
-    it 'stops the game when stuck'
-    it 'calls the winner'
+    it 'stops the game when stuck' do
+
+      test :dominoes,
+        given: { knocked: [:right, :front, :left, :player]},
+        when: { on: :knock },
+        then: { on: :stuck }
+
+    end
+
+    it 'calls the winner' do
+
+      test :dominoes,
+        when: { on: :play, domino: :domino },
+        then: { on: :won }
+
+    end
+
     it 'winner has the first turn'
 
   end
