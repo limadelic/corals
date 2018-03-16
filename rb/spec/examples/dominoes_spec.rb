@@ -104,6 +104,13 @@ describe 'Dominoes' do
 
   end
 
+  describe 'Done' do
+
+    it 'counts the dominoes'
+    it 'picks a winner'
+
+  end
+
   describe 'Controller' do
 
     it 'starts the game' do
@@ -173,10 +180,34 @@ describe 'Dominoes' do
 
   end
 
-  let(:game) {{}}
+  describe 'Game' do
 
-  it 'plays a game' do
-     game = resolve game, [:dominoes] until game[:winner]
+    let(:game) {{}}
+
+    def play game
+      game = resolve game, [:dominoes] until game[:winner]
+      game
+    end
+
+    xit 'stuck, player wins' do
+      game = play(
+        on: :turn,
+        table: [[9,9]],
+        players: {
+          player: [[0,0]],
+          right: [[1,1]],
+          front: [[2,2]],
+          left: [[3,3]],
+        }
+      )
+
+      expect(game[:winner]).to be :player
+    end
+
+    it 'stuck, all tie'
+    it 'player wins'
+    it 'play a game'
+
   end
 
 end

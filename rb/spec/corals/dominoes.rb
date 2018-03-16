@@ -58,11 +58,15 @@ define play: {
   ]
 }
 
+define done: {
+
+}
+
 define controller: {
   rules: [
     { when!: { on: nil }, on: :start },
     { when!: { on: :start }, on: :turn },
-    { when!: { on: :turn, domino: nil }, on: :knock, knocked: -> { knocked + [player]}},
+    { when!: { on: :turn, domino: nil }, on: :knock, knocked: -> { p knocked + [player]}},
     { when!: { on: :turn }, on: :play },
     { when!: { on: :knock, knocked: -> { count == players.count }}, on: :stuck },
     { when!: { on: :play, _player: []}, on: :won },
@@ -89,6 +93,7 @@ define rules: {
     { when: { rules: [:dominoes] }, dominoes: true },
     { when: { dominoes: true }, rules: [:helpers, :defaults] },
     { when: { on: [:start, :turn, :play] }, rules: -> { rules + [on] } },
+    { when: { on: [:won, :stuck] }, rules: -> { rules + [:done] } },
     { when: { dominoes: true }, rules: -> { rules + [:controller]}}
   ]
 }
