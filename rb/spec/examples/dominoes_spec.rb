@@ -106,7 +106,29 @@ describe 'Dominoes' do
 
   describe 'Done' do
 
-    it 'counts the dominoes'
+    it 'counts the dominoes' do
+
+      test :dominoes,
+        given: {
+          players: {
+            player: [[0,0]],
+            right: [[1,1]],
+            front: [[2,2]],
+            left: [[3,3]],
+          }
+        },
+        when: { on: :done },
+        then: {
+          players: {
+            player: 0,
+            right: 2,
+            front: 4,
+            left: 6,
+          }
+        }
+
+    end
+
     it 'picks a winner'
 
   end
