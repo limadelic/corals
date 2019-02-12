@@ -3,20 +3,6 @@ require_relative '../corals/dominoes'
 
 describe 'Dominoes' do
 
-  describe 'Defaults' do
-
-    it '1 table 4 players & 55 dominoes' do
-
-      test :dominoes, then: {
-        table: [],
-        players: -> { expect(count).to eq 4 },
-        dominoes: -> { expect(count).to eq 55 }
-      }
-
-    end
-
-  end
-
   describe 'Start' do
 
     it 'empty table, each player with 10 dominoes' do
@@ -25,8 +11,7 @@ describe 'Dominoes' do
         when: { on: :start },
         then: {
           table: [],
-          players: -> { all? { |_, dominoes| expect(dominoes.count).to eq 10 }},
-          dominoes: -> { expect(count).to eq 15 }
+          players: -> { all? { |player| expect(player[:dominoes].count).to eq 10 }},
         }
 
     end
@@ -38,27 +23,27 @@ describe 'Dominoes' do
     it 'can play anything if table is empty' do
 
       test :dominoes,
-        given: { players: { player: [[9,9]] } },
-        when: { on: :turn },
-        then: { domino: [9,9], players: { player: [] }}
+        given: { table: []},
+        when: { on: :turn, player: { dominoes: [[9,9]]}},
+        then: { domino: [9,9], player: { dominoes: []}}
 
     end
 
     it 'finds a domino to play' do
 
       test :dominoes,
-        given: { table: [[9,9]], players: { player: [[0,0],[9,8],[8,8]] }},
-        when: { on: :turn },
-        then: { domino: [9,8], players: { player: [[0,0],[8,8]] }}
+        given: { table: [[9,9]]},
+        when: { on: :turn, player: { dominoes: [[0,0],[9,8],[8,8]] } },
+        then: { domino: [9,8], player: { dominoes: [[0,0],[8,8]] }}
 
     end
 
     it 'finds nothing if cannot play' do
 
       test :dominoes,
-        given: { table: [[9,9]], players: { player: [[0,0],[8,8]] }},
-        when: { on: :turn },
-        then: { domino: nil, players: { player: [[0,0],[8,8]] }}
+        given: { table: [[9,9]]},
+        when: { on: :turn, player: { dominoes: [[0,0], [8,8]] } },
+        then: { domino: nil, player: { dominoes: [[0,0],[8,8]] }}
 
     end
 
@@ -69,6 +54,7 @@ describe 'Dominoes' do
     it 'the domino goes on the table' do
 
       test :dominoes,
+        given: { table: []},
         when: { on: :play, domino: [9,9] },
         then: { table: [[9,9]] }
 
@@ -106,30 +92,32 @@ describe 'Dominoes' do
 
   describe 'Done' do
 
+    let(:players) {[
+      { name: :right, dominoes: [[1,1]] },
+      { name: :player, dominoes: [[0,0]] },
+      { name: :front, dominoes: [[2,2]] },
+      { name: :left, dominoes: [[3,4]] },
+    ]}
+
     it 'counts the dominoes' do
 
       test :dominoes,
-        given: {
-          players: {
-            player: [[0,0]],
-            right: [[1,1]],
-            front: [[2,2]],
-            left: [[3,3]],
-          }
-        },
+        given: { players: players },
         when: { on: :done },
-        then: {
-          players: {
-            player: 0,
-            right: 2,
-            front: 4,
-            left: 6,
-          }
-        }
+        then: { players: -> { zip([0,2,4,7]).all? { |player, score|
+          expect(player[:score]).to be score
+        }}}
 
     end
 
-    it 'picks a winner'
+    it 'picks a winner' do
+
+      test :dominoes,
+        given: { players: players },
+        when: { on: :done },
+        then: { winner: { name: :player }}
+
+    end
 
   end
 

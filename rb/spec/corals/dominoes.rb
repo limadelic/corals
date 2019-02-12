@@ -1,11 +1,11 @@
 define defaults: {
   rules: [
-    { when: { dominoes: nil }, dominoes: -> { all_dominoes }},
-    { when: { table: nil}, table: []},
-    { when: { players: nil }, players: -> { Hash[[:front, :left, :right, :player].map { |x| [x, []] }] }},
-    { when: { player: nil }, player: :player },
-    { when: { knocked: nil }, knocked: [] },
-    { given: { _player: -> { players[player] } } },
+    {
+      when: { players: nil },
+      players: [:player, :right, :front, :left].map {|x| { name: x }}
+    },
+    # { when: { player: nil }, player: :player },
+    # { given: { player_dominoes: -> { players[player][:dominoes] } } },
   ]
 }
 
@@ -14,7 +14,7 @@ define start: {
     {
       table: [],
       dominoes: -> { all_dominoes.shuffle },
-      players: -> { map { |k, _| [k, pick.(10)] } }
+      players: { dominoes: -> { pick.(10) }}
     }
   ]
 }
@@ -23,12 +23,11 @@ define turn: {
   rules: [
     {
       when: { table: [] },
-      domino: -> { _player.pop }
+      domino: -> { player[:dominoes].pop }
     },
     {
       when: { table: -> { count > 0 } },
-      given: { heads: -> { [table.first.first, table.last.last] } },
-      domino: -> { _player.delete _player.find &playable }
+      domino: -> { player[:dominoes].delete player[:dominoes].find &playable }
     },
   ]
 }
@@ -36,7 +35,7 @@ define turn: {
 define play: {
   rules: [
     {
-      when!: -> { table.empty? },
+      when!: { table: [] },
       table: -> { [domino] }
     },
     {
@@ -62,7 +61,12 @@ define done: {
   rules: [
     {
       when: { on: :done },
-      players: -> { Hash[players.map { |player, dominoes| [player, dominoes.flatten.reduce(:+)]}] }
+      players: { score: -> { dominoes.flatten.reduce :+ }},
+    },
+    {
+      when: { on: :done },
+      players: -> { sort { |x, y| x[:score] <=> y[:score]}},
+      winner: -> { players.first }
     }
   ]
 }
@@ -71,11 +75,11 @@ define controller: {
   rules: [
     { when!: { on: nil }, on: :start },
     { when!: { on: :start }, on: :turn },
-    { when!: { on: :turn, domino: nil }, on: :knock, knocked: -> { knocked + [player]}},
+    { when!: { on: :turn, domino: nil }, on: :knock },
     { when!: { on: :turn }, on: :play },
     { when!: { on: :knock, knocked: -> { count == players.count }}, on: :stuck },
     { when!: { on: :play, _player: []}, on: :won },
-    { when!: { on: [:play, :knock] }, on: :turn, player: -> { next_player.call }},
+    # { when!: { on: [:play, :knock] }, on: :turn, player: -> { next_player.call }},
   ]
 }
 
