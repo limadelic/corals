@@ -1,9 +1,7 @@
 define defaults: {
   rules: [
-    {
-      when: { players: nil },
-      players: [:player, :right, :front, :left].map {|x| { name: x }}
-    },
+    { when: { table: nil }, table: []},
+    { when: { players: nil }, players: [:player, :right, :front, :left].map {|x| { name: x }}}
     # { when: { player: nil }, player: :player },
     # { given: { player_dominoes: -> { players[player][:dominoes] } } },
   ]
@@ -14,7 +12,7 @@ define start: {
     {
       table: [],
       dominoes: -> { all_dominoes.shuffle },
-      players: { dominoes: -> { pick.(10) }}
+      players: { dominoes: -> { pick.(10) }},
     }
   ]
 }
@@ -74,12 +72,12 @@ define done: {
 define controller: {
   rules: [
     { when!: { on: nil }, on: :start },
-    { when!: { on: :start }, on: :turn },
+    { when!: { on: :start }, on: :turn, player: -> { players.first } },
     { when!: { on: :turn, domino: nil }, on: :knock },
     { when!: { on: :turn }, on: :play },
-    { when!: { on: :knock, knocked: -> { count == players.count }}, on: :stuck },
-    { when!: { on: :play, _player: []}, on: :won },
-    # { when!: { on: [:play, :knock] }, on: :turn, player: -> { next_player.call }},
+    { when!: { on: :knock, players: -> { players.all? { |x| x[:knocked] }}}, on: :stuck },
+    { when!: { on: :play, player: { dominoes: []}}, on: :won },
+    { when!: { on: [:play, :knock] }, on: :turn, player: -> { next_player.call }},
   ]
 }
 
@@ -89,9 +87,10 @@ define helpers: {
       given: {
         all_dominoes: -> { (0..9).map { |x| (x..9).map { |y| [x, y] } }.reduce :+ },
         pick: -> { -> count { (1..count).map { dominoes.pop } } },
+        heads: -> { table.empty? ? [] : [table.first.first, table.last.last]},
         playable: -> { -> domino { not (domino & heads).empty? } },
         order_of_play: [:player, :right, :front, :left, :player],
-        next_player: -> { -> { order_of_play[order_of_play.find_index(player) + 1] }}
+        next_player: -> { -> { players.find { |x| x[:name] == order_of_play[order_of_play.find_index(player[:name]) + 1] }}}
       }
     }
   ]
@@ -99,10 +98,9 @@ define helpers: {
 
 define rules: {
   rules: [
-    { when: { rules: [:dominoes] }, dominoes: true },
-    { when: { dominoes: true }, rules: [:helpers, :defaults] },
+    { when: { rules: [:dominoes] }, rules: [:defaults, :helpers] },
     { when: { on: [:start, :turn, :play] }, rules: -> { rules + [on] } },
     { when: { on: [:won, :stuck, :done] }, rules: -> { rules + [:done] } },
-    { when: { dominoes: true }, rules: -> { rules + [:controller]}}
+    { rules: -> { rules + [:controller] }}
   ]
 }

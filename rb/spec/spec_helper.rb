@@ -21,6 +21,10 @@ def stub_p
   stub($stdout).p
 end
 
+def stub_rules rules
+  rules.each { |x| stub(eval "Corals::Rules::#{x.to_s.camel_case}").rules {[]}}
+end
+
 def hashie(hash={}); Hashie::Mash.new hash end
 
 require 'corals/global'
