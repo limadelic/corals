@@ -4,10 +4,10 @@ defmodule ApiTest do
   test "single rule" do
 
     Corals.define :hello_world, %{
-      rules: [ "hello world"]
+      rules: [ hello: :world ]
     }
 
-    assert Corals.resolve(:hello_world) == "hello world"
+    assert Corals.resolve(:hello_world) == %{hello: :world}
 
   end
 

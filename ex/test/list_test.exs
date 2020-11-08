@@ -1,4 +1,4 @@
-defmodule ListTest do
+defmodule ResolveTest do
   use ExUnit.Case
 
   import Corals.Resolver
