@@ -1,7 +1,10 @@
 defmodule Corals do
 
-  def hello do
-    :world
+  def define name, spec do
+  end
+
+  def resolve do
+    "hello world"
   end
 
 end
