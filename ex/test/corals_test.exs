@@ -3,11 +3,11 @@ defmodule CoralsTest do
 
   test "single value" do
 
-    Corals.define :hello_world, rules: [
-      "hello world"
-    ]
+    Corals.define :hello_world, %{
+      rules: [ "hello world"]
+    }
 
-    assert Corals.resolve == "hello world"
+    assert Corals.resolve(:hello_world) == "hello world"
 
   end
 
