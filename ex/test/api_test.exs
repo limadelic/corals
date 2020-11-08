@@ -1,7 +1,7 @@
-defmodule CoralsTest do
+defmodule ApiTest do
   use ExUnit.Case
 
-  test "single value" do
+  test "single rule" do
 
     Corals.define :hello_world, %{
       rules: [ "hello world"]
