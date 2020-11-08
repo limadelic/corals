@@ -4,4 +4,5 @@ defmodule CoralsTest do
   test "greets the world" do
     assert Corals.hello == :world
   end
+
 end

@@ -2,7 +2,7 @@
 <module type="RUBY_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Elixir" name="Elixir">
-      <configuration sdkName="Elixir 1.8.2" />
+      <configuration sdkName="Elixir 1.10.3" />
     </facet>
   </component>
   <component name="ModuleRunConfigurationManager">
@@ -23,5 +23,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Elixir 1.10.3" level="application" />
   </component>
 </module>
