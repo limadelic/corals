@@ -1,7 +1,7 @@
 defmodule Corals.Resolver do
 
   import Corals.Expander
-  import Enum, only: [map: 2, reduce: 2, reduce: 3, into: 2]
+  import Enum, only: [map: 2, reduce: 2, reduce: 3]
   import Map, only: [merge: 2]
 
   def resolve rules do if is_single? rules do single rules else many rules end end
@@ -10,6 +10,6 @@ defmodule Corals.Resolver do
 
   defp is_single? rules do Keyword.keyword? rules end
 
-  defp single rules do rules |> reduce(%{}, &(expand &1, &2)) |> into(%{}) end
+  defp single rules do rules |> reduce(%{}, &(expand &1, &2)) end
 
 end
