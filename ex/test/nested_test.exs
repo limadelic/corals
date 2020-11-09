@@ -28,4 +28,24 @@ defmodule NestedTest do
     assert resolve(rules) == %{calc: %{x: 1, y: 2, sum: 3}}
   end
 
+  test "deep merged" do
+    rules = [
+      [calc: [units: "cm"]],
+      [calc: [x: 1, y: 2]]
+    ]
+    assert resolve(rules) == %{calc: %{x: 1, y: 2, units: "cm"}}
+  end
+
+  @tag :wip
+  test "many w/ context" do
+    rules = [
+      [calc: [units: "cm"]],
+      [calc: [
+        [x: 1, y: 2],
+        [sum: fn %{x: x, y: y, units: u} -> "#{x + y} #{u}" end]
+      ]]
+    ]
+    assert resolve(rules) == %{calc: %{x: 1, y: 2, units: "cm", sum: "3 cm"}}
+  end
+
 end
