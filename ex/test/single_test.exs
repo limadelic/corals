@@ -29,4 +29,13 @@ defmodule SingleTest do
     assert resolve(rules) == %{hello: :world}
   end
 
+  test "context" do
+    rules = [
+      x: 1,
+      y: 1,
+      sum: fn %{x: x, y: y} -> x + y end
+    ]
+    assert resolve(rules) == %{x: 1, y: 1, sum: 2}
+  end
+
 end
