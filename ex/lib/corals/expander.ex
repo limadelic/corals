@@ -3,14 +3,13 @@ defmodule Corals.Expander do
   import Map, only: [merge: 2]
   import Function, only: [info: 2]
 
-  def expand({k, v}, map) when is_function(v) do
-    case info v, :arity do
-      {_, 1} -> add {k, v.(map)}, map
-      _ -> add {k, v.()}, map
-    end
+  def expand({k, v}, context) when is_function(v) do
+    expand_fn {k, v}, context, info(v, :arity)
   end
+  def expand tuple, context do add tuple, context end
 
-  def expand tuple, map do add tuple, map end
+  defp expand_fn {k, v}, context, {_, 1} do add {k, v.(context)}, context end
+  defp expand_fn {k, v}, context, _ do add {k, v.()}, context end
 
   defp add {k, v}, map do merge map, %{k => v} end
 

@@ -26,4 +26,12 @@ defmodule ManyTest do
     assert resolve(rules) == %{hello: :world, hi: :there}
   end
 
+  test "context" do
+    rules = [
+      [x: 1, y: 1],
+      [sum: fn %{x: x, y: y} -> x + y end]
+    ]
+    assert resolve(rules) == %{x: 1, y: 1, sum: 2}
+  end
+
 end
