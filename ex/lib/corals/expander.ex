@@ -5,7 +5,6 @@ defmodule Corals.Expander do
   import Function, only: [info: 2]
 
   def expand({k, v}, context) when is_list(v) do
-    IO.puts "gonna recurse"
     add {k,  Resolver.resolve(v)}, context
   end
   def expand({k, v}, context) when is_function(v) do
