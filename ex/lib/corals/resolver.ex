@@ -7,8 +7,11 @@ defmodule Corals.Resolver do
 
   defp is_single? rules do Keyword.keyword? rules end
 
-  defp single rules do rules |> into(%{}) end
+  defp single rules do rules |> map(&(expand &1)) |> into(%{}) end
 
   defp many rules do rules |> map(&(single &1)) |> reduce(&(merge &2, &1)) end
+
+  defp expand({k,v}) when is_function(v) do {k, v.()} end
+  defp expand x do x end
 
 end

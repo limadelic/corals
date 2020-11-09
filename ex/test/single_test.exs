@@ -24,4 +24,9 @@ defmodule SingleTest do
     assert resolve(rules) == %{hello: :world, hi: :there}
   end
 
+  test "lambda" do
+    rules = [hello: fn -> :world end]
+    assert resolve(rules) == %{hello: :world}
+  end
+
 end
