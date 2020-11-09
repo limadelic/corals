@@ -1,8 +1,13 @@
 defmodule Corals.Expander do
 
+  alias Corals.Resolver
   import Map, only: [merge: 2]
   import Function, only: [info: 2]
 
+  def expand({k, v}, context) when is_list(v) do
+    IO.puts "gonna recurse"
+    add {k,  Resolver.resolve(v)}, context
+  end
   def expand({k, v}, context) when is_function(v) do
     expand_fn {k, v}, context, info(v, :arity)
   end
