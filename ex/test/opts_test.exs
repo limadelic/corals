@@ -20,11 +20,10 @@ defmodule OptsTest do
     assert resolve(rules, opts) == %{name: :neo}
   end
 
-  @tag :wip
-  test "respect list" do
+  test "respect lists" do
     opts = %{names: [:neo]}
     rules = [names: [:noe]]
-    assert resolve(rules, opts) == %{name: [:neo]}
+    assert resolve(rules, opts) == %{names: [:neo]}
   end
 
   test "override" do
