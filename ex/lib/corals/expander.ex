@@ -4,10 +4,10 @@ defmodule Corals.Expander do
   import Corals.Opts
   import Corals.Utils
 
-  def expand({k, _}, context, opts) when is_opt? k, opts do context end
   def expand({k, v}, context, opts) when is_list v do
-    merge context, {k,  Resolver.resolve(v, context[k] || %{}, opts || %{})}
+    merge context, {k,  Resolver.resolve(v, context[k] || %{}, opts[k] || %{})}
   end
+  def expand({k, _}, context, opts) when is_opt? k, opts do context end
   def expand({k, f}, context, _) when is_function f do
     expand_fn {k, f}, context, Function.info(f, :arity)
   end
