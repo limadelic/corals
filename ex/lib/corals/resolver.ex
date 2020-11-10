@@ -4,10 +4,14 @@ defmodule Corals.Resolver do
   import Corals.Utils
   import Enum, only: [all?: 2, reduce: 3]
 
-  def resolve rules, context \\ %{} do
+  def resolve rules, opts \\ %{} do
+    resolve rules, opts, opts
+  end
+
+  def resolve rules, context, opts do
     cond do
-      is_single? rules -> single rules, context
-      are_many? rules -> many rules, context
+      is_single? rules -> single rules, context, opts
+      are_many? rules -> many rules, context, opts
       true -> rules
     end
   end
@@ -18,14 +22,14 @@ defmodule Corals.Resolver do
 
   defp is_single? rules do Keyword.keyword? rules end
 
-  defp single rules, context \\ %{} do
-    reduce rules, context, &(expand &1, &2)
+  defp single rules, context, opts do
+    reduce rules, context, &(expand &1, &2, opts)
   end
 
   defp are_many? rules do all? rules, &(are_rules? &1) end
 
-  defp many rules, context do
-    reduce rules, context, &(merge &2, resolve(&1, &2))
+  defp many rules, context, opts do
+    reduce rules, context, &(merge &2, resolve(&1, &2, opts))
   end
 
 end
