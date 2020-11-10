@@ -7,8 +7,10 @@ defmodule Corals.Utils do
   def l tag, x, context do
     i tag, x
     i :context, context
-    p
+    p ""
   end
+
+  def ends_with? x, suffix do String.match? "#{x}", ~r/#{suffix}$/ end
 
   def merge map, {k, v} do merge map, %{k => v} end
   def merge left, right do Map.merge left, right, &deep/3 end
