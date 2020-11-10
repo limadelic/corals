@@ -25,7 +25,7 @@ defmodule Corals.Resolver do
   defp are_many? rules do all? rules, &(are_rules? &1) end
 
   defp many rules, context do
-    reduce rules, context, &(merge &2, single(&1, &2))
+    reduce rules, context, &(merge &2, resolve(&1, &2))
   end
 
 end

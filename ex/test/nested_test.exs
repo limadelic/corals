@@ -36,7 +36,6 @@ defmodule NestedTest do
     assert resolve(rules) == %{calc: %{x: 1, y: 2, units: "cm"}}
   end
 
-  @tag :wip
   test "many w/ context" do
     rules = [
       [calc: [units: "cm"]],
