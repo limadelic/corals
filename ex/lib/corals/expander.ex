@@ -5,11 +5,11 @@ defmodule Corals.Expander do
   import Corals.Utils
   import Function, only: [info: 2]
 
-  def expand({k, _}, context, opts) when :erlang.is_map_key(k, opts) do context end
-  def expand({k, v}, context, opts) when is_list(v) do
+  def expand({k, _}, context, opts) when is_opt? k, opts do context end
+  def expand({k, v}, context, opts) when is_list v do
     merge context, {k,  Resolver.resolve(v, context[k] || %{}, opts || %{})}
   end
-  def expand({k, v}, context, _) when is_function(v) do
+  def expand({k, v}, context, _) when is_function v do
     expand_fn {k, v}, context, info(v, :arity)
   end
   def expand {opt, v} = tuple, context, _ do
