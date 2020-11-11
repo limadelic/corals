@@ -3,36 +3,67 @@ defmodule WhenTest do
 
   import Corals.Resolver
 
-  test "true" do
-    rules = [
-      when: true,
-      hello: :world
-    ]
-    assert resolve(rules) == %{hello: :world}
+  describe "before" do
+
+    test "single" do
+      rules = [
+        try: :to,
+        when: false,
+        hello: :world
+      ]
+      assert resolve(rules) == %{try: :to}
+    end
+
+    test "single+" do
+      rules = [
+        try: :to,
+        really: :hard,
+        when: false,
+        hello: :world
+      ]
+      assert resolve(rules) == %{try: :to, really: :hard}
+    end
+
   end
 
-  test "false" do
-    rules = [
-      when: false,
-      hello: :world
-    ]
-    assert resolve(rules) == %{}
+  describe "pass" do
+
+    test "bool" do
+      rules = [
+        when: true,
+        hello: :world
+      ]
+      assert resolve(rules) == %{hello: :world}
+    end
+
+    test "fun" do
+      rules = [
+        when: fn -> true end,
+        hello: :world
+      ]
+      assert resolve(rules) == %{hello: :world}
+    end
+
   end
 
-  test "fun" do
-    rules = [
-      when: fn -> true end,
-      hello: :world
-    ]
-    assert resolve(rules) == %{hello: :world}
-  end
+  describe "fail" do
 
-  test "not fun" do
-    rules = [
-      when: fn -> false end,
-      hello: :world
-    ]
-    assert resolve(rules) == %{}
+    test "bool" do
+      rules = [
+        when: false,
+        hello: :world
+      ]
+      assert resolve(rules) == %{}
+    end
+
+    test "fun" do
+      rules = [
+        when: fn -> false end,
+        hello: :world
+      ]
+      assert resolve(rules) == %{}
+    end
+
   end
 
 end
