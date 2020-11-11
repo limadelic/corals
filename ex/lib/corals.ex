@@ -10,4 +10,10 @@ defmodule Corals do
     result
   end
 
+  defmacro has? pattern do
+    quote do
+      fn unquote(pattern) -> true; _ -> false end
+    end
+  end
+
 end

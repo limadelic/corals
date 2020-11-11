@@ -2,6 +2,7 @@ defmodule WhenTest do
   use ExUnit.Case, async: true
 
   import Corals.Resolver
+  import Corals, only: [has?: 1]
 
   describe "before" do
 
@@ -62,6 +63,19 @@ defmodule WhenTest do
         hello: :world
       ]
       assert resolve(rules) == %{}
+    end
+
+  end
+
+  describe "matches?" do
+
+    test "has key" do
+      rules = [
+        hello: :world,
+        when: has?(%{hello: _}),
+        it: :greeted
+      ]
+      assert resolve(rules) == %{it: :greeted, hello: :world}
     end
 
   end
