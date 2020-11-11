@@ -1,8 +1,10 @@
 defmodule Corals.Expander do
 
   alias Corals.Resolver
+
   import Corals.When
   import Corals.Opts
+  import Corals.Fun
   import Corals.Utils
 
   def expand {:when, cond}, context, _ do do_when cond, context end
@@ -11,7 +13,7 @@ defmodule Corals.Expander do
   end
   def expand({k, _}, context, opts) when is_opt? k, opts do {:cont, context} end
   def expand({k, f}, context, _) when is_function f do
-    {:cont, expand_fn({k, f}, context, Function.info(f, :arity))}
+    {:cont, merge(context, {k, fun(f, context)})}
   end
   def expand {opt, v} = tuple, context, _ do
     cond do
@@ -19,8 +21,5 @@ defmodule Corals.Expander do
       true -> {:cont, merge(context, tuple)}
     end
   end
-
-  defp expand_fn {k, f}, context, {_, 1} do merge context, {k, f.(context)} end
-  defp expand_fn {k, f}, context,  _ do merge context, {k, f.()} end
 
 end
