@@ -67,12 +67,30 @@ defmodule WhenTest do
 
   end
 
-  describe "matches?" do
+  describe "has?" do
 
     test "has key" do
       rules = [
         hello: :world,
         when: has?(%{hello: _}),
+        it: :greeted
+      ]
+      assert resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+    test "has value" do
+      rules = [
+        hello: :world,
+        when: has?(%{hello: :world}),
+        it: :greeted
+      ]
+      assert resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+    test "when" do
+      rules = [
+        hello: :world,
+        when: has?(%{hello: x} when is_atom x),
         it: :greeted
       ]
       assert resolve(rules) == %{it: :greeted, hello: :world}
