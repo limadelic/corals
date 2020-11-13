@@ -98,4 +98,42 @@ defmodule WhenTest do
 
   end
 
+  describe "many" do
+
+    test "say what?" do
+      rules = [
+        [when: has?(%{name: _}), say: fn %{name: who} -> "hello #{who}" end],
+        [when: has?(%{name: :neo}), say: "the matrix has you"],
+      ]
+
+      assert resolve(rules, %{name: :mike}).say == "hello mike"
+      assert resolve(rules, %{name: :neo}).say == "the matrix has you"
+    end
+
+    test "knock knock" do
+      rules = [
+        [when: has?(%{name: _}), say: fn %{name: who} -> "hello #{who}" end],
+        [when: has?(%{name: :neo}), say: fn %{say: say} -> "#{say} ... the matrix has you" end],
+      ]
+
+      assert resolve(rules, %{name: :neo}).say == "hello neo ... the matrix has you"
+    end
+
+  end
+
+  describe "shortcut!" do
+
+    @tag :wip
+    test "odd/even" do
+      rules = [
+        [when!: has?(%{x: x} when rem(x, 2) == 0), its: :even],
+        [its: :odd]
+      ]
+
+      assert resolve(rules, %{x: 1}).its == :odd
+      assert resolve(rules, %{x: 2}).its == :even
+    end
+
+  end
+
 end
