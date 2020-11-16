@@ -13,6 +13,11 @@ defmodule Corals.Utils do
     p ""
   end
 
+  def cont_single? %{_halt_: _} = context do {:halt, drop(context, [:_halt_])} end
+  def cont_single? context do {:cont, context} end
+  def cont_many? %{__halt__: _} = context do {:halt, drop(context, [:__halt__])} end
+  def cont_many? context do {:cont, context} end
+
   def ends_with? x, suffix do String.match? "#{x}", ~r/#{suffix}$/ end
 
   def merge map, {k, v} do merge map, %{k => v} end
@@ -21,6 +26,8 @@ defmodule Corals.Utils do
   defp deep _, left=%{}, right=%{} do merge left, right end
   defp deep _, _, right do right end
 
+
+  def clean result do drop_deep result, ~r/^_/ end
   def drop_deep %{}=map, exp do
     map |> drop(keys(map, exp)) |> to_list |> map(fn {k, v} -> {k, drop_deep(v, exp)} end) |> into(%{})
   end
