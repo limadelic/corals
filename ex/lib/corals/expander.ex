@@ -8,6 +8,7 @@ defmodule Corals.Expander do
   import Corals.Utils
 
   def expand {:when, cond}, context, _ do do_when cond, context end
+  def expand {:when!, cond}, context, _ do do_when! cond, context end
   def expand({k, v}, context, opts) when is_list v do
     {:cont, merge(context, {k,  Resolver.resolve(v, context[k] || %{}, opts[k] || %{})})}
   end

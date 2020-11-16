@@ -21,10 +21,10 @@ defmodule Corals.Utils do
   defp deep _, left=%{}, right=%{} do merge left, right end
   defp deep _, _, right do right end
 
-  def drop_deep %{}=map, keys do
-    map |> drop(keys(map, keys)) |> to_list |> map(fn {k, v} -> {k, drop_deep(v, keys)} end) |> into(%{})
+  def drop_deep %{}=map, exp do
+    map |> drop(keys(map, exp)) |> to_list |> map(fn {k, v} -> {k, drop_deep(v, exp)} end) |> into(%{})
   end
   def drop_deep x, _ do x end
-  defp keys map, keys do map |> keys |> filter(&(String.match? "#{&1}", keys)) end
+  defp keys map, exp do map |> keys |> filter(&(String.match? "#{&1}", exp)) end
 
 end

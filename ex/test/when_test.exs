@@ -123,7 +123,6 @@ defmodule WhenTest do
 
   describe "shortcut!" do
 
-    @tag :wip
     test "odd/even" do
       rules = [
         [when!: has?(%{x: x} when rem(x, 2) == 0), its: :even],
