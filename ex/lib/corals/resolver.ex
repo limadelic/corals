@@ -5,7 +5,7 @@ defmodule Corals.Resolver do
   import Enum, only: [all?: 2, reduce: 3, reduce_while: 3]
 
   def resolve rules, opts \\ %{} do
-    resolve rules, opts, opts
+    clean resolve rules, opts, opts
   end
 
   def resolve rules, context, opts do
@@ -28,5 +28,7 @@ defmodule Corals.Resolver do
   defp many rules, context, opts do
     reduce rules, context, &(merge &2, resolve(&1, &2, opts))
   end
+
+  defp clean result do drop_deep result, ~r/^_/ end
 
 end
