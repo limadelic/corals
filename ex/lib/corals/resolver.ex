@@ -2,6 +2,7 @@ defmodule Corals.Resolver do
 
   import Corals.Expander
   import Corals.Utils
+  import Corals.Helpers
   import Enum, only: [all?: 2, reduce_while: 3]
 
   def resolve rules, opts \\ %{} do

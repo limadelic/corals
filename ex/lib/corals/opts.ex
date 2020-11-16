@@ -1,6 +1,6 @@
 defmodule Corals.Opts do
 
-  import Corals.Utils
+  import Corals.Helpers
 
   defguard is_opt?(opt, opts) when :erlang.is_map_key(opt, opts)
 
