@@ -6,8 +6,7 @@ defmodule Corals do
   end
 
   def resolve name do
-    {:ok, result} = Rules.resolve name
-    result
+    Rules.resolve name
   end
 
   defmacro has? pattern do

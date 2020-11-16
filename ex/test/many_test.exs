@@ -34,4 +34,17 @@ defmodule ManyTest do
     assert resolve(rules) == %{x: 1, y: 1, sum: 2}
   end
 
+  @tag :wip
+  test "globals" do
+    rules = [
+      [global: :value],
+      [
+        local: [
+          access: fn _, %{global: value} -> value end
+        ]
+      ]
+    ]
+    assert resolve(rules).local.access == :value
+  end
+
 end

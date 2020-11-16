@@ -1,14 +1,26 @@
 defmodule ApiTest do
   use ExUnit.Case
+  import Corals
 
-  test "single rule" do
+  test "one rule" do
 
-    Corals.define :hello_world, %{
+    define :hello_world, %{
       rules: [ hello: :world ]
     }
 
-    assert Corals.resolve(:hello_world) == %{hello: :world}
+    assert resolve(:hello_world) == %{hello: :world}
+  end
 
+  test "two rules" do
+
+    define :hello_world, %{
+      rules: [ hello: :world ]
+    }
+    define :sup, %{
+      rules: [ yo: :sup ]
+    }
+
+    assert resolve(:sup) == %{yo: :sup}
   end
 
 end

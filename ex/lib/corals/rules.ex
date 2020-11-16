@@ -4,11 +4,19 @@ defmodule Corals.Rules do
   alias Corals.Resolver
 
   def define name, spec do
-    GenServer.start_link __MODULE__, spec, name: name
+    DynamicSupervisor.start_child Corals.RulesSupervisor, %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [name, spec]}
+    }
   end
 
   def resolve name do
-    GenServer.call name, {:resolve}
+    {:ok, result} = GenServer.call name, {:resolve}
+    result
+  end
+
+  def start_link name, spec do
+    GenServer.start_link __MODULE__, spec, name: name
   end
 
   def init spec do {:ok, spec} end
