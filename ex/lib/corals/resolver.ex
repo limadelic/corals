@@ -17,7 +17,7 @@ defmodule Corals.Resolver do
     end
   end
 
-  defp are_rules? rules do  endis_list(rules) && (is_single?(rules) || are_many?(rules)) end
+  defp are_rules? rules do is_list(rules) && (is_single?(rules) || are_many?(rules)) end
   defp is_single? rules do Keyword.keyword? rules end
   defp are_many? rules do all? rules, &(are_rules? &1) end
 
