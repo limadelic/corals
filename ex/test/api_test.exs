@@ -13,14 +13,14 @@ defmodule ApiTest do
 
   test "two rules" do
 
-    define :hello_world, %{
-      rules: [ hello: :world ]
+    define :hey, %{
+      rules: [ hey: :jude ]
     }
     define :sup, %{
       rules: [ yo: :sup ]
     }
 
-    assert resolve(:sup) == %{yo: :sup}
+    assert resolve([:hey, :sup]) == %{hey: :jude, yo: :sup}
   end
 
 end
