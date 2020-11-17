@@ -1,14 +1,20 @@
 defmodule Corals.Rules do
 
   alias Corals.Server
+
   import Corals.Helpers
   import Enum, only: [reduce: 3]
   import Task, only: [async_stream: 2]
 
+  @defaults %{
+    requires: [],
+    rules: []
+  }
+
   def define name, spec do
     DynamicSupervisor.start_child Corals.RulesSupervisor, %{
       id: Server,
-      start: {Server, :start_link, [name, spec]}
+      start: {Server, :start_link, [name, merge(@defaults, spec)]}
     }
   end
 
@@ -19,7 +25,7 @@ defmodule Corals.Rules do
   end
 
   def resolve rules, opts do
-    elem GenServer.call(rules, {:resolve, %{}, opts}), 1
+    rules |> GenServer.call({:resolve, opts}) |> elem(1)
   end
 
 end

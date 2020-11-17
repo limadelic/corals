@@ -1,7 +1,7 @@
 defmodule Corals.Server do
   use GenServer
 
-  alias Corals.Resolver
+  alias Corals.{Rules, Resolver}
 
   def start_link name, spec do
     GenServer.start_link __MODULE__, spec, name: name
@@ -9,7 +9,8 @@ defmodule Corals.Server do
 
   def init spec do {:ok, spec} end
 
-  def handle_call {:resolve, context, opts}, _, %{rules: rules} = spec do
+  def handle_call {:resolve, opts}, _, %{requires: deps, rules: rules} = spec do
+    context = Rules.resolve deps, opts
     {:reply, {:ok, Resolver.resolve(rules, context, opts)}, spec}
   end
 
