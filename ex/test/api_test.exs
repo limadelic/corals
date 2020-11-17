@@ -15,37 +15,55 @@ defmodule ApiTest do
 
   test "two rules" do
 
-    define :hey, %{
+    define :one, %{
       rules: [
-        hey: :jude
+        one: :value
       ]
     }
 
-    define :sup, %{
+    define :two, %{
       rules: [
-        yo: :sup
+        another: :value
       ]
     }
 
-    assert resolve([:hey, :sup]) == %{hey: :jude, yo: :sup}
+    assert resolve([:one, :two]) == %{one: :value, another: :value}
   end
 
   test "requires" do
 
-    define :hey, %{
+    define :required, %{
       rules: [
-        hey: :jude
+        required: :value
       ]
     }
 
-    define :sup, %{
-      requires: [:hey],
+    define :needy, %{
+      requires: [:required],
       rules: [
-        yo: :sup
+        needed: :value
       ]
     }
 
-    assert resolve(:sup) == %{hey: :jude, yo: :sup}
+    assert resolve(:needy) == %{needed: :value, required: :value}
+  end
+
+  test "private across rules" do
+
+    define :private, %{
+      rules: [
+        _private: :value
+      ]
+    }
+
+    define :spy, %{
+      requires: [:private],
+      rules: [
+        spied: fn %{_private: x} -> x end
+      ]
+    }
+
+    assert resolve(:spy) == %{spied: :value}
   end
 
 end

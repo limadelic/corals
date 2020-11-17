@@ -2,6 +2,7 @@ defmodule Corals.Rules do
 
   alias Corals.Server
 
+  import Corals.Utils
   import Corals.Helpers
   import Enum, only: [reduce: 3]
   import Task, only: [async_stream: 2]
@@ -18,13 +19,17 @@ defmodule Corals.Rules do
     }
   end
 
-  def resolve(rules, opts) when is_list(rules) do
+  def resolve rules, opts do
+    rules |> resolve_raw(opts) |> clean
+  end
+
+  def resolve_raw(rules, opts) when is_list(rules) do
     rules
-    |> async_stream(&(resolve &1, opts))
+    |> async_stream(&(resolve_raw &1, opts))
     |> reduce(%{}, &(merge &2, elem(&1, 1)))
   end
 
-  def resolve rules, opts do
+  def resolve_raw rules, opts do
     rules |> GenServer.call({:resolve, opts}) |> elem(1)
   end
 

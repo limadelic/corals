@@ -10,8 +10,8 @@ defmodule Corals.Server do
   def init spec do {:ok, spec} end
 
   def handle_call {:resolve, opts}, _, %{requires: deps, rules: rules} = spec do
-    context = Rules.resolve deps, opts
-    {:reply, {:ok, Resolver.resolve(rules, context, opts)}, spec}
+    context = Rules.resolve_raw deps, opts
+    {:reply, {:ok, Resolver.resolve_raw(rules, context, opts)}, spec}
   end
 
 end

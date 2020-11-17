@@ -9,7 +9,7 @@ defmodule Corals.Expander do
   def expand {:when, cond}, context, _ do do_when cond, context end
   def expand {:when!, cond}, context, _ do do_when! cond, context end
   def expand({k, v}, context, opts) when is_list v do
-    {k,  Resolver.resolve(v, context[k] || %{}, opts[k] || %{})}
+    {k,  Resolver.resolve_raw(v, context[k] || %{}, opts[k] || %{})}
   end
   def expand({k, _}, context, opts) when is_opt? k, opts do context end
   def expand({k, f}, context, _) when is_function f do {k, fun(f, context)} end
