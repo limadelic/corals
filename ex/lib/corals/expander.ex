@@ -3,7 +3,6 @@ defmodule Corals.Expander do
   alias Corals.Resolver
 
   import Corals.{When, Opts, Fun}
-  import Enum, only: [zip: 2]
 
   def expand {:when, cond}, context, _, globals do do_when cond, context, globals end
   def expand {:when!, cond}, context, _, globals do do_when! cond, context, globals end
