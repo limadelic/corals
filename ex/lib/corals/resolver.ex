@@ -1,8 +1,6 @@
 defmodule Corals.Resolver do
 
-  import Corals.Expander
-  import Corals.Utils
-  import Corals.Helpers
+  import Corals.{Expander, Utils, Helpers}
   import Enum, only: [all?: 2, reduce_while: 3]
 
   def resolve rules, opts \\ %{} do
@@ -18,9 +16,9 @@ defmodule Corals.Resolver do
     end
   end
 
-  defp are_rules? rules do is_list(rules) && (is_single?(rules) || are_many?(rules)) end
-  defp is_single? rules do Keyword.keyword? rules end
-  defp are_many? rules do all? rules, &(are_rules? &1) end
+  def are_rules? rules do is_list(rules) && (is_single?(rules) || are_many?(rules)) end
+  def is_single? rules do Keyword.keyword? rules end
+  def are_many? rules do all? rules, &(are_rules? &1) end
 
   defp many(rules, context, opts, globals) when is_nil(globals) do
     reduce_while rules, context, &(cont_many? merge &2, resolve_raw(&1, &2, opts, &2))

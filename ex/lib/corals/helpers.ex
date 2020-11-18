@@ -1,6 +1,6 @@
 defmodule Corals.Helpers do
 
-  import Enum, only: [map: 2, into: 2, filter: 2]
+  import Enum, only: [all?: 2, map: 2, into: 2, filter: 2]
   import Map, only: [keys: 1, drop: 2, to_list: 1]
 
   def p x \\ nil do IO.puts x end
@@ -26,5 +26,7 @@ defmodule Corals.Helpers do
   end
   def drop_deep x, _ do x end
   defp keys map, exp do map |> keys |> filter(&(String.match? "#{&1}", exp)) end
+
+  def is_map_list x do is_list(x) && all?(x, &(is_map &1)) end
 
 end
