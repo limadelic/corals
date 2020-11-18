@@ -1,5 +1,6 @@
 defmodule ApiTest do
-  use ExUnit.Case
+  use ExUnit.Case, aync: true
+
   import Corals
 
   test "one rule" do

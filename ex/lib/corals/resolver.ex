@@ -6,7 +6,7 @@ defmodule Corals.Resolver do
   import Enum, only: [all?: 2, reduce_while: 3]
 
   def resolve rules, opts \\ %{} do
-    clean resolve_raw rules, opts, opts
+    rules |> resolve_raw(opts, opts) |> clean
   end
 
   def resolve_raw rules, context, opts do
