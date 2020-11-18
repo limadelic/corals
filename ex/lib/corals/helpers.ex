@@ -27,6 +27,6 @@ defmodule Corals.Helpers do
   def drop_deep x, _ do x end
   defp keys map, exp do map |> keys |> filter(&(String.match? "#{&1}", exp)) end
 
-  def is_map_list x do is_list(x) && all?(x, &(is_map &1)) end
+  def is_map_list? x do is_list(x) && all?(x, &(is_map &1)) end
 
 end
