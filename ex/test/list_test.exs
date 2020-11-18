@@ -3,21 +3,21 @@ defmodule ListTest do
 
   import Corals.Resolver
 
-  @tag :wip
+  @the_beatles [
+    %{name: "John", last_name: "Lennon"},
+    %{name: "Paul", last_name: "McCartney"},
+    %{name: "George", last_name: "Harrison"},
+    %{name: "Ringo", last_name: "Starr"},
+  ]
+
   test "list" do
     rules = [
-      names: [
+      the_beatles: [
         full_name: fn %{name: name, last_name: last_name} -> "#{name} #{last_name}" end
       ]
     ]
-    opts = %{
-      the_beatles: [
-        %{name: "John", last_name: "Lennon"},
-        %{name: "Paul", last_name: "McCartney"},
-        %{name: "George", last_name: "Harrison"},
-        %{name: "Ringo", last_name: "Starr"},
-      ]
-    }
+    opts = %{the_beatles: @the_beatles}
+    
     assert resolve(rules, opts).the_beatles == [
       %{name: "John", last_name: "Lennon", full_name: "John Lennon"},
       %{name: "Paul", last_name: "McCartney", full_name: "Paul McCartney"},
