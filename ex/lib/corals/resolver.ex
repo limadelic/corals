@@ -1,7 +1,7 @@
 defmodule Corals.Resolver do
 
   import Corals.{Expander, Utils, Helpers}
-  import Enum, only: [all?: 2, reduce_while: 3, map: 2]
+  import Enum, only: [all?: 2, reduce_while: 3, map: 2, zip: 2]
 
   def resolve rules, opts \\ %{} do
     rules |> resolve_raw(opts, opts) |> clean
@@ -36,8 +36,11 @@ defmodule Corals.Resolver do
     reduce_while rules, context, &(cont_single? merge &2, expand(&1, &2, opts, globals))
   end
 
-  defp list rules, context, opts, globals do
-    context |> map(&(resolve_raw rules, &1, opts, globals))
+  defp list(rules, context, opts, globals) when is_list(opts) and (length(context) == length(opts)) do
+    zip(context, opts) |> map(&(resolve_raw rules, elem(&1,0), elem(&1,1), globals))
+  end
+  defp list rules, context, _, globals do
+    context |> map(&(resolve_raw rules, &1, %{}, globals))
   end
 
 end

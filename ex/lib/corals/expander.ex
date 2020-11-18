@@ -14,7 +14,9 @@ defmodule Corals.Expander do
 
   def expand({k, _}, context, opts, _) when is_opt? k, opts do context end
 
-  def expand({k, f}, context, _, globals) when is_function f do {k, fun(f, context, globals)} end
+  def expand({k, f}, context, _, globals) when is_function f do
+    expand {k, fun(f, context, globals)}, nil, nil, nil
+  end
 
   def expand {opt, v} = tuple, _, _, _ do
     cond do
