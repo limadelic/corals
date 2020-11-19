@@ -23,4 +23,17 @@ defmodule StartTest do
 
   end
 
+  @tag :wip
+  describe "pick" do
+
+    setup do
+      resolve :game, %{on: :start}
+    end
+
+    test "each player has 10 dominoes" do
+      assert 42 == 10
+    end
+
+  end
+
 end
