@@ -31,7 +31,7 @@ defmodule ApiTest do
     assert resolve([:one, :two]) == %{one: :value, another: :value}
   end
 
-  test "requires" do
+  test "require" do
 
     define :required, %{
       rules: [
@@ -40,7 +40,7 @@ defmodule ApiTest do
     }
 
     define :needy, %{
-      requires: [:required],
+      require: [:required],
       rules: [
         needed: :value
       ]
@@ -58,7 +58,7 @@ defmodule ApiTest do
     }
 
     define :spy, %{
-      requires: [:private],
+      require: [:private],
       rules: [
         spied: fn %{_private: x} -> x end
       ]

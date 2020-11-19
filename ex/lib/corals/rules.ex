@@ -7,7 +7,7 @@ defmodule Corals.Rules do
   import Task, only: [async_stream: 2]
 
   @defaults %{
-    requires: [],
+    require: [],
     rules: []
   }
 
