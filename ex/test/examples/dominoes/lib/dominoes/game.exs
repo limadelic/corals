@@ -1,0 +1,10 @@
+defmodule Dominoes.Game do
+
+  import Corals
+
+  define :game, %{
+    rules: []
+  }
+
+
+end

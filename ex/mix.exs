@@ -6,6 +6,7 @@ defmodule Corals.MixProject do
       app: :ex,
       version: "0.1.0",
       elixir: "~> 1.10",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -26,4 +27,8 @@ defmodule Corals.MixProject do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
   end
+
+  defp elixirc_paths :test do ["lib", "test/examples"] end
+  defp elixirc_paths _ do ["lib"] end
+
 end
