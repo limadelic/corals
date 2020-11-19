@@ -1,7 +1,7 @@
 defmodule Corals do
   alias Corals.Rules
 
-  def define name, spec do
+  def define name, spec \\ %{} do
     Rules.define name, spec
   end
 

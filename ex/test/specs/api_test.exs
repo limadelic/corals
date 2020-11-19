@@ -67,4 +67,11 @@ defmodule ApiTest do
     assert resolve(:spy) == %{spied: :value}
   end
 
+  test "opts" do
+
+    define :opts
+
+    assert resolve(:opts, %{some: :opts}) == %{some: :opts}
+  end
+
 end

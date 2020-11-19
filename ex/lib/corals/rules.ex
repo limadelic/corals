@@ -2,8 +2,7 @@ defmodule Corals.Rules do
 
   alias Corals.Server
 
-  import Corals.Utils
-  import Corals.Helpers
+  import Corals.{Utils, Helpers}
   import Enum, only: [reduce: 3]
   import Task, only: [async_stream: 2]
 
@@ -22,6 +21,8 @@ defmodule Corals.Rules do
   def resolve rules, opts do
     rules |> resolve_raw(opts) |> clean
   end
+
+  def resolve_raw [], opts do opts end
 
   def resolve_raw(rules, opts) when is_list(rules) do
     rules
