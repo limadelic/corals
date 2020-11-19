@@ -14,7 +14,7 @@ defmodule SingleTest do
       number: 42,
       bool: true,
       list: [1,2,3],
-#      empty_list: [],
+      empty_list: [],
       map: %{key: :value},
       empty_map: %{}
     ]
@@ -24,7 +24,7 @@ defmodule SingleTest do
       number: 42,
       bool: true,
       list: [1,2,3],
-#      empty_list: [],
+      empty_list: [],
       map: %{key: :value},
       empty_map: %{}
     }

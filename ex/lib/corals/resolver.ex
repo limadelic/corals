@@ -17,9 +17,12 @@ defmodule Corals.Resolver do
     end
   end
 
+  defp are_rules? [] do false end
   defp are_rules? rules do is_list(rules) && (is_single?(rules) || are_many?(rules)) end
   defp is_list? rules, context do is_single?(rules) && is_map_list?(context) end
-  defp is_single? rules do rules != [] && Keyword.keyword?(rules) end
+  defp is_single? [] do false end
+  defp is_single? rules do Keyword.keyword?(rules) end
+  defp are_many? [] do false end
   defp are_many? rules do all? rules, &(are_rules? &1) end
 
   defp many rules, context, opts, nil do
