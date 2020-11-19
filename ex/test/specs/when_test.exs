@@ -78,6 +78,37 @@ defmodule WhenTest do
       assert resolve(rules) == %{it: :greeted, hello: :world}
     end
 
+    test "has key from opts" do
+      rules = [
+        when: has?(%{hello: _}),
+        it: :greeted
+      ]
+      assert resolve(rules, %{hello: :dude}) == %{it: :greeted, hello: :dude}
+    end
+
+    test "many" do
+      rules = [
+        [
+          hello: :world
+        ],
+        [
+          when: has?(%{hello: _}),
+          it: :greeted
+        ]
+      ]
+      assert resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+    test "many from opts" do
+      rules = [
+        [
+          when: has?(%{hello: :dude}),
+          it: :greeted
+        ]
+      ]
+      assert resolve(rules, %{hello: :dude}) == %{it: :greeted, hello: :dude}
+    end
+
     test "has value" do
       rules = [
         hello: :world,

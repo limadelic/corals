@@ -5,7 +5,7 @@ defmodule Dominoes.Game do
   define :game, %{
     rules: [
       [
-        when: [on: :start],
+        when: has?(%{on: :start}),
         table: []
       ]
     ]
