@@ -9,7 +9,7 @@ defmodule Corals do
     Rules.resolve rules, opts
   end
 
-  defmacro has? pattern do
+  defmacro is? pattern do
     quote do
       fn unquote(pattern) -> true; _ -> false end
     end
