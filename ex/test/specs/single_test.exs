@@ -8,6 +8,28 @@ defmodule SingleTest do
     assert resolve(rules) == %{hello: :world}
   end
 
+  test "values" do
+    rules = [
+      atom: :bomb,
+      number: 42,
+      bool: true,
+      list: [1,2,3],
+#      empty_list: [],
+      map: %{key: :value},
+      empty_map: %{}
+    ]
+
+    assert resolve(rules) == %{
+      atom: :bomb,
+      number: 42,
+      bool: true,
+      list: [1,2,3],
+#      empty_list: [],
+      map: %{key: :value},
+      empty_map: %{}
+    }
+  end
+
   test "dups" do
     rules = [
       hello: :world,
