@@ -49,6 +49,20 @@ defmodule ApiTest do
     assert resolve(:needy) == %{needed: :value, required: :value}
   end
 
+  test "require only" do
+    define :only, %{
+      rules: [
+        required: :value
+      ]
+    }
+
+    define :require_only, %{
+      require: [:only]
+    }
+
+    assert resolve(:require_only, %{with: :opts}) == %{required: :value, with: :opts}
+  end
+
   test "private across rules" do
 
     define :private, %{

@@ -12,6 +12,7 @@ defmodule Corals.Resolver do
       is_list? rules, context -> list rules, context, opts, globals
       is_single? rules -> single rules, context, opts, globals
       are_many? rules -> many rules, context, opts, globals
+      globals == nil -> context
       opts != %{} -> opts
       true -> rules
     end
