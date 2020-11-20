@@ -14,11 +14,7 @@ defmodule StartTest do
     end
 
     test "4 players", %{players: players} do
-      assert length(Map.keys(players)) == 4
-    end
-
-    test "there r 55 dominoes available", %{dominoes: dominoes} do
-      assert length(dominoes) == 55
+      assert length(players) == 4
     end
 
   end

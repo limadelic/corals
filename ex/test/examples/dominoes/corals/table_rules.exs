@@ -8,6 +8,7 @@ defmodule Dominoes.Table do
   define :table, %{
     rules: [
       [
+        when: is?(%{on: :start}),
         dominoes: shuffle(@dominoes),
         table: [],
       ]

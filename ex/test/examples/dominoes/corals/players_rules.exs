@@ -7,10 +7,15 @@ defmodule Dominoes.Players do
       [
         when: is?(%{on: :start}),
         players: [
-          player: [],
-          right: [],
-          front: [],
-          left: [],
+          %{name: :player},
+          %{name: :right},
+          %{name: :front},
+          %{name: :left}
+        ]
+      ],
+      [
+        when: is?(%{on: :pick}),
+        players: [
         ]
       ]
     ]
