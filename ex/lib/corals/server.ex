@@ -3,6 +3,7 @@ defmodule Corals.Server do
 
   alias Corals.Rules
   import Corals.Resolver
+  import Corals.Helpers
 
   def start_link name, spec do
     GenServer.start_link __MODULE__, spec, name: name
