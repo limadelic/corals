@@ -15,8 +15,7 @@ defmodule Corals.Server do
   end
 
   defp resolve opts, user_opts, deps, rules do
-    opts = opts |> Rules.resolve_raw(deps, user_opts)
-    resolve_raw(rules, opts, user_opts)
+    opts |> Rules.resolve_raw(deps, user_opts) |> resolve_raw(rules, user_opts)
   end
 
 end

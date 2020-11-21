@@ -8,7 +8,7 @@ defmodule Corals.Expander do
   def expand {:when!, cond}, opts, _, globals do do_when! cond, opts, globals end
 
   def expand({k, v}, opts, user_opts, globals) when is_list v do
-    {k,  Resolver.resolve_raw(v, opts[k] || %{}, user_opts[k] || %{}, globals)}
+    {k,  Resolver.resolve_raw(opts[k] || %{}, v, user_opts[k] || %{}, globals)}
   end
 
   def expand({k, _}, opts, user_opts, _) when is_user_opt? k, user_opts do opts end
