@@ -18,20 +18,20 @@ defmodule Corals.Rules do
     }
   end
 
-  def resolve context, rules, opts do
-    context |> merge(opts) |> resolve_raw(rules, opts) |> clean
+  def resolve opts, rules, user_opts do
+    opts |> merge(user_opts) |> resolve_raw(rules, user_opts) |> clean
   end
 
-  def resolve_raw context, [], _ do context end
+  def resolve_raw opts, [], _ do opts end
 
-  def resolve_raw(context, rules, opts) when is_list(rules) do
+  def resolve_raw(opts, rules, user_opts) when is_list(rules) do
     rules
-    |> async_stream(&(resolve_raw context, &1, opts))
+    |> async_stream(&(resolve_raw opts, &1, user_opts))
     |> reduce(%{}, &(merge &2, elem(&1, 1)))
   end
 
-  def resolve_raw context, rules, opts do
-    rules |> GenServer.call({:resolve, context, opts}) |> elem(1)
+  def resolve_raw opts, rules, user_opts do
+    rules |> GenServer.call({:resolve, opts, user_opts}) |> elem(1)
   end
 
 end
