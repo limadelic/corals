@@ -2,19 +2,19 @@ defmodule Corals.Expander do
 
   alias Corals.Resolver
 
-  import Corals.{When, Opts, Fun}
+  import Corals.{When, UserOpts, Fun}
 
-  def expand {:when, cond}, context, _, globals do do_when cond, context, globals end
-  def expand {:when!, cond}, context, _, globals do do_when! cond, context, globals end
+  def expand {:when, cond}, opts, _, globals do do_when cond, opts, globals end
+  def expand {:when!, cond}, opts, _, globals do do_when! cond, opts, globals end
 
-  def expand({k, v}, context, opts, globals) when is_list v do
-    {k,  Resolver.resolve_raw(v, context[k] || %{}, opts[k] || %{}, globals)}
+  def expand({k, v}, opts, user_opts, globals) when is_list v do
+    {k,  Resolver.resolve_raw(v, opts[k] || %{}, user_opts[k] || %{}, globals)}
   end
 
-  def expand({k, _}, context, opts, _) when is_opt? k, opts do context end
+  def expand({k, _}, opts, user_opts, _) when is_user_opt? k, user_opts do opts end
 
-  def expand({k, f}, context, _, globals) when is_function f do
-    expand {k, fun(f, context, globals)}, nil, nil, nil
+  def expand({k, f}, opts, _, globals) when is_function f do
+    expand {k, fun(f, opts, globals)}, nil, nil, nil
   end
 
   def expand {opt, v} = tuple, _, _, _ do

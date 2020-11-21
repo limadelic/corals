@@ -1,4 +1,4 @@
-defmodule OptsTest do
+defmodule UserOptsTest do
   use ExUnit.Case, async: true
 
   import Corals.Resolver
