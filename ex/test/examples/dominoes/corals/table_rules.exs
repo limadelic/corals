@@ -9,8 +9,9 @@ defmodule Dominoes.Table do
     rules: [
       [
         when: is?(%{on: :start}),
-        dominoes: shuffle(@dominoes),
-        table: [],
+        table: [
+          dominoes: shuffle(@dominoes),
+        ],
       ]
     ]
   }

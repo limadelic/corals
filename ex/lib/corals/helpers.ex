@@ -5,7 +5,7 @@ defmodule Corals.Helpers do
 
   def p x \\ nil do IO.puts x end
   def w x do IO.write x end
-  def i x do IO.inspect x end
+  def i x do IO.inspect x, charlists: :as_lists end
   def i tag, x do w "#{tag}: "; i x end
   def l tag, x, context do
     i tag, x
