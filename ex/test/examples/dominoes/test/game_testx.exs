@@ -19,7 +19,6 @@ defmodule StartTest do
 
   end
 
-  @tag :wip
   describe "pick" do
 
     setup do

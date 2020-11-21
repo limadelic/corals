@@ -5,8 +5,8 @@ defmodule Corals do
     Rules.define name, spec
   end
 
-  def resolve rules, opts \\ %{} do
-    Rules.resolve rules, opts
+  def resolve context, rules, opts \\ %{} do
+    Rules.resolve context, rules, opts
   end
 
   defmacro is? pattern do

@@ -11,7 +11,7 @@ defmodule ApiTest do
       ]
     }
 
-    assert resolve(:hello_world) == %{hello: :world}
+    assert resolve(%{}, :hello_world) == %{hello: :world}
   end
 
   test "two rules" do
@@ -28,7 +28,7 @@ defmodule ApiTest do
       ]
     }
 
-    assert resolve([:one, :two]) == %{one: :value, another: :value}
+    assert resolve(%{}, [:one, :two]) == %{one: :value, another: :value}
   end
 
   test "require" do
@@ -46,7 +46,7 @@ defmodule ApiTest do
       ]
     }
 
-    assert resolve(:needy) == %{needed: :value, required: :value}
+    assert resolve(%{}, :needy) == %{needed: :value, required: :value}
   end
 
   test "require only" do
@@ -60,7 +60,8 @@ defmodule ApiTest do
       require: [:only]
     }
 
-    assert resolve(:require_only, %{with: :opts}) == %{required: :value, with: :opts}
+    assert resolve(%{with: :context}, :require_only, %{and: :opts}) ==
+      %{required: :value, with: :context, and: :opts}
   end
 
   test "private across rules" do
@@ -78,14 +79,14 @@ defmodule ApiTest do
       ]
     }
 
-    assert resolve(:spy) == %{spied: :value}
+    assert resolve(%{}, :spy) == %{spied: :value}
   end
 
   test "opts" do
 
     define :opts
 
-    assert resolve(:opts, %{some: :opts}) == %{some: :opts}
+    assert resolve(%{}, :opts, %{some: :opts}) == %{some: :opts}
   end
 
 end
