@@ -3,8 +3,8 @@ defmodule Corals.Resolver do
   import Corals.{Expander, Utils, Helpers}
   import Enum, only: [all?: 2, reduce_while: 3, map: 2, zip: 2]
 
-  def resolve rules, opts \\ %{} do
-    opts |> resolve_raw(rules, opts) |> clean
+  def resolve opts, rules, user_opts \\ %{} do
+    opts |> merge(user_opts) |> resolve_raw(rules, user_opts) |> clean
   end
 
   def resolve_raw opts, rules, user_opts, globals \\ nil do

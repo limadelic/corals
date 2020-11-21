@@ -12,7 +12,7 @@ defmodule WhenTest do
         when: false,
         hello: :world
       ]
-      assert resolve(rules) == %{try: :to}
+      assert %{} |> resolve(rules) == %{try: :to}
     end
 
     test "single+" do
@@ -22,7 +22,7 @@ defmodule WhenTest do
         when: false,
         hello: :world
       ]
-      assert resolve(rules) == %{try: :to, really: :hard}
+      assert %{} |> resolve(rules) == %{try: :to, really: :hard}
     end
 
   end
@@ -34,7 +34,7 @@ defmodule WhenTest do
         when: true,
         hello: :world
       ]
-      assert resolve(rules) == %{hello: :world}
+      assert %{} |> resolve(rules) == %{hello: :world}
     end
 
     test "fun" do
@@ -42,7 +42,7 @@ defmodule WhenTest do
         when: fn -> true end,
         hello: :world
       ]
-      assert resolve(rules) == %{hello: :world}
+      assert %{} |> resolve(rules) == %{hello: :world}
     end
 
   end
@@ -54,7 +54,7 @@ defmodule WhenTest do
         when: false,
         hello: :world
       ]
-      assert resolve(rules) == %{}
+      assert %{} |> resolve(rules) == %{}
     end
 
     test "fun" do
@@ -62,7 +62,7 @@ defmodule WhenTest do
         when: fn -> false end,
         hello: :world
       ]
-      assert resolve(rules) == %{}
+      assert %{} |> resolve(rules) == %{}
     end
 
   end
@@ -75,7 +75,7 @@ defmodule WhenTest do
         when: is?(%{hello: _}),
         it: :greeted
       ]
-      assert resolve(rules) == %{it: :greeted, hello: :world}
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
     end
 
     test "key from opts" do
@@ -83,7 +83,7 @@ defmodule WhenTest do
         when: is?(%{hello: _}),
         it: :greeted
       ]
-      assert resolve(rules, %{hello: :dude}) == %{it: :greeted, hello: :dude}
+      assert %{hello: :dude} |> resolve(rules) == %{it: :greeted, hello: :dude}
     end
 
     test "many" do
@@ -96,7 +96,7 @@ defmodule WhenTest do
           it: :greeted
         ]
       ]
-      assert resolve(rules) == %{it: :greeted, hello: :world}
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
     end
 
     test "many from opts" do
@@ -106,7 +106,7 @@ defmodule WhenTest do
           it: :greeted
         ]
       ]
-      assert resolve(rules, %{hello: :dude}) == %{it: :greeted, hello: :dude}
+      assert %{hello: :dude} |> resolve(rules) == %{it: :greeted, hello: :dude}
     end
 
     test "value" do
@@ -115,7 +115,7 @@ defmodule WhenTest do
         when: is?(%{hello: :world}),
         it: :greeted
       ]
-      assert resolve(rules) == %{it: :greeted, hello: :world}
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
     end
 
     test "when" do
@@ -124,7 +124,7 @@ defmodule WhenTest do
         when: is?(%{hello: x} when is_atom x),
         it: :greeted
       ]
-      assert resolve(rules) == %{it: :greeted, hello: :world}
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
     end
 
   end
@@ -137,8 +137,8 @@ defmodule WhenTest do
         [when: is?(%{name: :neo}), say: "the matrix has you"],
       ]
 
-      assert resolve(rules, %{name: :mike}).say == "hello mike"
-      assert resolve(rules, %{name: :neo}).say == "the matrix has you"
+      assert resolve(%{name: :mike}, rules).say == "hello mike"
+      assert resolve(%{name: :neo}, rules).say == "the matrix has you"
     end
 
     test "knock knock" do
@@ -147,7 +147,7 @@ defmodule WhenTest do
         [when: is?(%{name: :neo}), say: fn %{say: say} -> "#{say} ... the matrix has you" end],
       ]
 
-      assert resolve(rules, %{name: :neo}).say == "hello neo ... the matrix has you"
+      assert resolve(%{name: :neo}, rules).say == "hello neo ... the matrix has you"
     end
 
   end
@@ -160,8 +160,8 @@ defmodule WhenTest do
         [its: :odd]
       ]
 
-      assert resolve(rules, %{x: 1}).its == :odd
-      assert resolve(rules, %{x: 2}).its == :even
+      assert resolve(%{x: 1}, rules).its == :odd
+      assert resolve(%{x: 2}, rules).its == :even
     end
 
   end

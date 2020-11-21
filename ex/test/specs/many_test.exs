@@ -7,7 +7,7 @@ defmodule ManyTest do
     rules = [
       [hello: :world]
     ]
-    assert resolve(rules) == %{hello: :world}
+    assert %{} |> resolve(rules) == %{hello: :world}
   end
 
   test "dups" do
@@ -15,7 +15,7 @@ defmodule ManyTest do
       [hello: :world],
       [hello: :there]
     ]
-    assert resolve(rules) == %{hello: :there}
+    assert %{} |> resolve(rules) == %{hello: :there}
   end
 
   test "two" do
@@ -23,7 +23,7 @@ defmodule ManyTest do
       [hello: :world],
       [hi: :there]
     ]
-    assert resolve(rules) == %{hello: :world, hi: :there}
+    assert %{} |> resolve(rules) == %{hello: :world, hi: :there}
   end
 
   test "context" do
@@ -31,7 +31,7 @@ defmodule ManyTest do
       [x: 1, y: 1],
       [sum: fn %{x: x, y: y} -> x + y end]
     ]
-    assert resolve(rules) == %{x: 1, y: 1, sum: 2}
+    assert %{} |> resolve(rules) == %{x: 1, y: 1, sum: 2}
   end
 
   test "globals" do
@@ -43,7 +43,7 @@ defmodule ManyTest do
         ]
       ]
     ]
-    assert resolve(rules).local.access == :value
+    assert resolve(%{}, rules).local.access == :value
   end
 
 end

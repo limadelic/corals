@@ -18,7 +18,7 @@ defmodule ListTest do
     ]
     opts = %{the_beatles: @the_beatles}
 
-    assert resolve(rules, opts).the_beatles |> Enum.map(&(&1.full_name)) ==
+    assert resolve(opts, rules).the_beatles |> Enum.map(&(&1.full_name)) ==
       ["John Lennon", "Paul McCartney", "George Harrison", "Ringo Starr"]
   end
 
@@ -29,9 +29,9 @@ defmodule ListTest do
         last_name: "Pooh"
       ]
     ]
-    opts = %{the_beatles: @the_beatles}
+    user_opts = %{the_beatles: @the_beatles}
 
-    assert resolve(rules, opts).the_beatles == @the_beatles
+    assert resolve(%{}, rules, user_opts).the_beatles == @the_beatles
   end
 
   test "dissie" do
@@ -44,9 +44,9 @@ defmodule ListTest do
         end
       ]
     ]
-    opts = %{the_beatles: @the_beatles}
+    user_opts = %{the_beatles: @the_beatles}
 
-    assert resolve(rules, opts).the_beatles |> Enum.map(&(&1.name)) ==
+    assert resolve(%{}, rules, user_opts).the_beatles |> Enum.map(&(&1.name)) ==
       ["Johnie", "Paulie", "Georgie", "Ringie"]
   end
 

@@ -5,7 +5,7 @@ defmodule SingleTest do
 
   test "single" do
     rules = [hello: :world]
-    assert resolve(rules) == %{hello: :world}
+    assert %{} |> resolve(rules) == %{hello: :world}
   end
 
   test "values" do
@@ -19,7 +19,7 @@ defmodule SingleTest do
       empty_map: %{}
     ]
 
-    assert resolve(rules) == %{
+    assert %{} |> resolve(rules) == %{
       atom: :bomb,
       number: 42,
       bool: true,
@@ -35,7 +35,7 @@ defmodule SingleTest do
       hello: :world,
       hello: :there
     ]
-    assert resolve(rules) == %{hello: :there}
+    assert %{} |> resolve(rules) == %{hello: :there}
   end
 
   test "two" do
@@ -43,12 +43,12 @@ defmodule SingleTest do
       hello: :world,
       hi: :there
     ]
-    assert resolve(rules) == %{hello: :world, hi: :there}
+    assert %{} |> resolve(rules) == %{hello: :world, hi: :there}
   end
 
   test "lambda" do
     rules = [hello: fn -> :world end]
-    assert resolve(rules) == %{hello: :world}
+    assert %{} |> resolve(rules) == %{hello: :world}
   end
 
   test "context" do
@@ -57,7 +57,7 @@ defmodule SingleTest do
       y: 1,
       sum: fn %{x: x, y: y} -> x + y end
     ]
-    assert resolve(rules) == %{x: 1, y: 1, sum: 2}
+    assert %{} |> resolve(rules) == %{x: 1, y: 1, sum: 2}
   end
 
 end
