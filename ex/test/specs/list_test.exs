@@ -1,7 +1,7 @@
 defmodule ListTest do
   use ExUnit.Case, async: true
 
-  import Corals.Resolver
+  import Corals.{Resolver}
 
   @the_beatles [
     %{name: "John", last_name: "Lennon"},
@@ -48,6 +48,32 @@ defmodule ListTest do
 
     assert resolve(%{}, rules, user_opts).the_beatles |> Enum.map(&(&1.name)) ==
       ["Johnie", "Paulie", "Georgie", "Ringie"]
+  end
+
+  @dominoes for x <- 0..9, y <- x..9, do: [x,y]
+
+  test "using lists as values" do
+
+    rules = [
+      [
+        dominoes: @dominoes,
+        players: [
+          %{name: :player},
+          %{name: :right},
+          %{name: :front},
+          %{name: :left},
+        ]
+      ],
+      [
+        players: [
+          dominoes: fn _, %{dominoes: dominoes} ->
+            Enum.take dominoes, 10
+          end
+        ]
+      ]
+    ]
+
+    assert Enum.all?(resolve(%{}, rules).players, &(length(&1.dominoes) == 10)) == true
   end
 
 end

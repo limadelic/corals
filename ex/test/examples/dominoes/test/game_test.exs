@@ -30,8 +30,7 @@ defmodule StartTest do
     end
 
     test "each player has 10 dominoes", %{players: players} do
-      i players
-#      assert Enum.all?(players, &(length(&1.dominoes) == 10)) == true
+      assert Enum.all?(players, &(length(&1.dominoes) == 10)) == true
     end
 
   end
