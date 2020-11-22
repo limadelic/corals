@@ -1,8 +1,7 @@
 defmodule Dominoes.Players do
 
   import Corals
-  import Enum, only: [take: 2, map: 2]
-  import Map, only: [put: 3]
+  import Enum, only: [take: 2]
 
   define :players, %{
     rules: [
@@ -17,9 +16,11 @@ defmodule Dominoes.Players do
       ],
       [
         when: is?(%{on: :pick}),
-        players: fn _, %{players: players, table: %{dominoes: dominoes}} ->
-          map(players, &(put &1, :dominoes, take(dominoes, 10)))
-        end
+        players: [
+          dominoes: fn _, %{table: %{dominoes: dominoes}} ->
+            take dominoes, 10
+          end
+        ]
       ]
     ]
   }
