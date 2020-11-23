@@ -10,8 +10,8 @@ defmodule StartTest do
       %{on: :start} |> resolve(:game)
     end
 
-    test "55 dominoes available on table", %{table: table} do
-      assert length(table.dominoes) == 55
+    test "55 dominoes available on table", %{table: %{dominoes: dominoes}} do
+      assert length(dominoes) == 55
     end
 
     test "4 players", %{players: players} do
@@ -31,6 +31,10 @@ defmodule StartTest do
 
     test "each player has 10 dominoes", %{players: players} do
       assert Enum.all?(players, &(length(&1.dominoes) == 10)) == true
+    end
+
+    test "there are 15 dominoes left on the table", %{table: %{dominoes: dominoes}} do
+      assert length(dominoes) == 15
     end
 
   end

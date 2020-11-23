@@ -2,7 +2,6 @@ defmodule Dominoes.Players do
 
   import Corals
   import Enum, only: [map: 2, zip: 2]
-  import Map, only: [merge: 2]
 
   @names [:player, :right, :front, :left]
 
@@ -15,7 +14,7 @@ defmodule Dominoes.Players do
       ],
       [
         when: is?(%{on: :pick}),
-        players: fn %{players: players, table: %{picked: dominoes}} ->
+        players: fn %{players: players, table: %{_picked: dominoes}} ->
           players |> zip(dominoes) |> map(fn {player, dominoes} ->
             %{player | dominoes: dominoes}
           end)
