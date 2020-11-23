@@ -1,26 +1,25 @@
 defmodule Dominoes.Players do
 
   import Corals
-  import Enum, only: [take: 2]
+  import Enum, only: [map: 2, zip: 2]
+  import Map, only: [merge: 2]
+
+  @names [:player, :right, :front, :left]
 
   define :players, %{
+    require: [:table],
     rules: [
       [
         when: is?(%{on: :start}),
-        players: [
-          %{name: :player},
-          %{name: :right},
-          %{name: :front},
-          %{name: :left}
-        ]
+        players: @names |> map(&(%{name: &1, dominoes: []}))
       ],
       [
         when: is?(%{on: :pick}),
-        players: [
-          dominoes: fn _, %{table: %{dominoes: dominoes}} ->
-            take dominoes, 10
-          end
-        ]
+        players: fn %{players: players, table: %{picked: dominoes}} ->
+          players |> zip(dominoes) |> map(fn {player, dominoes} ->
+            %{player | dominoes: dominoes}
+          end)
+        end
       ]
     ]
   }
