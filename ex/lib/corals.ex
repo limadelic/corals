@@ -9,9 +9,15 @@ defmodule Corals do
     Rules.resolve opts, rules, user_opts
   end
 
-  defmacro is? pattern do
+  defmacro is? opts_pattern do
     quote do
-      fn unquote(pattern) -> true; _ -> false end
+      fn unquote(opts_pattern) -> true; _ -> false end
+    end
+  end
+
+  defmacro is? opts_pattern, global_pattern  do
+    quote do
+      fn unquote(opts_pattern), unquote(global_pattern) -> true; _, _ -> false end
     end
   end
 

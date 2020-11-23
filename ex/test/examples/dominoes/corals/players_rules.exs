@@ -19,6 +19,13 @@ defmodule Dominoes.Players do
             %{player | dominoes: dominoes}
           end)
         end
+      ],
+      [
+        when: is?(%{on: {:turn, _, _}}),
+        players: [
+          when: is?(%{name: player}, %{on: {_, player, []}}),
+          play: [9,9]
+        ]
       ]
     ]
   }
