@@ -52,6 +52,10 @@ defmodule StartTest do
       assert domino == [9,9]
     end
 
+    test "the dominoe is no longer in the players dominoes", %{players: players} do
+      assert Enum.at(players, 0).dominoes == []
+    end
+
   end
 
 end

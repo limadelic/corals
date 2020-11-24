@@ -27,7 +27,8 @@ defmodule Dominoes.Players do
           play: fn
             %{name: player, dominoes: dominoes}, %{on: {_, player, []}} -> first dominoes
             _, _ -> nil
-          end
+          end,
+          dominoes: fn %{dominoes: dominoes, play: domino} -> delete dominoes, domino end
         ]
       ]
     ]
