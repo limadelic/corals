@@ -94,8 +94,27 @@ defmodule StartTest do
       assert on == {:knock, :player}
     end
 
-    test "the domino is no longer in the players dominoes", %{players: players} do
+    test "the player has the same dominoes", %{players: players} do
       assert Enum.at(players, 0).dominoes == [[0,0],[7,7]]
+    end
+
+  end
+
+  describe "play on empty table" do
+
+    setup do
+      %{
+        on: {:play, :player, [9,9]},
+        table: %{dominoes: []},
+        players: [
+          %{name: :player},
+          %{name: :next}
+        ]
+      } |> resolve(:game) |> i
+    end
+
+    test "the domino goes on then table", %{table: table} do
+      assert table.dominoes == [[9,9]]
     end
 
   end

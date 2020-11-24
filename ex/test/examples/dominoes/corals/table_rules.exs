@@ -19,6 +19,12 @@ defmodule Dominoes.Table do
           _picked: fn %{dominoes: x} -> x |> chunk_every(10) |> take(4) end,
           dominoes: []
         ]
+      ],
+      [
+        when: is?(%{on: {:play, _, _}}),
+        table: [
+          dominoes: fn %{dominoes: []}, %{on: {_, _, domino}} -> [domino] end
+        ]
       ]
     ]
   }
