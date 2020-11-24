@@ -45,7 +45,7 @@ defmodule StartTest do
           %{name: :player, dominoes: [[9,9]]},
           %{name: :right, dominoes: [[0,0]]}
         ]
-      } |> resolve(:game)
+      } |> resolve(:game) |> i
     end
 
     test "the player plays the first domino", %{on: {:play, :player, domino}} do

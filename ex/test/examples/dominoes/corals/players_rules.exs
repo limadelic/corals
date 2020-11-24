@@ -24,16 +24,16 @@ defmodule Dominoes.Players do
       [
         when: is?(%{on: {:turn, _, _}}),
         players: [
+          when: is?(%{name: player},%{on: {_, player, _}}),
           play: fn
-            %{name: player, dominoes: dominoes}, %{on: {_, player, []}} -> first dominoes
-            %{name: player, dominoes: dominoes}, %{on: {_, player, [h, t]}} -> dominoes |> find(fn
+            %{dominoes: dominoes}, %{on: {_, _, []}} -> first dominoes
+            %{dominoes: dominoes}, %{on: {_, _, [h, t]}} -> dominoes |> find(fn
                 [^h, _] -> true
                 [_, ^t] -> true
                 [_, ^h] -> true
                 [^t, _] -> true
                 _ -> false
               end)
-            _, _ -> nil
           end,
           dominoes: fn %{dominoes: dominoes, play: domino} -> delete dominoes, domino end
         ]
