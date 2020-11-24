@@ -23,9 +23,7 @@ defmodule StartTest do
   describe "pick" do
 
     setup do
-      %{on: :start}
-      |> resolve(:game)
-      |> resolve(:game)
+      %{on: :start} |> resolve(:game) |> resolve(:game)
     end
 
     test "each player has 10 dominoes", %{players: players} do
@@ -50,9 +48,8 @@ defmodule StartTest do
       } |> resolve(:game)
     end
 
-    test "the player plays the first domino", game do
-      i game
-#      assert dominoes == [[9,9]]
+    test "the player plays the first domino", %{on: {:play, :player, domino}} do
+      assert domino == [9,9]
     end
 
   end
