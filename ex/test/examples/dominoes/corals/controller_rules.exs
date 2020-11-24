@@ -14,7 +14,9 @@ defmodule Dominoes.Controller do
         when: is?(%{on: {:turn, _, _}}),
         on: fn %{on: {_, player, _}, players: players} ->
           {:play, player, find(players, &(&1.name == player)).play}
-        end
+        end,
+        when: is?(%{on: {:play, _, nil}}),
+        on: fn %{on: {_, player, _}} -> {:knock, player} end
       ]
     ]
   }
