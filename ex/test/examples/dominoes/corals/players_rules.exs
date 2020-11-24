@@ -1,7 +1,7 @@
 defmodule Dominoes.Players do
 
   import Corals
-  import Enum, only: [map: 2, zip: 2]
+  import Enum, only: [map: 2, zip: 2, find: 2]
   import List, only: [first: 1, delete: 2]
 
   @names [:player, :right, :front, :left]
@@ -26,6 +26,13 @@ defmodule Dominoes.Players do
         players: [
           play: fn
             %{name: player, dominoes: dominoes}, %{on: {_, player, []}} -> first dominoes
+            %{name: player, dominoes: dominoes}, %{on: {_, player, [h, t]}} -> dominoes |> find(fn
+                [^h, _] -> true
+                [_, ^t] -> true
+                [_, ^h] -> true
+                [^t, _] -> true
+                _ -> false
+              end)
             _, _ -> nil
           end,
           dominoes: fn %{dominoes: dominoes, play: domino} -> delete dominoes, domino end

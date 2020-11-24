@@ -36,7 +36,7 @@ defmodule StartTest do
 
   end
 
-  describe "turn" do
+  describe "turn on empty table" do
 
     setup do
       %{
@@ -52,8 +52,29 @@ defmodule StartTest do
       assert domino == [9,9]
     end
 
-    test "the dominoe is no longer in the players dominoes", %{players: players} do
+    test "the domino is no longer in the players dominoes", %{players: players} do
       assert Enum.at(players, 0).dominoes == []
+    end
+
+  end
+
+  describe "turn with dominoes on the table" do
+
+    setup do
+      %{
+        on: {:turn, :player, [9,9]},
+        players: [
+          %{name: :player, dominoes: [[0,0],[9,8],[7,7]]},
+        ]
+      } |> resolve(:game)
+    end
+
+    test "the player find a domino to play", %{on: {:play, :player, domino}} do
+      assert domino == [9,8]
+    end
+
+    test "the domino is no longer in the players dominoes", %{players: players} do
+      assert Enum.at(players, 0).dominoes == [[0,0],[7,7]]
     end
 
   end
