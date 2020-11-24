@@ -3,7 +3,7 @@ defmodule Dominoes.Game do
   import Corals
 
   define :game, %{
-    require: [:table, :players],
+    require: [:table, :players, :controller],
   }
 
 end

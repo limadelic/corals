@@ -25,7 +25,6 @@ defmodule StartTest do
     setup do
       %{on: :start}
       |> resolve(:game)
-      |> merge(%{on: :pick})
       |> resolve(:game)
     end
 
@@ -46,7 +45,7 @@ defmodule StartTest do
         on: {:turn, :player, []},
         players: [
           %{name: :player, dominoes: [[9,9]]},
-          %{name: :right, dominoes: [[9,9]]}
+          %{name: :right, dominoes: [[0,0]]}
         ]
       } |> resolve(:game)
     end

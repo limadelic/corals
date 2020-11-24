@@ -2,6 +2,7 @@ defmodule Dominoes.Players do
 
   import Corals
   import Enum, only: [map: 2, zip: 2]
+  import List, only: [first: 1, delete: 2]
 
   @names [:player, :right, :front, :left]
 
@@ -23,8 +24,10 @@ defmodule Dominoes.Players do
       [
         when: is?(%{on: {:turn, _, _}}),
         players: [
-          when: is?(%{name: player}, %{on: {_, player, []}}),
-          play: [9,9]
+          play: fn
+            %{name: player, dominoes: dominoes}, %{on: {_, player, []}} -> first dominoes
+            _, _ -> nil
+          end
         ]
       ]
     ]
