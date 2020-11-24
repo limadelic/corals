@@ -117,6 +117,10 @@ defmodule StartTest do
       assert table.dominoes == [[9,9]]
     end
 
+    test "it's next players turn" do
+
+    end
+
   end
 
 end
