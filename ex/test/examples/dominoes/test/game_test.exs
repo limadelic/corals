@@ -35,7 +35,7 @@ defmodule StartTest do
     end
 
     test "it's players turn", %{on: on} do
-      assert on == {:turn, :player}
+      assert on == {:turn, :player, []}
     end
 
   end
@@ -88,14 +88,15 @@ defmodule StartTest do
     setup do
       %{
         on: {:turn, :player, [9,9]},
+        table: %{dominoes: [[9,9]]},
         players: [
           %{name: :player, dominoes: [[0,0],[7,7]]},
         ]
       } |> resolve(:game)
     end
 
-    test "the player find a domino to play", %{on: on} do
-      assert on == {:knock, :player}
+    test "the player knocked", %{on: on} do
+      assert on == {:knock, :player, [9,9]}
     end
 
     test "the player has the same dominoes", %{players: players} do
@@ -175,6 +176,25 @@ defmodule StartTest do
 
     test "the heads are right", %{table: %{heads: heads}} do
       assert heads == [9,5]
+    end
+
+  end
+
+  describe "knocking" do
+
+    setup do
+      %{
+        on: {:knock, :knocker},
+        table: %{dominoes: [[9,9]]},
+        players: [
+          %{name: :knocker},
+          %{name: :next}
+        ]
+      } |> resolve(:game) |> i
+    end
+
+    test "it's next player turn", %{on: on} do
+#      i on
     end
 
   end

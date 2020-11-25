@@ -21,7 +21,7 @@ defmodule Dominoes.Controller do
       ],
       [
         when!: is?(%{on: :pick}),
-        on: fn %{_order: order} -> {:turn, hd(order)} end
+        on: fn %{_order: order} -> {:turn, hd(order), []} end
       ],
       [
         when!: is?(%{on: {:turn, _, _}}),
@@ -29,7 +29,11 @@ defmodule Dominoes.Controller do
           {:play, player, find(players, &(&1.name == player)).play}
         end,
         when: is?(%{on: {:play, _, nil}}),
-        on: fn %{on: {_, player, _}} -> {:knock, player} end
+        on: fn %{on: {_, player, _}, table: %{heads: heads}} -> {:knock, player, heads} end
+      ],
+      [
+        when!: is?(%{on: {:play, _, _}}),
+        on: fn %{_next: next, table: %{heads: heads}} -> {:turn, next, heads} end
       ],
       [
         when!: is?(%{on: {:play, _, _}}),
