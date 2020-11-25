@@ -137,7 +137,7 @@ defmodule StartTest do
           %{name: :player},
           %{name: :next}
         ]
-      } |> resolve(:game) |> i
+      } |> resolve(:game)
     end
 
     test "the domino goes on then table", %{table: table} do
@@ -148,6 +148,30 @@ defmodule StartTest do
       assert table.heads == [8,9]
     end
 
+  end
+
+  describe "placing dominoes on the table" do
+
+    setup do
+      dominoes = [[9,9],[9,8],[8,8],[7,9],[7,7],[8,7],[6,7],[6,6],[9,6],[5,7]]
+      game = %{
+        on: {},
+        table: %{dominoes: []}
+      }
+
+      Enum.reduce dominoes, game, fn domino, game ->
+        %{game | on: {:play, :player, domino}} |> resolve(:table)
+      end
+    end
+
+    test "dominoes are placed correctly", %{table: %{dominoes: dominoes}} do
+      assert dominoes ==
+        [[9,6],[6,6],[6,7],[7,8],[8,8],[8,9],[9,9],[9,7],[7,7],[7,5]]
+    end
+
+    test "the heads are right", %{table: %{heads: heads}} do
+      assert heads == [9,5]
+    end
 
   end
 
