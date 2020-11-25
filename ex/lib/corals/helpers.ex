@@ -13,6 +13,7 @@ defmodule Corals.Helpers do
     p ""
   end
 
+  def starts_with? x, prefix do String.match? "#{x}", ~r/^#{prefix}/ end
   def ends_with? x, suffix do String.match? "#{x}", ~r/#{suffix}$/ end
 
   def merge map, {k, v} do merge map, %{k => v} end

@@ -121,9 +121,33 @@ defmodule StartTest do
       assert table.heads == [9,9]
     end
 
-    test "it's next players turn", %{on: on} do
+    test "it's next player's turn", %{on: on} do
       assert on == {:turn, :next, [9,9]}
     end
+
+  end
+
+  describe "play with 1 domino on the table" do
+
+    setup do
+      %{
+        on: {:play, :player, [9,8]},
+        table: %{dominoes: [[9,9]]},
+        players: [
+          %{name: :player},
+          %{name: :next}
+        ]
+      } |> resolve(:game) |> i
+    end
+
+    test "the domino goes on then table", %{table: table} do
+#      assert table.dominoes == [[9,9],[9,8]]
+    end
+
+    test "the table's head is the head's head n' tail's tail", %{table: table} do
+#      assert table.heads == [9,8]
+    end
+
 
   end
 

@@ -51,6 +51,14 @@ defmodule SingleTest do
     assert %{} |> resolve(rules) == %{hello: :world}
   end
 
+  test "fun" do
+    rules = [
+      _@hello: fn -> :world end,
+      hello: fn %{_@hello: f} -> f.() end
+    ]
+    assert %{} |> resolve(rules) == %{hello: :world}
+  end
+
   test "context" do
     rules = [
       x: 1,
