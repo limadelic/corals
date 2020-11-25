@@ -9,6 +9,15 @@ defmodule Dominoes.Table do
   define :table, %{
     rules: [
       [
+        table: [
+          _@heads: fn
+            [] -> []
+            [domino] -> domino
+            [[head,_]|tail] -> [head, tail |> last |> last]
+          end
+        ]
+      ],
+      [
         when: is?(%{on: :start}),
         table: [
           dominoes: shuffle(@dominoes),
@@ -24,13 +33,9 @@ defmodule Dominoes.Table do
       [
         when: is?(%{on: {:play, _, _}}),
         table: [
-          heads: fn
-            %{dominoes: []} -> []
-            %{dominoes: [domino]} -> domino
-            %{dominoes: [[head,_]|tail]} -> [head, tail |> last |> last]
-          end,
+          heads: fn %{_@heads: heads, dominoes: dominoes} -> heads.(dominoes) end,
           dominoes: fn %{dominoes: _}, %{on: {_, _, domino}} -> [domino] end,
-          heads: fn %{dominoes: dominoes} -> hd(dominoes) end
+          heads: fn %{_@heads: heads, dominoes: dominoes} -> heads.(dominoes) end,
         ]
       ]
     ]
