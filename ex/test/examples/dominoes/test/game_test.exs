@@ -141,11 +141,11 @@ defmodule StartTest do
     end
 
     test "the domino goes on then table", %{table: table} do
-#      assert table.dominoes == [[9,9],[9,8]]
+      assert table.dominoes == [[8,9],[9,9]]
     end
 
     test "the table's head is the head's head n' tail's tail", %{table: table} do
-#      assert table.heads == [9,8]
+      assert table.heads == [8,9]
     end
 
 
