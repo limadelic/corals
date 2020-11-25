@@ -23,7 +23,8 @@ defmodule Dominoes.Table do
       [
         when: is?(%{on: {:play, _, _}}),
         table: [
-          dominoes: fn %{dominoes: []}, %{on: {_, _, domino}} -> [domino] end
+          dominoes: fn %{dominoes: []}, %{on: {_, _, domino}} -> [domino] end,
+          heads: fn %{dominoes: dominoes} -> hd(dominoes) end
         ]
       ]
     ]

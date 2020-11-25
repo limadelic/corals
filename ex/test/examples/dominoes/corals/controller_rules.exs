@@ -7,8 +7,8 @@ defmodule Dominoes.Controller do
     require: [:players],
     rules: [
       [
-        _order: fn %{players: players} -> map players, &(&1.name) end,
-        _order: fn %{_order: order} -> order ++ [hd(order)] end,
+        _names: fn %{players: players} -> map players, &(&1.name) end,
+        _order: fn %{_names: names} -> names ++ [hd(names)] end,
         _next: fn
           %{_order: order, on: {_, player, _}} ->
             at order, find_index(order, &(&1 == player)) + 1
@@ -29,7 +29,7 @@ defmodule Dominoes.Controller do
       ],
       [
         when!: is?(%{on: {:play, _, _}}),
-        on: fn %{_next: next} -> {:turn, next} end
+        on: fn %{_next: next, table: %{heads: heads}} -> {:turn, next, heads} end
       ]
     ]
   }
