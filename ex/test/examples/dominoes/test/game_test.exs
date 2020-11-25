@@ -184,17 +184,36 @@ defmodule StartTest do
 
     setup do
       %{
-        on: {:knock, :knocker},
+        on: {:knock, :knocker, [9,9]},
         table: %{dominoes: [[9,9]]},
         players: [
           %{name: :knocker},
-          %{name: :next}
+          %{name: :next, play: [9,9]}
         ]
-      } |> resolve(:game) |> i
+      } |> resolve(:game)
     end
 
     test "it's next player turn", %{on: on} do
-#      i on
+      assert on == {:turn, :next, [9,9]}
+    end
+
+  end
+
+  describe "game stuck" do
+
+    setup do
+      %{
+        on: {:knock, :last, [9,9]},
+        table: %{dominoes: [[9,9]]},
+        players: [
+          %{name: :player},
+          %{name: :last},
+        ]
+      } |> resolve(:game)
+    end
+
+    test "game is stuck", %{on: on} do
+      assert on == :stuck
     end
 
   end
