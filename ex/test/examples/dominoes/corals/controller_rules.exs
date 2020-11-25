@@ -20,6 +20,10 @@ defmodule Dominoes.Controller do
         on: :pick
       ],
       [
+        when!: is?(%{on: :pick}),
+        on: fn %{_order: order} -> {:turn, hd(order)} end
+      ],
+      [
         when!: is?(%{on: {:turn, _, _}}),
         on: fn %{on: {_, player, _}, players: players} ->
           {:play, player, find(players, &(&1.name == player)).play}

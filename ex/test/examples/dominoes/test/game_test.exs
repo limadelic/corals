@@ -34,6 +34,10 @@ defmodule StartTest do
       assert dominoes == []
     end
 
+    test "it's players turn", %{on: on} do
+      assert on == {:turn, :player}
+    end
+
   end
 
   describe "turn on empty table" do
@@ -155,7 +159,7 @@ defmodule StartTest do
     setup do
       dominoes = [[9,9],[9,8],[8,8],[7,9],[7,7],[8,7],[6,7],[6,6],[9,6],[5,7]]
       game = %{
-        on: {},
+        on: :start,
         table: %{dominoes: []}
       }
 

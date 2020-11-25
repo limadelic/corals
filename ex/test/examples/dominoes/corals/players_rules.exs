@@ -10,6 +10,18 @@ defmodule Dominoes.Players do
     require: [:table],
     rules: [
       [
+        _@play: fn
+          dominoes, [] -> first dominoes
+          dominoes, [h,t] -> find dominoes, fn
+            [^h, _] -> true
+            [_, ^t] -> true
+            [_, ^h] -> true
+            [^t, _] -> true
+            _ -> false
+          end
+        end
+      ],
+      [
         when: is?(%{on: :start}),
         players: @names |> map(&(%{name: &1, dominoes: []}))
       ],
@@ -25,16 +37,7 @@ defmodule Dominoes.Players do
         when: is?(%{on: {:turn, _, _}}),
         players: [
           when: is?(%{name: player},%{on: {_, player, _}}),
-          play: fn
-            %{dominoes: dominoes}, %{on: {_, _, []}} -> first dominoes
-            %{dominoes: dominoes}, %{on: {_, _, [h, t]}} -> dominoes |> find(fn
-                [^h, _] -> true
-                [_, ^t] -> true
-                [_, ^h] -> true
-                [^t, _] -> true
-                _ -> false
-              end)
-          end,
+          play: fn %{dominoes: x}, %{_@play: play, on: {_, _, heads}} -> x |> play.(heads) end,
           dominoes: fn %{dominoes: dominoes, play: domino} -> delete dominoes, domino end
         ]
       ]
