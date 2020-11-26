@@ -236,6 +236,10 @@ defmodule StartTest do
       assert Enum.map(players, &(&1.count)) == [18,15,0,16]
     end
 
+    test "find a winner", %{on: on} do
+      assert on = {:winner, :front}
+    end
+
   end
 
 end

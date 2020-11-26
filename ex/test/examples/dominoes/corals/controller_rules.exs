@@ -1,7 +1,7 @@
 defmodule Dominoes.Controller do
 
   import Corals
-  import Enum, only: [find: 2, find_index: 2, at: 2, map: 2, all?: 2]
+  import Enum, only: [find: 2, find_index: 2, at: 2, map: 2, all?: 2, sort_by: 2]
 
   define :controller, %{
     require: [:players],
@@ -42,6 +42,11 @@ defmodule Dominoes.Controller do
       [
         when!: is?(%{on: {:play, _, _}}),
         on: fn %{_next: next, table: %{heads: heads}} -> {:turn, next, heads} end
+      ],
+      [
+        when!: is?(%{on: :stuck}),
+        _winner: fn %{players: players} -> players |> sort_by(&(&1.count)) |> at(0) end,
+        on: fn %{_winner: winner} -> {:winner, winner.name} end
       ]
     ]
   }
