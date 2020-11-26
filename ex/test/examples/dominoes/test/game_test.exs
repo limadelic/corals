@@ -229,7 +229,7 @@ defmodule StartTest do
           %{name: :front, dominoes: [[0,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:game) |> i
+      } |> resolve(:game)
     end
 
     test "dominoes r counted", %{players: players} do
@@ -237,7 +237,31 @@ defmodule StartTest do
     end
 
     test "find a winner", %{on: on} do
-      assert on = {:winner, :front}
+      assert on == {:winner, :front}
+    end
+
+  end
+
+  describe "game stuck with a tie" do
+
+    setup do
+      %{
+        on: :stuck,
+        players: [
+          %{name: :player, dominoes: [[9,9]]},
+          %{name: :right, dominoes: [[6,6],[0,3]]},
+          %{name: :front, dominoes: [[0,0],[5,5],[5,0]]},
+          %{name: :left, dominoes: [[8,8]]},
+        ]
+      } |> resolve(:game)
+    end
+
+    test "dominoes r counted", %{players: players} do
+      assert Enum.map(players, &(&1.count)) == [18,15,15,16]
+    end
+
+    test "it's a tie!", %{on: on} do
+      assert on == {:tie, [:right, :front]}
     end
 
   end
