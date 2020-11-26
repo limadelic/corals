@@ -199,7 +199,7 @@ defmodule StartTest do
 
   end
 
-  describe "game stuck" do
+  describe "game got stuck" do
 
     setup do
       %{
