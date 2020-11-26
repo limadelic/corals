@@ -218,4 +218,24 @@ defmodule StartTest do
 
   end
 
+  describe "game stuck with a winner" do
+
+    setup do
+      %{
+        on: :stuck,
+        players: [
+          %{name: :player, dominoes: [[9,9]]},
+          %{name: :right, dominoes: [[6,6],[0,3]]},
+          %{name: :front, dominoes: [[0,0]]},
+          %{name: :left, dominoes: [[8,8]]},
+        ]
+      } |> resolve(:game) |> i
+    end
+
+    test "dominoes r counted", %{players: players} do
+      assert Enum.map(players, &(&1.count)) == [18,15,0,16]
+    end
+
+  end
+
 end

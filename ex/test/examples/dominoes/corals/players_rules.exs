@@ -1,8 +1,8 @@
 defmodule Dominoes.Players do
 
   import Corals
-  import Enum, only: [map: 2, zip: 2, find: 2]
-  import List, only: [first: 1, delete: 2]
+  import Enum, only: [map: 2, zip: 2, find: 2, sum: 1]
+  import List, only: [first: 1, delete: 2, flatten: 1]
 
   @names [:player, :right, :front, :left]
 
@@ -39,6 +39,12 @@ defmodule Dominoes.Players do
           when: is?(%{name: player},%{on: {_, player, _}}),
           play: fn %{dominoes: x}, %{_@play: play, on: {_, _, heads}} -> x |> play.(heads) end,
           dominoes: fn %{dominoes: dominoes, play: domino} -> delete dominoes, domino end
+        ]
+      ],
+      [
+        when: is?(%{on: :stuck}),
+        players: [
+          count: fn %{dominoes: dominoes} -> dominoes |> flatten |> sum end
         ]
       ]
     ]

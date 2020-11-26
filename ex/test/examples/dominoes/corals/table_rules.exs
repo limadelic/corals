@@ -25,6 +25,7 @@ defmodule Dominoes.Table do
             dominoes, [_,t], [h,t] -> dominoes ++ [[t,h]]
             dominoes, _heads, _domino -> dominoes
           end
+
         ]
       ],
       [
