@@ -277,7 +277,7 @@ defmodule StartTest do
           %{name: :front, dominoes: [[0,0],[5,5],[5,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:game) |> i
+      } |> resolve(:game)
     end
 
     test "player has no more dominoes", %{players: players} do
@@ -286,6 +286,32 @@ defmodule StartTest do
 
     test "dominates", %{on: on} do
       assert on == {:dominate, :player, [9,9]}
+    end
+
+  end
+
+  describe "game ends in domination" do
+
+    setup do
+      %{
+        on: {:dominate, :player, [9,9]},
+        table: %{dominoes: []},
+        players: [
+          %{name: :player, dominoes: []},
+          %{name: :right, dominoes: [[6,6],[0,3]]},
+          %{name: :front, dominoes: [[0,0]]},
+          %{name: :left, dominoes: [[8,8]]},
+        ]
+      } |> resolve(:game) |> i
+    end
+
+    test "domino goes on the table" do
+    end
+
+    test "dominoes are counted" do
+    end
+
+    test "player is the winner" do
     end
 
   end
