@@ -302,7 +302,7 @@ defmodule StartTest do
           %{name: :front, dominoes: [[0,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:game) |> i
+      } |> resolve(:game)
     end
 
     test "domino goes on the table", %{table: %{dominoes: dominoes}} do
@@ -313,7 +313,8 @@ defmodule StartTest do
       assert Enum.map(players, &(&1.count)) == [0,15,0,16]
     end
 
-    test "player is the winner" do
+    test "player is the winner", %{on: on} do
+      assert on == {:winner, :player}
     end
 
   end

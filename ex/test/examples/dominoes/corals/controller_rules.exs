@@ -52,6 +52,10 @@ defmodule Dominoes.Controller do
         on: fn %{_next: next, table: %{heads: heads}} -> {:turn, next, heads} end
       ],
       [
+        when!: is?(%{on: {:dominate, _, _}}),
+        on: fn %{on: {_, player, _}} -> {:winner, player} end
+      ],
+      [
         when!: is?(%{on: :stuck}),
         _winners: fn %{_@winners: winners, players: players} -> winners.(players) end,
         on: fn
