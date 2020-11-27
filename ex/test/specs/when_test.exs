@@ -2,7 +2,7 @@ defmodule WhenTest do
   use ExUnit.Case, async: true
 
   import Corals.Resolver
-  import Corals, only: [is?: 1, not?: 1]
+  import Corals, only: [is?: 1, not?: 1, either?: 1]
 
   describe "before" do
 
@@ -187,6 +187,20 @@ defmodule WhenTest do
         it: :greeted
       ]
       assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+  end
+
+  describe "either?" do
+
+    @tag :wip
+    test "simple choices" do
+      rules = [
+        good_bye: :world,
+        when: either?([%{hello: _}, %{good_bye: _}]),
+        it: :greeted
+      ]
+      assert %{} |> resolve(rules) == %{it: :greeted, good_bye: :world}
     end
 
   end

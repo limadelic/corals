@@ -21,6 +21,12 @@ defmodule Corals do
     end
   end
 
+  defmacro either? opts_patterns do
+    quote do
+      fn unquote(opts_patterns) -> true; _ -> false end
+    end
+  end
+
   defmacro not? opts_pattern do
     quote do
       fn unquote(opts_pattern) -> false; _ -> true end
