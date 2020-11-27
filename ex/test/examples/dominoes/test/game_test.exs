@@ -46,7 +46,7 @@ defmodule StartTest do
       %{
         on: {:turn, :player, []},
         players: [
-          %{name: :player, dominoes: [[9,9]]},
+          %{name: :player, dominoes: [[9,9],[8,8]]},
           %{name: :right, dominoes: [[0,0]]}
         ]
       } |> resolve(:game)
@@ -57,7 +57,7 @@ defmodule StartTest do
     end
 
     test "the domino is no longer in the players dominoes", %{players: players} do
-      assert Enum.at(players, 0).dominoes == []
+      assert Enum.at(players, 0).dominoes == [[8,8]]
     end
 
   end
@@ -262,6 +262,30 @@ defmodule StartTest do
 
     test "it's a tie!", %{on: on} do
       assert on == {:tie, [:right, :front]}
+    end
+
+  end
+
+  describe "player plays last domino" do
+
+    setup do
+      %{
+        on: {:turn, :player, []},
+        players: [
+          %{name: :player, dominoes: [[9,9]]},
+          %{name: :right, dominoes: [[6,6],[0,3]]},
+          %{name: :front, dominoes: [[0,0],[5,5],[5,0]]},
+          %{name: :left, dominoes: [[8,8]]},
+        ]
+      } |> resolve(:game) |> i
+    end
+
+    test "player has no more dominoes", %{players: players} do
+      assert Enum.at(players, 0).dominoes == []
+    end
+
+    test "dominates", %{on: on} do
+      assert on == {:dominate, :player, [9,9]}
     end
 
   end
