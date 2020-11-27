@@ -2,7 +2,7 @@ defmodule WhenTest do
   use ExUnit.Case, async: true
 
   import Corals.Resolver
-  import Corals, only: [is?: 1]
+  import Corals, only: [is?: 1, not?: 1]
 
   describe "before" do
 
@@ -122,6 +122,68 @@ defmodule WhenTest do
       rules = [
         hello: :world,
         when: is?(%{hello: x} when is_atom x),
+        it: :greeted
+      ]
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+  end
+
+  describe "not?" do
+
+    test "key" do
+      rules = [
+        hello: :world,
+        when: not?(%{hi: _}),
+        it: :greeted
+      ]
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+    test "key from opts" do
+      rules = [
+        when: not?(%{hi: _}),
+        it: :greeted
+      ]
+      assert %{hello: :dude} |> resolve(rules) == %{it: :greeted, hello: :dude}
+    end
+
+    test "many" do
+      rules = [
+        [
+          hello: :world
+        ],
+        [
+          when: not?(%{hi: _}),
+          it: :greeted
+        ]
+      ]
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+    test "many from opts" do
+      rules = [
+        [
+          when: not?(%{hello: :jude}),
+          it: :greeted
+        ]
+      ]
+      assert %{hello: :dude} |> resolve(rules) == %{it: :greeted, hello: :dude}
+    end
+
+    test "value" do
+      rules = [
+        hello: :world,
+        when: not?(%{hello: :word}),
+        it: :greeted
+      ]
+      assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
+    end
+
+    test "when" do
+      rules = [
+        hello: :world,
+        when: not?(%{hello: x} when is_list x),
         it: :greeted
       ]
       assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
