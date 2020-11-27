@@ -46,6 +46,12 @@ defmodule Dominoes.Players do
         players: [
           count: fn %{dominoes: dominoes} -> dominoes |> flatten |> sum end
         ]
+      ],
+      [
+        when: is?(%{on: {:dominate, _, _}}),
+        players: [
+          count: fn %{dominoes: dominoes} -> dominoes |> flatten |> sum end
+        ]
       ]
     ]
   }

@@ -51,6 +51,15 @@ defmodule Dominoes.Table do
         ]
       ],
       [
+        when: is?(%{on: {:dominate, _, _}}),
+        table: [
+          heads: fn %{_@heads: heads, dominoes: dominoes} -> heads.(dominoes) end,
+          dominoes: fn %{_@place: place, dominoes: dominoes, heads: heads}, %{on: {_,_,domino}} ->
+            place.(dominoes, heads, domino)
+          end
+        ]
+      ],
+      [
         table: [
           heads: fn
             %{_@heads: heads, dominoes: dominoes} -> heads.(dominoes)

@@ -305,10 +305,12 @@ defmodule StartTest do
       } |> resolve(:game) |> i
     end
 
-    test "domino goes on the table" do
+    test "domino goes on the table", %{table: %{dominoes: dominoes}} do
+      assert dominoes == [[9,9]]
     end
 
-    test "dominoes are counted" do
+    test "dominoes are counted", %{players: players} do
+      assert Enum.map(players, &(&1.count)) == [0,15,0,16]
     end
 
     test "player is the winner" do
