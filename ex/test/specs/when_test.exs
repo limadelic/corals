@@ -193,11 +193,10 @@ defmodule WhenTest do
 
   describe "either?" do
 
-    @tag :wip
     test "simple choices" do
       rules = [
         good_bye: :world,
-        when: either?([%{hello: _}, %{good_bye: _}]),
+        when: either?([is?(%{hello: _}), is?(%{good_bye: _})]),
         it: :greeted
       ]
       assert %{} |> resolve(rules) == %{it: :greeted, good_bye: :world}

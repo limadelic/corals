@@ -29,9 +29,9 @@ defmodule Corals do
     end
   end
 
-  defmacro either? opts_patterns do
+  defmacro either? matchers do
     quote do
-      fn unquote(opts_patterns) -> true; _ -> false end
+      fn opts, globals -> unquote(matchers) |> Enum.any?(&(&1.(opts, globals))) end
     end
   end
 

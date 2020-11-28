@@ -42,17 +42,14 @@ defmodule Dominoes.Players do
         ]
       ],
       [
-        when: is?(%{on: :stuck}),
+        when: either?([
+          is?(%{on: :stuck}),
+          is?(%{on: {:dominate, _, _}})
+        ])
         players: [
           count: fn %{dominoes: dominoes} -> dominoes |> flatten |> sum end
         ]
       ],
-      [
-        when: is?(%{on: {:dominate, _, _}}),
-        players: [
-          count: fn %{dominoes: dominoes} -> dominoes |> flatten |> sum end
-        ]
-      ]
     ]
   }
 
