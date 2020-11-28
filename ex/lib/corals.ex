@@ -11,11 +11,20 @@ defmodule Corals do
     Rules.resolve opts, rules, user_opts
   end
 
-  defmacro is? opts_pattern, global_pattern \\ escape(%{}) do
+  defmacro is? opts_pattern, globals_pattern \\ escape(%{}) do
     quote do
       fn opts, globals ->
         match?(unquote(opts_pattern), opts) and
-        match?(unquote(global_pattern), globals)
+        match?(unquote(globals_pattern), globals)
+      end
+    end
+  end
+
+  defmacro not? opts_pattern, globals_pattern \\ escape(%{}) do
+    quote do
+      fn opts, globals ->
+        not match?(unquote(opts_pattern), opts) or
+        not match?(unquote(globals_pattern), globals)
       end
     end
   end
@@ -23,18 +32,6 @@ defmodule Corals do
   defmacro either? opts_patterns do
     quote do
       fn unquote(opts_patterns) -> true; _ -> false end
-    end
-  end
-
-  defmacro not? opts_pattern do
-    quote do
-      fn unquote(opts_pattern) -> false; _ -> true end
-    end
-  end
-
-  defmacro not? opts_pattern, global_pattern  do
-    quote do
-      fn unquote(opts_pattern), unquote(global_pattern) -> false; _, _ -> true end
     end
   end
 

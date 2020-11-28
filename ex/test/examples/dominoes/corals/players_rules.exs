@@ -36,7 +36,7 @@ defmodule Dominoes.Players do
       [
         when: is?(%{on: {:turn, _, _}}),
         players: [
-          when: is?(%{name: player},%{on: {_, player, _}}),
+          when: is?(%{name: _player},%{on: {_, _player, _}}),
           play: fn %{dominoes: x}, %{_@play: play, on: {_, _, heads}} -> x |> play.(heads) end,
           dominoes: fn %{dominoes: dominoes, play: domino} -> delete dominoes, domino end
         ]
