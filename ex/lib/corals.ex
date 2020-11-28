@@ -1,6 +1,8 @@
 defmodule Corals do
   alias Corals.Rules
 
+  import Macro, only: [escape: 1]
+
   def define name, spec \\ %{} do
     Rules.define name, spec
   end
@@ -9,15 +11,12 @@ defmodule Corals do
     Rules.resolve opts, rules, user_opts
   end
 
-  defmacro is? opts_pattern do
+  defmacro is? opts_pattern, global_pattern \\ escape(%{}) do
     quote do
-      fn unquote(opts_pattern) -> true; _ -> false end
-    end
-  end
-
-  defmacro is? opts_pattern, global_pattern  do
-    quote do
-      fn unquote(opts_pattern), unquote(global_pattern) -> true; _, _ -> false end
+      fn opts, globals ->
+        match?(unquote(opts_pattern), opts) and
+        match?(unquote(global_pattern), globals)
+      end
     end
   end
 
