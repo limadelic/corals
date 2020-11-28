@@ -2,12 +2,11 @@ defmodule StartTest do
   use ExUnit.Case
 
   import Corals
-  import Corals.Helpers
 
   describe "start" do
 
     setup do
-      %{on: :start} |> resolve(:game)
+      %{} |> resolve(:game) |> resolve(:game)
     end
 
     test "55 dominoes available on table", %{table: %{dominoes: dominoes}} do
@@ -23,7 +22,7 @@ defmodule StartTest do
   describe "pick" do
 
     setup do
-      %{on: :start} |> resolve(:game) |> resolve(:game)
+      %{} |> resolve(:game) |> resolve(:game) |> resolve(:game)
     end
 
     test "each player has 10 dominoes", %{players: players} do

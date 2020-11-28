@@ -7,27 +7,31 @@ defmodule Dominoes.Controller do
     require: [:players],
     rules: [
       [
-        _names: fn %{players: players} -> map players, &(&1.name) end,
-        _order: fn %{_names: names} -> names ++ [hd(names)] end,
-        _next: fn
-          %{_order: order, on: {_, player, _}} ->
-            at order, find_index(order, &(&1 == player)) + 1
-          %{_order: order} -> hd order
-        end,
-
-        _@winners: fn players ->
-          sorted = sort_by players, &(&1.count)
-          score = at(sorted, 0).count
-          sorted |> take_while(&(&1.count == score)) |> map(&(&1.name))
-        end
+        when!: not?(%{on: _}),
+        on: :start
       ],
       [
         when!: is?(%{on: :start}),
         on: :pick
       ],
       [
+        when: either?([
+          is?(%{on: :pick}),
+          is?(%{on: {:knock, _, _}}),
+          is?(%{on: {:play, _, _}})
+        ]),
+        _next: fn %{players: players, on: on} ->
+          names = map players, &(&1.name)
+          order = names ++ [hd(names)]
+          case on do
+            {_, player, _} -> at order, find_index(order, &(&1 == player)) + 1
+            _ -> hd order
+          end
+        end,
+      ],
+      [
         when!: is?(%{on: :pick}),
-        on: fn %{_order: order} -> {:turn, hd(order), []} end
+        on: fn %{_next: next} -> {:turn, next, []} end
       ],
       [
         when!: is?(%{on: {:turn, _, _}}),
@@ -57,7 +61,11 @@ defmodule Dominoes.Controller do
       ],
       [
         when!: is?(%{on: :stuck}),
-        _winners: fn %{_@winners: winners, players: players} -> winners.(players) end,
+        _winners: fn %{players: players} ->
+          sorted = sort_by players, &(&1.count)
+          score = at(sorted, 0).count
+          sorted |> take_while(&(&1.count == score)) |> map(&(&1.name))
+        end,
         on: fn
           %{_winners: [winner]} -> {:winner, winner}
           %{_winners: winners} -> {:tie, winners}
