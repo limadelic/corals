@@ -42,16 +42,10 @@ defmodule Dominoes.Table do
         ]
       ],
       [
-        when: is?(%{on: {:play, _, _}}),
-        table: [
-          heads: fn %{_@heads: heads, dominoes: dominoes} -> heads.(dominoes) end,
-          dominoes: fn %{_@place: place, dominoes: dominoes, heads: heads}, %{on: {_,_,domino}} ->
-            place.(dominoes, heads, domino)
-          end
-        ]
-      ],
-      [
-        when: is?(%{on: {:dominate, _, _}}),
+        when: either?([
+          is?(%{on: {:play, _, _}}),
+          is?(%{on: {:dominate, _, _}})
+        ]),
         table: [
           heads: fn %{_@heads: heads, dominoes: dominoes} -> heads.(dominoes) end,
           dominoes: fn %{_@place: place, dominoes: dominoes, heads: heads}, %{on: {_,_,domino}} ->

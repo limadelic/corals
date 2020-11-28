@@ -35,4 +35,10 @@ defmodule Corals do
     end
   end
 
+  defmacro neither? matchers do
+    quote do
+      fn opts, globals -> unquote(matchers) |> Enum.all?(&(not &1.(opts, globals))) end
+    end
+  end
+
 end
