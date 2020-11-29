@@ -1,4 +1,4 @@
-defmodule StartTest do
+defmodule GameRulesTest do
   use ExUnit.Case
 
   import Corals
