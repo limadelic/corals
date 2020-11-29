@@ -5,8 +5,8 @@ defmodule GamePlayTest do
   import Corals.Helpers
 
   defp play do play %{} end
-  defp play %{on: {:winner, _} = game} do game end
-  defp play %{on: {:tie, _} = game} do game end
+  defp play %{on: {:winner, _} = done} do done end
+  defp play %{on: {:tie, _} = done} do done end
   defp play game do game |> resolve(:game) |> play end
 
   test "play a whole game" do
