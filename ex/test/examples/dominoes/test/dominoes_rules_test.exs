@@ -1,5 +1,5 @@
 defmodule DominoesRulesTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   import Corals
 
