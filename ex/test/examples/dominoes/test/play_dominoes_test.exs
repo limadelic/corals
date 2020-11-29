@@ -1,11 +1,10 @@
-defmodule GamePlayTest do
+defmodule PlayDominoesTest do
   use ExUnit.Case
 
-  alias Dominoes.Game, as: Game
   import Corals.Helpers
 
   test "play a whole game" do
-    {result, _} = i Game.play()
+    {result, _} = i Dominoes.play()
     assert result == :winner || result == :tie
   end
 
