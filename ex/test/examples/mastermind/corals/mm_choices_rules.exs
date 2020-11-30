@@ -35,8 +35,8 @@ defmodule MM.Choices do
         choices: fn %{guess: guess, score: score, choices: choices} ->
 
           narrow = fn
-            guess -> true
-            _ -> false
+            ^guess -> true
+            choice -> score != resolve(%{guess: choice, solution: guess}, MM.Score).score
           end
 
           choices |> to_list |> map(fn x -> reject x, &(narrow.(&1)) end) |> to_tuple

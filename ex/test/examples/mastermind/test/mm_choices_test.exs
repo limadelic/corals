@@ -45,7 +45,7 @@ defmodule MM.ChoicesTest do
     setup do
       %{
         solution: [:red, :red, :green, :blue],
-        guess: [:red, :red, :blue, :blue]
+        guess: [:red, :red, :blue, :red]
       } |> resolve(MM.Choices)
     end
 
@@ -53,9 +53,11 @@ defmodule MM.ChoicesTest do
       refute choices |> Tuple.to_list |> Enum.any?(&(Enum.member? &1, guess))
     end
 
-    @tag :wip
-    test "only leaves the ones that would match the guess score" do
-
+    test "only leaves the ones that would match the guess score", %{guess: guess, score: score, choices: choices} do
+      assert score == [:white, :black, :black]
+      assert choices |> Tuple.to_list |> Enum.all?(&(Enum.all? &1, fn choice ->
+        score == resolve(%{guess: choice, solution: guess}, MM.Score).score
+      end))
     end
 
   end

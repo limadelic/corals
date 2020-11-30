@@ -2,16 +2,14 @@ defmodule MM.Guess do
 
   import Corals
 
-  import Enum, only: [random: 1]
+  import Enum, only: [find_value: 2, random: 1]
+  import Tuple, only: [to_list: 1]
 
   define __MODULE__, %{
     require: [MM.Score, MM.Choices],
     rules: [
-      [ when!: is?(%{score: [:black, :black, :black, :black]}) ],
-      [
-        when!: not?(%{choices: {[], _, _, _}}),
-        guess: fn %{choices: {best, _, _, _}} -> random best end,
-      ]
+      when: not?(%{score: [:black, :black, :black, :black]}),
+      guess: fn %{choices: x} -> x |> to_list |> find_value(&(&1 != [] && random &1)) end
     ]
   }
 
