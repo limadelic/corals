@@ -2,7 +2,6 @@ defmodule MM.GuessTest do
   use ExUnit.Case, async: true
 
   import Corals
-  import Corals.Helpers
 
   test "pick the first guess from the best choices" do
     %{guess: guess} = resolve %{}, MM.Guess
