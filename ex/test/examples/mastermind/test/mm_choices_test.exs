@@ -40,4 +40,24 @@ defmodule MM.ChoicesTest do
 
   end
 
+  describe "narrow choices" do
+
+    setup do
+      %{
+        solution: [:red, :red, :green, :blue],
+        guess: [:red, :red, :blue, :blue]
+      } |> resolve(MM.Choices)
+    end
+
+    test "remove the guess from the choices", %{guess: guess, choices: choices} do
+      refute choices |> Tuple.to_list |> Enum.any?(&(Enum.member? &1, guess))
+    end
+
+    @tag :wip
+    test "only leaves the ones that would match the guess score" do
+
+    end
+
+  end
+
 end

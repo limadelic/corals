@@ -1,11 +1,14 @@
 defmodule MM.Choices do
 
   import Corals
-  import Enum, only: [reduce: 3, uniq: 1, count: 2, at: 2]
+  import Enum, only: [reduce: 3, uniq: 1, count: 2, at: 2, map: 2, reject: 2]
+  import Tuple, only: [to_list: 1]
+  import List, only: [to_tuple: 1]
 
   @colors [:red, :yellow, :green, :blue, :purple, :pink]
 
   define __MODULE__, %{
+    require: [MM.Score],
     rules: [
       [
         when: not?(%{choices: _}),
@@ -25,6 +28,19 @@ defmodule MM.Choices do
               true -> {best, better, good, [choice | bad]}
             end
           end
+        end
+      ],
+      [
+        when: is?(%{guess: _}),
+        choices: fn %{guess: guess, score: score, choices: choices} ->
+
+          narrow = fn
+            guess -> true
+            _ -> false
+          end
+
+          choices |> to_list |> map(fn x -> reject x, &(narrow.(&1)) end) |> to_tuple
+
         end
       ]
     ]
