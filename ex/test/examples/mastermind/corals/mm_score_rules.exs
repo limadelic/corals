@@ -1,4 +1,4 @@
-defmodule MMScore do
+defmodule MM.Score do
 
   import Corals
   import Enum, only: [zip: 2, reduce: 3, member?: 2]
