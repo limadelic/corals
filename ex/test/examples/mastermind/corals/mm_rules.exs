@@ -4,7 +4,7 @@ defmodule MM do
   import Enum, only: [random: 1]
 
   def play do play %{} end
-  def play %{score: [:black, :black, :black, :black]} = done do done end
+  def play %{solved: true} = done do done end
   def play %{} = game do play resolve game, __MODULE__ end
   def play solution do play %{solution: solution} end
 
@@ -20,7 +20,7 @@ defmodule MM do
         guesses: fn %{guess: guess} -> [guess] end
       ],
       [
-        when: not?(%{score: [:black, :black, :black, :black]}),
+        when: not?(%{solved: true}),
         guesses: fn %{guesses: guesses, guess: guess} -> guesses ++ [guess] end
       ]
     ]

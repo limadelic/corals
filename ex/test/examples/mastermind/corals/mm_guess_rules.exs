@@ -8,7 +8,7 @@ defmodule MM.Guess do
   define __MODULE__, %{
     require: [MM.Score, MM.Choices],
     rules: [
-      when: not?(%{score: [:black, :black, :black, :black]}),
+      when: not?(%{solved: true}),
       guess: fn %{choices: x} -> x |> to_list |> find_value(&(&1 != [] && random &1)) end
     ]
   }
