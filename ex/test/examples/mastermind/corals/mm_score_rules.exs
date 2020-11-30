@@ -6,6 +6,8 @@ defmodule MM.Score do
 
   define __MODULE__, %{
     rules: [
+      score: [],
+      when: is?(%{guess: _, solution: _}),
       score: fn %{guess: guess, solution: solution} ->
         zip(guess, solution) |> reduce({[],[],[]}, fn
           {x, x}, {guess, solution, score} -> {guess, solution, [:black | score]}

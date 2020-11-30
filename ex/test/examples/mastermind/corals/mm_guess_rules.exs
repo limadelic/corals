@@ -6,8 +6,9 @@ defmodule MM.Guess do
   import List, only: [delete: 2]
 
   define __MODULE__, %{
-    require: [MM.Choices],
+    require: [MM.Score, MM.Choices],
     rules: [
+      [ when!: is?(%{score: [:black, :black, :black, :black]}) ],
       [
         when!: not?(%{choices: {[], _, _, _}}),
         guess: fn %{choices: {best, _, _, _}} -> random best end,
