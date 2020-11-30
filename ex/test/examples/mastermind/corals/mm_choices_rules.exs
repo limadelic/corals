@@ -1,11 +1,11 @@
-defmodule MM.Guess do
+defmodule MM.Choices do
 
   import Corals
-  import Enum, only: [random: 1, reduce: 3, uniq: 1, count: 2, at: 2]
+  import Enum, only: [reduce: 3, uniq: 1, count: 2, at: 2]
 
   @colors [:red, :yellow, :green, :blue, :purple, :pink]
 
-  define :mm_guess, %{
+  define __MODULE__, %{
     rules: [
       [
         when: not?(%{choices: _}),
@@ -26,11 +26,7 @@ defmodule MM.Guess do
             end
           end
         end
-      ],
-#      [
-#        when: not?(%{choices: _}),
-#        guess: fn %{choices: {best, _, _, _}} -> end
-#      ]
+      ]
     ]
   }
 

@@ -4,7 +4,7 @@ defmodule MM.Score do
   import Enum, only: [zip: 2, reduce: 3, member?: 2]
   import List, only: [delete: 2]
 
-  define :mm_score, %{
+  define __MODULE__, %{
     rules: [
       score: fn %{guess: guess, solution: solution} ->
         zip(guess, solution) |> reduce({[],[],[]}, fn

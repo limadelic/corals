@@ -1,4 +1,4 @@
-defmodule MMScoreTest do
+defmodule MM.ScoreTest do
   use ExUnit.Case, async: true
 
   import Corals
@@ -6,7 +6,7 @@ defmodule MMScoreTest do
   @solution [:red, :green, :blue, :yellow]
 
   def score guess do
-    (%{solution: @solution, guess: guess} |> resolve(:mm_score)).score
+    (%{solution: @solution, guess: guess} |> resolve(MM.Score)).score
   end
 
   test "win with 4 blacks" do

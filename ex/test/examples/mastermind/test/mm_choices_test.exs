@@ -1,14 +1,14 @@
-defmodule MMGuessTest do
+defmodule MM.ChoicesTest do
   use ExUnit.Case, async: true
 
   import Corals
 
   describe "choices" do
 
-    setup do resolve %{}, :mm_guess end
+    setup do resolve %{}, MM.Choices end
 
     test "there r 1296", %{choices: choices} do
-      assert choices |> Tuple.to_list |> Enum.map(&Enum.count/1) |> Enum.sum == 1296
+      assert 1296 == choices |> Tuple.to_list |> Enum.map(&Enum.count/1) |> Enum.sum
     end
 
     test "the best choices have 2x2 colors", %{choices: {best, _, _, _}} do
@@ -38,12 +38,6 @@ defmodule MMGuessTest do
       end
     end
 
-  end
-
-  @tag :wip
-  test "start with any 2x2 colors", %{guess: guess} do
-    assert length Enum.uniq guess == 2
-    assert Enum.count guess, guess[0] == 2
   end
 
 end
