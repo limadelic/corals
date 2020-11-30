@@ -17,6 +17,14 @@ defmodule MMScoreTest do
     assert score([:red, :green, :blue, :green]) == [:black, :black, :black]
   end
 
+  test "some whites" do
+    assert score([:pink, :purple, :red, :green]) == [:white, :white]
+  end
+
+  test "mixed" do
+    assert score([:pink, :green, :red, :yellow]) == [:white, :black, :black]
+  end
+
   test "score nothing" do
     assert score([:pink, :pink, :pink, :pink]) == []
   end
