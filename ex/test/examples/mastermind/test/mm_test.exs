@@ -1,15 +1,16 @@
 defmodule MMTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   import Corals.Helpers
 
   test "guess in less than 5" do
-    %{attempts: attempts, solution: solution} = MM.play()
+    %{guesses: guesses, solution: solution} = MM.play()
 
-    i :solved, solution
-    i :in, attempts
+    p "\nMastermind"
+    i :solution, solution
+    i :guesses, guesses
 
-    assert attempts <= 7
+    assert length(guesses) <= 7
   end
 
 end

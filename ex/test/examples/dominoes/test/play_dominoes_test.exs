@@ -4,7 +4,11 @@ defmodule PlayDominoesTest do
   import Corals.Helpers
 
   test "play a whole game" do
-    {result, _} = i Dominoes.play()
+    {result, winner} = Dominoes.play()
+
+    p "\nDominoes"
+    i result, winner
+
     assert result == :winner || result == :tie
   end
 

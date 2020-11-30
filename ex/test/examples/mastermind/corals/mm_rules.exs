@@ -16,11 +16,12 @@ defmodule MM do
         solution: fn %{choices: {x1, x2, x3, x4}} -> random x1 ++ x2 ++ x3 ++ x4 end
       ],
       [
-        when!: not?(%{attempts: _}),
-        attempts: 0
+        when!: not?(%{guesses: _}),
+        guesses: fn %{guess: guess} -> [guess] end
       ],
       [
-        attempts: fn %{attempts: x} -> x + 1 end
+        when: not?(%{score: [:black, :black, :black, :black]}),
+        guesses: fn %{guesses: guesses, guess: guess} -> guesses ++ [guess] end
       ]
     ]
   }
