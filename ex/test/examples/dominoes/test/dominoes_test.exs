@@ -4,10 +4,12 @@ defmodule DominoesTest do
   import Corals.Helpers
 
   test "play a whole game" do
-    {result, winner} = Dominoes.play()
+    %{on: {result, winner}, table: %{dominoes: dominoes}, players: players} = Dominoes.play()
 
-    p "\nDominoes"
+    p "\n\n:: Dominoes ::\n"
     i result, winner
+    i :table, dominoes
+    i :players, Enum.map(players, &({&1.name, &1.count, &1.dominoes}))
 
     assert result == :winner || result == :tie
   end

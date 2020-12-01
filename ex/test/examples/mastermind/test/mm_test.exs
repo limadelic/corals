@@ -6,7 +6,7 @@ defmodule MMTest do
   test "guess in less than 5" do
     %{guesses: guesses, solution: solution} = MM.play()
 
-    p "\nMastermind"
+    p "\n\n:: Mastermind ::\n"
     i :solution, solution
     i :guesses, guesses
 
