@@ -2,7 +2,7 @@ defmodule WhenTest do
   use ExUnit.Case, async: true
 
   import Corals.Resolver
-  import Corals, only: [is?: 1, not?: 1, either?: 1, neither?: 1]
+  import Corals, except: [resolve: 2]
 
   describe "before" do
 
@@ -250,6 +250,65 @@ defmodule WhenTest do
 
       assert resolve(%{x: 1}, rules).its == :odd
       assert resolve(%{x: 2}, rules).its == :even
+    end
+
+  end
+
+  describe "deep" do
+
+    test "value in the leave" do
+
+      opts= %{
+        value: :at_root,
+        leave: %{
+          value: :at_leave
+        }
+      }
+
+      rules = [
+        [
+          leave: [
+            when: is?(%{value: :at_leave}, %{value: :at_root}),
+            value: :found
+          ]
+        ],
+        [
+          leave: [
+            when: not?(%{value: :found}),
+            value: :not_found
+          ]
+        ]
+      ]
+
+      assert resolve(opts, rules).leave.value == :found
+    end
+
+    test "values in the leaves" do
+
+      opts = %{
+        value: :at_root,
+        leaves: [
+          %{value: :at_leave1},
+          %{value: :at_leave2}
+        ]
+      }
+
+      rules = [
+        [
+          leaves: [
+            when: is?(%{value: :at_leave1}, %{value: :at_root}),
+            value: :found
+          ]
+        ],
+        [
+          leaves: [
+            when: not?(%{value: :found}),
+            value: :not_found
+          ]
+        ]
+      ]
+
+      assert resolve(opts, rules).leaves == [%{value: :found}, %{value: :not_found}]
     end
 
   end
