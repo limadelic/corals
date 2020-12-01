@@ -3,8 +3,8 @@ defmodule Dominoes.Controller do
   import Corals
   import Enum, only: [find: 2, find_index: 2, at: 2, map: 2, all?: 2, sort_by: 2, take_while: 2]
 
-  define :controller, %{
-    require: [:players],
+  define __MODULE__, %{
+    require: [Dominoes.Players],
     rules: [
       [
         when!: not?(%{on: _}),

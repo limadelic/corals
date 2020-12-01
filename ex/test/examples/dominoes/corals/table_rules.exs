@@ -6,7 +6,7 @@ defmodule Dominoes.Table do
 
   @dominoes for x <- 0..9, y <- x..9, do: [x,y]
 
-  define :table, %{
+  define __MODULE__, %{
     rules: [
       [
         table: [

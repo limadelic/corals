@@ -6,8 +6,8 @@ defmodule Dominoes.Players do
 
   @names [:player, :right, :front, :left]
 
-  define :players, %{
-    require: [:table],
+  define __MODULE__, %{
+    require: [Dominoes.Table],
     rules: [
       [
         _@play: fn

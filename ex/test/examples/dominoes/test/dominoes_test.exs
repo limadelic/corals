@@ -1,4 +1,4 @@
-defmodule PlayDominoesTest do
+defmodule DominoesTest do
   use ExUnit.Case
 
   import Corals.Helpers

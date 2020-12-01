@@ -1,4 +1,4 @@
-defmodule DominoesRulesTest do
+defmodule DominoesSpecTest do
   use ExUnit.Case, async: true
 
   import Corals
@@ -6,7 +6,7 @@ defmodule DominoesRulesTest do
   describe "start" do
 
     setup do
-      %{} |> resolve(:dominoes) |> resolve(:dominoes)
+      %{} |> resolve(Dominoes) |> resolve(Dominoes)
     end
 
     test "55 dominoes available on table", %{table: %{dominoes: dominoes}} do
@@ -22,7 +22,7 @@ defmodule DominoesRulesTest do
   describe "pick" do
 
     setup do
-      %{} |> resolve(:dominoes) |> resolve(:dominoes) |> resolve(:dominoes)
+      %{} |> resolve(Dominoes) |> resolve(Dominoes) |> resolve(Dominoes)
     end
 
     test "each player has 10 dominoes", %{players: players} do
@@ -48,7 +48,7 @@ defmodule DominoesRulesTest do
           %{name: :player, dominoes: [[9,9],[8,8]]},
           %{name: :right, dominoes: [[0,0]]}
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "the player plays the first domino", %{on: {:play, :player, domino}} do
@@ -69,7 +69,7 @@ defmodule DominoesRulesTest do
         players: [
           %{name: :player, dominoes: [[0,0],[9,8],[7,7]]},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "the player find a domino to play", %{on: {:play, :player, domino}} do
@@ -91,7 +91,7 @@ defmodule DominoesRulesTest do
         players: [
           %{name: :player, dominoes: [[0,0],[7,7]]},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "the player knocked", %{on: on} do
@@ -114,7 +114,7 @@ defmodule DominoesRulesTest do
           %{name: :player},
           %{name: :next}
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "the domino goes on then table", %{table: table} do
@@ -141,7 +141,7 @@ defmodule DominoesRulesTest do
           %{name: :player},
           %{name: :next}
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "the domino goes on then table", %{table: table} do
@@ -164,7 +164,7 @@ defmodule DominoesRulesTest do
       }
 
       Enum.reduce dominoes, game, fn domino, game ->
-        %{game | on: {:play, :player, domino}} |> resolve(:table)
+        %{game | on: {:play, :player, domino}} |> resolve(Dominoes.Table)
       end
     end
 
@@ -189,7 +189,7 @@ defmodule DominoesRulesTest do
           %{name: :knocker},
           %{name: :next, play: [9,9]}
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "it's next player turn", %{on: on} do
@@ -208,7 +208,7 @@ defmodule DominoesRulesTest do
           %{name: :player},
           %{name: :last},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "game is stuck", %{on: on} do
@@ -228,7 +228,7 @@ defmodule DominoesRulesTest do
           %{name: :front, dominoes: [[0,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "dominoes r counted", %{players: players} do
@@ -252,7 +252,7 @@ defmodule DominoesRulesTest do
           %{name: :front, dominoes: [[0,0],[5,5],[5,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "dominoes r counted", %{players: players} do
@@ -276,7 +276,7 @@ defmodule DominoesRulesTest do
           %{name: :front, dominoes: [[0,0],[5,5],[5,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "player has no more dominoes", %{players: players} do
@@ -301,7 +301,7 @@ defmodule DominoesRulesTest do
           %{name: :front, dominoes: [[0,0]]},
           %{name: :left, dominoes: [[8,8]]},
         ]
-      } |> resolve(:dominoes)
+      } |> resolve(Dominoes)
     end
 
     test "domino goes on the table", %{table: %{dominoes: dominoes}} do
