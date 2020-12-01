@@ -60,6 +60,23 @@ defmodule Dominoes.Table do
             _ -> []
           end
         ]
+      ],
+      [
+        when: either?([
+          is?(%{on: {:dominate, _, _}}),
+          is?(%{on: :stuck})
+        ]),
+        table: [
+          when: is?(%{dominoes: _}),
+          snake: fn %{dominoes: dominoes} ->
+            snake = dominoes |> Enum.chunk_every(7)
+            [
+              hd(snake) | tl(snake) |> Enum.map_every(2, fn x ->
+                x |> Enum.reverse |> Enum.map(&Enum.reverse/1)
+              end)
+            ]
+          end
+        ]
       ]
     ]
   }
