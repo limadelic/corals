@@ -13,8 +13,8 @@ defmodule Corals.Helpers do
     p ""
   end
 
-  def starts_with? x, prefix do String.match? "#{x}", ~r/^#{prefix}/ end
-  def ends_with? x, suffix do String.match? "#{x}", ~r/#{suffix}$/ end
+  def starts_with? x, prefix do "#{x}" =~ ~r/^#{prefix}/ end
+  def ends_with? x, suffix do "#{x}" =~ ~r/#{suffix}$/ end
 
   def merge map, {k, v} do merge map, %{k => v} end
   def merge left, right do Map.merge left, right, &deep/3 end
@@ -26,7 +26,7 @@ defmodule Corals.Helpers do
     map |> drop(keys(map, exp)) |> to_list |> map(fn {k, v} -> {k, drop_deep(v, exp)} end) |> into(%{})
   end
   def drop_deep x, _ do x end
-  defp keys map, exp do map |> keys |> filter(&(String.match? "#{&1}", exp)) end
+  defp keys map, exp do map |> keys |> filter(&("#{&1}" =~ exp)) end
 
   def is_map_list? x do is_list(x) && all?(x, &(is_map &1)) end
 
