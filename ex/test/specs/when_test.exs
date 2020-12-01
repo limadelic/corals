@@ -118,11 +118,10 @@ defmodule WhenTest do
       assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
     end
 
-    @tag :wip
     test "when" do
       rules = [
         hello: :world,
-#        when: is?(%{hello: x} when is_atom x),
+        when: is?(%{hello: x} when is_atom x),
         it: :greeted
       ]
       assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
@@ -181,11 +180,10 @@ defmodule WhenTest do
       assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
     end
 
-    @tag :wip
     test "when" do
       rules = [
         hello: :world,
-#        when: not?(%{hello: x} when is_list x),
+        when: not?(%{hello: x} when is_list x),
         it: :greeted
       ]
       assert %{} |> resolve(rules) == %{it: :greeted, hello: :world}
@@ -244,10 +242,9 @@ defmodule WhenTest do
 
   describe "shortcut!" do
 
-    @tag :wip
     test "odd/even" do
       rules = [
-#        [when!: is?(%{x: x} when rem(x, 2) == 0), its: :even],
+        [when!: is?(%{x: x} when rem(x, 2) == 0), its: :even],
         [its: :odd]
       ]
 

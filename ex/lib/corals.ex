@@ -1,7 +1,7 @@
 defmodule Corals do
   alias Corals.Rules
 
-  import Macro, only: [escape: 1]
+  import Corals.Fun
 
   def define name, spec \\ %{} do
     Rules.define name, spec
@@ -11,7 +11,13 @@ defmodule Corals do
     Rules.resolve opts, rules, user_opts
   end
 
-  defmacro is? opts_pattern, globals_pattern \\ escape(%{}) do
+  defmacro is? pattern do
+    quote do
+      fn unquote(pattern) -> true; _ -> false end
+    end
+  end
+
+  defmacro is? opts_pattern, globals_pattern do
     quote do
       fn
         unquote(opts_pattern), unquote(globals_pattern) -> true
@@ -20,7 +26,13 @@ defmodule Corals do
     end
   end
 
-  defmacro not? opts_pattern, globals_pattern \\ escape(%{}) do
+  defmacro not? pattern do
+    quote do
+      fn unquote(pattern) -> false; _ -> true end
+    end
+  end
+
+  defmacro not? opts_pattern, globals_pattern do
     quote do
       fn
         unquote(opts_pattern), unquote(globals_pattern) -> false
@@ -31,13 +43,13 @@ defmodule Corals do
 
   defmacro either? matchers do
     quote do
-      fn opts, globals -> unquote(matchers) |> Enum.any?(&(&1.(opts, globals))) end
+      fn opts, globals -> unquote(matchers) |> Enum.any?(&(fun &1, opts, globals)) end
     end
   end
 
   defmacro neither? matchers do
     quote do
-      fn opts, globals -> unquote(matchers) |> Enum.all?(&(not &1.(opts, globals))) end
+      fn opts, globals -> unquote(matchers) |> Enum.all?(&(not fun &1, opts, globals)) end
     end
   end
 
