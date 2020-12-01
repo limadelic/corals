@@ -13,18 +13,18 @@ defmodule Corals do
 
   defmacro is? opts_pattern, globals_pattern \\ escape(%{}) do
     quote do
-      fn opts, globals ->
-        match?(unquote(opts_pattern), opts) and
-        match?(unquote(globals_pattern), globals)
+      fn
+        unquote(opts_pattern), unquote(globals_pattern) -> true
+        _, _ -> false
       end
     end
   end
 
   defmacro not? opts_pattern, globals_pattern \\ escape(%{}) do
     quote do
-      fn opts, globals ->
-        not match?(unquote(opts_pattern), opts) or
-        not match?(unquote(globals_pattern), globals)
+      fn
+        unquote(opts_pattern), unquote(globals_pattern) -> false
+        _, _ -> true
       end
     end
   end
