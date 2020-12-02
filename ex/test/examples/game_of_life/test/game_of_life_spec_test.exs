@@ -1,8 +1,6 @@
 defmodule GoLSpecTest do
   use ExUnit.Case, async: true
 
-  import Corals
-
   describe "death" do
 
     @death [
