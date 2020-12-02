@@ -62,4 +62,22 @@ defmodule GoLSpecTest do
 
   end
 
+  describe "overcrowding" do
+
+    test "only the corners survive" do
+      cells = [
+        1, 1, 1,
+        1, 1, 1,
+        1, 1, 1
+      ]
+      result = [
+        1, 0, 1,
+        0, 0, 0,
+        1, 0, 1
+      ]
+      assert result == resolve(%{cells: cells}, GoL).cells
+    end
+
+  end
+
 end

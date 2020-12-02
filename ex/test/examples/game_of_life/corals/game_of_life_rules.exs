@@ -29,6 +29,7 @@ defmodule GoL do
         |> map(fn
           {1, nb} when nb < 2 -> 0
           {1, nb} when nb == 2 or nb == 3 -> 1
+          {1, nb} when nb > 3 -> 0
           {_, _} -> 0
         end)
       end
