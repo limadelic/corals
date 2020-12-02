@@ -80,4 +80,36 @@ defmodule GoLSpecTest do
 
   end
 
+  describe "reproduction" do
+
+    test "triangle" do
+      cells = [
+        1, 0, 1,
+        0, 0, 0,
+        0, 1, 0
+      ]
+      result = [
+        0, 0, 0,
+        0, 1, 0,
+        0, 0, 0
+      ]
+      assert result == resolve(%{cells: cells}, GoL).cells
+    end
+
+    test "diamond" do
+      cells = [
+        1, 0, 1,
+        0, 1, 0,
+        1, 0, 1
+      ]
+      result = [
+        0, 1, 0,
+        1, 0, 1,
+        0, 1, 0
+      ]
+      assert result == resolve(%{cells: cells}, GoL).cells
+    end
+
+  end
+
 end
