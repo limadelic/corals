@@ -11,9 +11,8 @@ defmodule GoLSpecTest do
       0, 0, 0
     ]
 
-    @tag :wip
     test "dead stays dead" do
-      assert @death == %{cells: @death} |> resolve(GoL)
+      assert @death == resolve(%{cells: @death}, GoL).cells
     end
 
   end
