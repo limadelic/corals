@@ -1,38 +1,43 @@
 defmodule GoL do
 
   import Corals
-  import Enum, only: [with_index: 1, map: 2, filter: 2]
+  import Enum, only: [with_index: 1, map: 2, filter: 2, at: 2, sum: 1]
 
   define __MODULE__, %{
     rules: [
 
-      _@coords: fn i, size -> [div(i, size), rem(i, size)] end,
-      _@index: fn [x, y], size -> x * size + y end,
+      _neighbors: [
+        [-1, -1], [0, -1], [1, -1],
+        [-1,  0],          [1,  0],
+        [-1,  1], [0,  1], [1,  1]
+      ],
 
-      _@neighbors: fn [x, y], size ->
-        [[-1, -1], [0, -1], [1, -1],
-         [-1,  0],          [1,  0],
-         [-1,  1], [0,  1], [1,  1]]
+      _@find: fn neighbors, index, size ->
+        [x, y] = [div(index, size), rem(index, size)]
+
+        neighbors
         |> map(fn [x1, y1] -> [x + x1, y + y1] end)
         |> filter(fn [x, y] -> x >= 0 && y >= 0 && x < size && y < size end)
+        |> map(fn [x, y] -> x * size + y end)
       end,
 
-      cells: fn %{cells: cells, _@neighbors: nb, _@coords: c, _@index: i} ->
+      _@count: fn neighbors, cells -> neighbors |> map(&(at cells, &1)) |> sum end,
+
+      _@evolve: fn
+        {1, neighbors} when neighbors < 2 -> 0
+        {1, neighbors} when neighbors == 2 or neighbors == 3 -> 1
+        {1, neighbors} when neighbors > 3 -> 0
+        {0, neighbors} when neighbors == 3 -> 1
+        {0, _} -> 0
+      end,
+
+      cells: fn %{cells: cells, _neighbors: neighbors, _@find: find, _@count: count, _@evolve: evolve} ->
         size = cells |> length |> :math.sqrt |> round
-        cells
-        |> with_index
-        |> map(fn {x, i} -> {x, c.(i, size) } end)
-        |> map(fn {x, c} -> {x, nb.(c, size)} end)
-        |> map(fn {x, nbs} -> {x, nbs |> map(&(i.(&1, size)))}end)
-        |> map(fn {x, nbs} -> {x, nbs |> map(&(Enum.at cells, &1))}end)
-        |> map(fn {x, nbs} -> {x, nbs |> Enum.sum} end)
-        |> map(fn
-          {1, nb} when nb < 2 -> 0
-          {1, nb} when nb == 2 or nb == 3 -> 1
-          {1, nb} when nb > 3 -> 0
-          {0, nb} when nb == 3 -> 1
-          {x, _} -> x
-        end)
+
+        with_index(cells)
+        |> map(fn {cell, index} -> {cell, find.(neighbors, index, size)} end)
+        |> map(fn {cell, neighbors} -> {cell, count.(neighbors, cells)} end)
+        |> map(&(evolve.(&1)))
       end
 
     ]
