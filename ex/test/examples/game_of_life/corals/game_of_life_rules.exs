@@ -3,6 +3,12 @@ defmodule GoL do
   import Corals
   import Enum, only: [with_index: 1, map: 2, filter: 2, at: 2, sum: 1]
 
+  def evolve cells do evolve cells, 1 end
+  def evolve cells, 0 do cells.cells end
+  def evolve cells, times do
+    %{cells: cells} |> resolve(__MODULE__) |> evolve(times - 1)
+  end
+
   define __MODULE__, %{
     rules: [
 

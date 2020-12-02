@@ -12,7 +12,7 @@ defmodule GoLSpecTest do
     ]
 
     test "dead stays dead" do
-      assert @death == resolve(%{cells: @death}, GoL).cells
+      assert @death == GoL.evolve @death
     end
 
     test "lonely cell dies" do
@@ -21,7 +21,7 @@ defmodule GoLSpecTest do
         0, 1, 0,
         0, 0, 0
       ]
-      assert @death == resolve(%{cells: cells}, GoL).cells
+      assert @death == GoL.evolve cells
     end
 
     test "isolated pair dies" do
@@ -30,7 +30,7 @@ defmodule GoLSpecTest do
         0, 1, 0,
         0, 0, 0
       ]
-      assert @death == resolve(%{cells: cells}, GoL).cells
+      assert @death == GoL.evolve cells
     end
 
   end
@@ -38,12 +38,12 @@ defmodule GoLSpecTest do
   describe "survive in numbers" do
 
     test "cluster" do
-      cluster = [
+      cells = [
         1, 1, 0,
         1, 1, 0,
         0, 0, 0
       ]
-      assert cluster == resolve(%{cells: cluster}, GoL).cells
+      assert cells == GoL.evolve cells
     end
 
     test "rect angle" do
@@ -57,7 +57,7 @@ defmodule GoLSpecTest do
         1, 0, 0,
         1, 1, 0
       ]
-      assert result == resolve(%{cells: cells}, GoL).cells
+      assert result == GoL.evolve cells
     end
 
   end
@@ -75,7 +75,7 @@ defmodule GoLSpecTest do
         0, 0, 0,
         1, 0, 1
       ]
-      assert result == resolve(%{cells: cells}, GoL).cells
+      assert result == GoL.evolve cells
     end
 
   end
@@ -93,7 +93,7 @@ defmodule GoLSpecTest do
         0, 1, 0,
         0, 0, 0
       ]
-      assert result == resolve(%{cells: cells}, GoL).cells
+      assert result == GoL.evolve cells
     end
 
     test "diamond" do
@@ -107,7 +107,7 @@ defmodule GoLSpecTest do
         1, 0, 1,
         0, 1, 0
       ]
-      assert result == resolve(%{cells: cells}, GoL).cells
+      assert result == GoL.evolve cells
     end
 
   end
