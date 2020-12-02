@@ -12,7 +12,8 @@ defmodule GoL do
         [-1,  1], [0,  1], [1,  1]
       ],
 
-      _@find: fn neighbors, index, size ->
+      _@find: fn neighbors, cells, index ->
+         size = cells |> length |> :math.sqrt |> round
         [x, y] = [div(index, size), rem(index, size)]
 
         neighbors
@@ -32,10 +33,8 @@ defmodule GoL do
       end,
 
       cells: fn %{cells: cells, _neighbors: neighbors, _@find: find, _@count: count, _@evolve: evolve} ->
-        size = cells |> length |> :math.sqrt |> round
-
         with_index(cells)
-        |> map(fn {cell, index} -> {cell, find.(neighbors, index, size)} end)
+        |> map(fn {cell, index} -> {cell, find.(neighbors, cells, index)} end)
         |> map(fn {cell, neighbors} -> {cell, count.(neighbors, cells)} end)
         |> map(&(evolve.(&1)))
       end
