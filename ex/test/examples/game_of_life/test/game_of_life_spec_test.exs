@@ -15,6 +15,15 @@ defmodule GoLSpecTest do
       assert @death == resolve(%{cells: @death}, GoL).cells
     end
 
+    test "lonely cell dies" do
+      cells = [
+        0, 0, 0,
+        0, 1, 0,
+        0, 0, 0
+      ]
+      assert @death == resolve(%{cells: cells}, GoL).cells
+    end
+
   end
 
 end
