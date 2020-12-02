@@ -28,6 +28,7 @@ defmodule GoL do
         |> map(fn {x, nbs} -> {x, nbs |> Enum.sum} end)
         |> map(fn
           {1, nb} when nb < 2 -> 0
+          {1, nb} when nb == 2 or nb == 3 -> 1
           {_, _} -> 0
         end)
       end

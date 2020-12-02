@@ -24,6 +24,42 @@ defmodule GoLSpecTest do
       assert @death == resolve(%{cells: cells}, GoL).cells
     end
 
+    test "isolated pair dies" do
+      cells = [
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 0
+      ]
+      assert @death == resolve(%{cells: cells}, GoL).cells
+    end
+
+  end
+
+  describe "survive in numbers" do
+
+    test "cluster" do
+      cluster = [
+        1, 1, 0,
+        1, 1, 0,
+        0, 0, 0
+      ]
+      assert cluster == resolve(%{cells: cluster}, GoL).cells
+    end
+
+    test "rect angle" do
+      cells = [
+        1, 0, 0,
+        1, 0, 0,
+        1, 1, 1
+      ]
+      result = [
+        0, 0, 0,
+        1, 0, 0,
+        1, 1, 0
+      ]
+      assert result == resolve(%{cells: cells}, GoL).cells
+    end
+
   end
 
 end
