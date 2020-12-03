@@ -9,7 +9,7 @@ defmodule GoL.Cells do
 
       _@evolve: fn
         {1, neighbors} when neighbors < 2 -> 0
-        {1, neighbors} when neighbors == 2 or neighbors == 3 -> 1
+        {1, neighbors} when neighbors in [2,3] -> 1
         {1, neighbors} when neighbors > 3 -> 0
         {0, neighbors} when neighbors == 3 -> 1
         {0, _} -> 0
