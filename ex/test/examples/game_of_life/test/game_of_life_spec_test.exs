@@ -4,9 +4,9 @@ defmodule GoLSpecTest do
   describe "death" do
 
     @death [
-      0, 0, 0,
-      0, 0, 0,
-      0, 0, 0
+      "   ",
+      "   ",
+      "   "
     ]
 
     test "dead stays dead" do
@@ -24,9 +24,9 @@ defmodule GoLSpecTest do
 
     test "isolated pair dies" do
       cells = [
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 0
+        "█  ",
+        " █ ",
+        "   "
       ]
       assert @death == GoL.evolve cells
     end

@@ -3,7 +3,7 @@ defmodule GoL do
   import Corals
 
   define __MODULE__, %{
-    require: [GoL.Cells]
+    require: [GoL.Out]
   }
 
   def evolve cells do evolve cells, 1 end

@@ -4,7 +4,6 @@ defmodule GoL.Neighbors do
   import Enum, only: [map: 2, filter: 2, at: 2, sum: 1]
 
   define __MODULE__, %{
-    require: [GoL.In],
     rules: [
 
       _neighbors: [
@@ -13,8 +12,7 @@ defmodule GoL.Neighbors do
         [-1,  1], [0,  1], [1,  1]
       ],
 
-      _@find: fn neighbors, cells, index ->
-         size = cells |> length |> :math.sqrt |> round
+      _@find: fn neighbors, index, size ->
         [x, y] = [div(index, size), rem(index, size)]
 
         neighbors
