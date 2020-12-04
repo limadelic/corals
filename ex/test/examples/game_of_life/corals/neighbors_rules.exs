@@ -4,6 +4,7 @@ defmodule GoL.Neighbors do
   import Enum, only: [map: 2, filter: 2, at: 2, sum: 1]
 
   define __MODULE__, %{
+    require: [GoL.In],
     rules: [
 
       _neighbors: [
