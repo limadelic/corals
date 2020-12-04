@@ -16,7 +16,7 @@ defmodule GoLSpecTest do
     test "lonely cell dies" do
       cells = [
         "   ",
-        " O ",
+        " ▉ ",
         "   "
       ]
       assert @death == GoL.evolve cells
