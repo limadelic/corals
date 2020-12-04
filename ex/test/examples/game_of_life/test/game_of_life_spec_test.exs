@@ -16,7 +16,7 @@ defmodule GoLSpecTest do
     test "lonely cell dies" do
       cells = [
         "   ",
-        " ▉ ",
+        " ▊ ",
         "   "
       ]
       assert @death == GoL.evolve cells
@@ -24,8 +24,8 @@ defmodule GoLSpecTest do
 
     test "isolated pair dies" do
       cells = [
-        "█  ",
-        " █ ",
+        "▊  ",
+        " ▊ ",
         "   "
       ]
       assert @death == GoL.evolve cells
@@ -37,23 +37,23 @@ defmodule GoLSpecTest do
 
     test "cluster" do
       cells = [
-        1, 1, 0,
-        1, 1, 0,
-        0, 0, 0
+        "▊▊ ",
+        "▊▊ ",
+        "   "
       ]
       assert cells == GoL.evolve cells
     end
 
     test "rect angle" do
       cells = [
-        1, 0, 0,
-        1, 0, 0,
-        1, 1, 1
+        "▊  ",
+        "▊  ",
+        "▊▊▊"
       ]
       result = [
-        0, 0, 0,
-        1, 0, 0,
-        1, 1, 0
+        "   ",
+        "▊  ",
+        "▊▊ "
       ]
       assert result == GoL.evolve cells
     end
@@ -64,14 +64,14 @@ defmodule GoLSpecTest do
 
     test "only the corners survive" do
       cells = [
-        1, 1, 1,
-        1, 1, 1,
-        1, 1, 1
+        "▊▊▊",
+        "▊▊▊",
+        "▊▊▊"
       ]
       result = [
-        1, 0, 1,
-        0, 0, 0,
-        1, 0, 1
+        "▊ ▊",
+        "   ",
+        "▊ ▊"
       ]
       assert result == GoL.evolve cells
     end
@@ -82,28 +82,28 @@ defmodule GoLSpecTest do
 
     test "triangle" do
       cells = [
-        1, 0, 1,
-        0, 0, 0,
-        0, 1, 0
+        "▊ ▊",
+        "   ",
+        " ▊ "
       ]
       result = [
-        0, 0, 0,
-        0, 1, 0,
-        0, 0, 0
+        "   ",
+        " ▊ ",
+        "   "
       ]
       assert result == GoL.evolve cells
     end
 
     test "diamond" do
       cells = [
-        1, 0, 1,
-        0, 1, 0,
-        1, 0, 1
+        "▊ ▊",
+        " ▊ ",
+        "▊ ▊"
       ]
       result = [
-        0, 1, 0,
-        1, 0, 1,
-        0, 1, 0
+        " ▊ ",
+        "▊ ▊",
+        " ▊ "
       ]
       assert result == GoL.evolve cells
     end

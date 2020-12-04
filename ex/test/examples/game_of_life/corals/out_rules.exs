@@ -9,7 +9,7 @@ defmodule GoL.Out do
       [
         when: is?(%{_strings?: true}),
         cells: fn %{cells: cells, _size: size, _char: char} ->
-          cells |> map(fn 0 -> " "; _ -> "#{char}" end) |> chunk_every(size) |> map(&join/1)
+          cells |> map(fn 0 -> " "; _ -> to_string [char] end) |> chunk_every(size) |> map(&join/1)
         end
       ]
     ]
