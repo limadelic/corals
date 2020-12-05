@@ -9,12 +9,11 @@ defmodule GoL do
     require: [GoL.Out]
   }
 
-  def evolve cells do evolve cells, 1 end
+  def evolve %{} = cells do resolve cells, __MODULE__ end
+  def evolve cells do evolve(%{cells: cells}).cells end
   def evolve cells, 0 do cells.cells end
-  def evolve cells, times do
-    %{cells: cells} |> resolve(__MODULE__) |> evolve(times - 1)
-  end
+  def evolve cells, times do cells |> evolve |> info |> evolve(times - 1) end
 
-  def info cells do clear(); map cells, &(p &1) end
+  def info cells do clear(); map cells, &(p &1); cells end
 
 end
