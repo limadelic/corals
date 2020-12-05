@@ -1,4 +1,4 @@
-defmodule GoLSpecTest do
+defmodule GoLSpecs do
   use ExUnit.Case, async: true
 
   describe "death" do
