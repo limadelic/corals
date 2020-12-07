@@ -9,10 +9,11 @@ defmodule GoL do
     require: [GoL.Out]
   }
 
-  def evolve %{} = game do resolve game, __MODULE__ end
-  def evolve cells, 0 do cells end
-  def evolve %{} = game, times do game |> evolve |> info |> evolve(times - 1) end
+  def evolve %{times: 0} = game do game end
+  def evolve %{times: _} = game do game |> do_evolve |> info |> evolve end
+  def evolve game do do_evolve game end
 
-  def info %{cells: cells} = game do clear(); map cells, &(p &1); :timer.sleep 200; game end
+  defp do_evolve game do resolve game, __MODULE__ end
+  defp info %{cells: cells} = game do clear(); map cells, &(p &1); :timer.sleep 200; game end
 
 end
