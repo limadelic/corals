@@ -15,7 +15,7 @@ defmodule GoL.Cells do
         {0, _} -> 0
       end,
 
-      cells: fn %{cells: cells, _size: size, _neighbors: neighbors, _@find: find, _@count: count, _@evolve: evolve} ->
+      cells: fn %{cells: cells, size: size, _neighbors: neighbors, _@find: find, _@count: count, _@evolve: evolve} ->
         with_index(cells)
         |> map(fn {cell, index} -> {cell, find.(neighbors, index, size)} end)
         |> map(fn {cell, neighbors} -> {cell, count.(neighbors, cells)} end)

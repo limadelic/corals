@@ -7,7 +7,7 @@ defmodule GoL.Out do
     require: [GoL.Cells],
     rules: [
       [
-        cells: fn %{cells: cells, _size: {width, _}, _char: char} ->
+        cells: fn %{cells: cells, size: [width, _], _char: char} ->
           cells |> map(fn 0 -> " "; _ -> to_string [char] end) |> chunk_every(width) |> map(&join/1)
         end
       ],

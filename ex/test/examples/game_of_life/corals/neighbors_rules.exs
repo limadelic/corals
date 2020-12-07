@@ -12,7 +12,7 @@ defmodule GoL.Neighbors do
         [-1,  1], [0,  1], [1,  1]
       ],
 
-      _@find: fn neighbors, index, {width, height} ->
+      _@find: fn neighbors, index, [width, height] ->
         [x, y] = [rem(index, width), div(index, width)]
 
         neighbors
