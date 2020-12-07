@@ -1,6 +1,10 @@
 defmodule GoLSpecs do
   use ExUnit.Case, async: true
 
+  def verify expected, actual do
+   assert expected == GoL.evolve(%{cells: actual}).cells
+  end
+
   describe "death" do
 
     @death [
@@ -10,7 +14,7 @@ defmodule GoLSpecs do
     ]
 
     test "dead stays dead" do
-      assert @death == GoL.evolve @death
+      verify @death, @death
     end
 
     test "lonely cell dies" do
@@ -19,7 +23,7 @@ defmodule GoLSpecs do
         " ▊ ",
         "   "
       ]
-      assert @death == GoL.evolve cells
+     verify @death, cells
     end
 
     test "isolated pair dies" do
@@ -28,7 +32,7 @@ defmodule GoLSpecs do
         " ▊ ",
         "   "
       ]
-      assert @death == GoL.evolve cells
+     verify @death, cells
     end
 
   end
@@ -41,7 +45,7 @@ defmodule GoLSpecs do
         "▊▊ ",
         "   "
       ]
-      assert cells == GoL.evolve cells
+     verify cells, cells
     end
 
     test "rect angle" do
@@ -55,7 +59,7 @@ defmodule GoLSpecs do
         "▊  ",
         "▊▊ "
       ]
-      assert result == GoL.evolve cells
+     verify result, cells
     end
 
   end
@@ -73,7 +77,7 @@ defmodule GoLSpecs do
         "   ",
         "▊ ▊"
       ]
-      assert result == GoL.evolve cells
+     verify result, cells
     end
 
   end
@@ -91,7 +95,7 @@ defmodule GoLSpecs do
         "  ▊  ",
         "     "
       ]
-      assert result == GoL.evolve cells
+     verify result, cells
     end
 
     test "diamond" do
@@ -105,7 +109,7 @@ defmodule GoLSpecs do
         " ▊ ▊ ",
         "  ▊  "
       ]
-      assert result == GoL.evolve cells
+     verify result, cells
     end
 
   end
