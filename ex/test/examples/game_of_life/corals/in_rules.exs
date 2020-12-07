@@ -14,7 +14,11 @@ defmodule GoL.In do
       ],
       [
         when: is?(%{size: _}),
-        cells: fn %{cells: cells, size: _} -> cells end
+        cells: fn %{cells: cells, size: [width, _]} -> cells |> map(&(pad_trailing &1, width)) end,
+        when: is?(%{cells: cells, size: [_, height]} when length(cells) < height),
+        cells: fn %{cells: cells, size: [width, height]} ->
+          cells ++ (for _ <- 1..height - length(cells), do: pad_trailing "", width)
+        end,
       ],
       [
         when: not?(size: _),
