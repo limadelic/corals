@@ -4,7 +4,7 @@ defmodule GoL.Examples do
   @tag :gol
   @tag :glider
   test "glider" do
-    GoL.evolve %{cells: :glider, times: 16, size: [80, 25]}
+    GoL.evolve %{cells: :glider, times: 50, size: [80, 25]}
   end
 
   @tag :gol
