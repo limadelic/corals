@@ -14,6 +14,6 @@ defmodule GoL do
   def evolve game do do_evolve game end
 
   defp do_evolve game do resolve game, __MODULE__ end
-  defp info %{cells: cells} = game do clear(); map cells, &(p &1); :timer.sleep 200; game end
+  defp info %{cells: cells} = game do clear(); map cells, &(p &1); game end
 
 end
