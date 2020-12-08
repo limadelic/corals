@@ -1,1 +1,1 @@
-ExUnit.start exclude: [:wip]
+ExUnit.start exclude: [:wip, :gol]
