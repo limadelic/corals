@@ -1,4 +1,4 @@
-defmodule ReefWeb.Endpoint do
+defmodule Reef.Endpoint do
   use Phoenix.Endpoint, otp_app: :reef
 
   # The session will be stored in the cookie and signed,
@@ -7,10 +7,10 @@ defmodule ReefWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_reef_key",
-    signing_salt: "kPsvm//n"
+    signing_salt: "7D+G7Rvv"
   ]
 
-  socket "/socket", ReefWeb.UserSocket,
+  socket "/socket", Reef.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -41,5 +41,5 @@ defmodule ReefWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ReefWeb.Router
+  plug Reef.Router
 end

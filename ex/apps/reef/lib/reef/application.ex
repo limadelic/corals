@@ -8,11 +8,9 @@ defmodule Reef.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      ReefWeb.Telemetry,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: Reef.PubSub},
+      Reef.Telemetry,
       # Start the Endpoint (http/https)
-      ReefWeb.Endpoint
+      Reef.Endpoint
       # Start a worker by calling: Reef.Worker.start_link(arg)
       # {Reef.Worker, arg}
     ]
@@ -26,7 +24,7 @@ defmodule Reef.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    ReefWeb.Endpoint.config_change(changed, removed)
+    Reef.Endpoint.config_change(changed, removed)
     :ok
   end
 end

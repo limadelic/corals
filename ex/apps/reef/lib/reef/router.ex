@@ -1,11 +1,11 @@
-defmodule ReefWeb.Router do
-  use ReefWeb, :router
+defmodule Reef.Router do
+  use Reef, :router
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ReefWeb do
+  scope "/api", Reef do
     pipe_through :api
   end
 end

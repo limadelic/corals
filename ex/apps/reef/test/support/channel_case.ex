@@ -1,4 +1,4 @@
-defmodule ReefWeb.ChannelCase do
+defmodule Reef.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule ReefWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use ReefWeb.ChannelCase, async: true`, although
+  by setting `use Reef.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,10 +21,10 @@ defmodule ReefWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import ReefWeb.ChannelCase
+      import Reef.ChannelCase
 
       # The default endpoint for testing
-      @endpoint ReefWeb.Endpoint
+      @endpoint Reef.Endpoint
     end
   end
 

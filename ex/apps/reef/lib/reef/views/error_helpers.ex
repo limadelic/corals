@@ -1,4 +1,4 @@
-defmodule ReefWeb.ErrorHelpers do
+defmodule Reef.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """

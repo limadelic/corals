@@ -1,5 +1,5 @@
-defmodule ReefWeb.ErrorView do
-  use ReefWeb, :view
+defmodule Reef.ErrorView do
+  use Reef, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
