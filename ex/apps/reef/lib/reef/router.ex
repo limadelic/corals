@@ -5,7 +5,10 @@ defmodule Reef.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", Reef do
+  scope "/", Reef do
     pipe_through :api
+
+    get "/", HomeController, :index
   end
+
 end
