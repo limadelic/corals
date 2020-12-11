@@ -10,10 +10,10 @@ use Mix.Config
 # Configures the endpoint
 config :reef, ReefWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "RxP5cVFLv8ADHuOO/TFCcVLllY7rQlOisza0nAp6ObQr+ZYpy9t6jErEWM4VVmFl",
+  secret_key_base: "caG9pk4rISYSc86/OMXC/1FTQLsNkQqqM93BHe3v3y3Pw7Stm693FYkkpx8YvIBb",
   render_errors: [view: ReefWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Reef.PubSub,
-  live_view: [signing_salt: "9A8Z8R4e"]
+  live_view: [signing_salt: "RMi68WML"]
 
 # Configures Elixir's Logger
 config :logger, :console,

@@ -7,7 +7,7 @@ defmodule ReefWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_reef_key",
-    signing_salt: "lZSGuUmZ"
+    signing_salt: "kPsvm//n"
   ]
 
   socket "/socket", ReefWeb.UserSocket,
