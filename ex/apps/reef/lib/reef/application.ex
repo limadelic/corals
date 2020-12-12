@@ -10,7 +10,7 @@ defmodule Reef.Application do
       # Start the Telemetry supervisor
       Reef.Telemetry,
       # Start the Endpoint (http/https)
-      Reef.Endpoint
+      Reef.Endpoint,
       # Start a worker by calling: Reef.Worker.start_link(arg)
       # {Reef.Worker, arg}
     ]

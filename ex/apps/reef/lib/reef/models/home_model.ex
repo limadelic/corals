@@ -9,7 +9,7 @@ defmodule Reef.HomeModel do
           %{id: "self", href: url()},
           %{id: "home", href: url()},
           %{id: "resolve", method: "POST", href: url()},
-          %{id: "rules", href: link("rules")}
+#          %{id: "rules", href: link("rules")}
         ]
       }
     }
