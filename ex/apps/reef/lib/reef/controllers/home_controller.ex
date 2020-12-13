@@ -7,8 +7,4 @@ defmodule Reef.HomeController do
     json conn, Model.index
   end
 
-  def evolve conn, _ do
-    json conn, %{}
-  end
-
 end
