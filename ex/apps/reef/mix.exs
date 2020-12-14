@@ -24,7 +24,7 @@ defmodule Reef.MixProject do
   def application do
     [
       mod: {Reef.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :corals]
     ]
   end
 
@@ -37,6 +37,7 @@ defmodule Reef.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:corals, in_umbrella: true},
       {:phoenix, "~> 1.5.7"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
