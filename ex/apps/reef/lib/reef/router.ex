@@ -9,7 +9,7 @@ defmodule Reef.Router do
     pipe_through :api
 
     get "/", HomeController, :index
-    post "/:rules", RulesController, :evolve
+    post "/:rules", RulesController, :resolve
   end
 
 end

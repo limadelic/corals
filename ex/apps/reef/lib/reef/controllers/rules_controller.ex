@@ -1,10 +1,8 @@
 defmodule Reef.RulesController do
   use Reef, :controller
 
-  import Corals
-
-  def evolve conn, %{"rules" => rules} do
-    json conn, resolve(%{}, rules)
+  def resolve conn, %{"rules" => rules} do
+    json conn, Corals.resolve(%{}, rules)
   end
 
 end
