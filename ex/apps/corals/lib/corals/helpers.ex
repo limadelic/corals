@@ -18,6 +18,10 @@ defmodule Corals.Helpers do
   def ends_with? x, suffix do "#{x}" =~ ~r/#{suffix}$/ end
 
   def to_atom x do to_existing_atom x rescue _ -> x end
+  def with_atoms x = %{} do
+    x |> map(fn {k, v} -> {to_atom(k), with_atoms(v)} end) |> into(%{})
+  end
+  def with_atoms x do x end
 
   def merge map, {k, v} do merge map, %{k => v} end
   def merge left, right do Map.merge left, right, &deep/3 end
