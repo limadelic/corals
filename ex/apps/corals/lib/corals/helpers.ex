@@ -2,6 +2,7 @@ defmodule Corals.Helpers do
 
   import Enum, only: [all?: 2, map: 2, into: 2, filter: 2]
   import Map, only: [keys: 1, drop: 2, to_list: 1]
+  import String, only: [to_existing_atom: 1]
 
   def p x \\ nil do IO.puts x end
   def w x do IO.write x end
@@ -15,6 +16,8 @@ defmodule Corals.Helpers do
 
   def starts_with? x, prefix do "#{x}" =~ ~r/^#{prefix}/ end
   def ends_with? x, suffix do "#{x}" =~ ~r/#{suffix}$/ end
+
+  def to_atom x do to_existing_atom x rescue _ -> x end
 
   def merge map, {k, v} do merge map, %{k => v} end
   def merge left, right do Map.merge left, right, &deep/3 end
