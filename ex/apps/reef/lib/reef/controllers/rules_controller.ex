@@ -1,10 +1,10 @@
 defmodule Reef.RulesController do
   use Reef, :controller
 
-  import String, only: [to_existing_atom: 1]
+  import Corals.Helpers
 
-  def resolve conn, %{"rules" => rules} do
-    json conn, Corals.resolve(%{}, to_existing_atom(rules))
+  def resolve conn, params do
+    json conn, Corals.resolve(atomic params)
   end
 
 end

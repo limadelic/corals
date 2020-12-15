@@ -17,11 +17,11 @@ defmodule Corals.Helpers do
   def starts_with? x, prefix do "#{x}" =~ ~r/^#{prefix}/ end
   def ends_with? x, suffix do "#{x}" =~ ~r/#{suffix}$/ end
 
-  def to_atom x do to_existing_atom x rescue _ -> x end
-  def with_atoms x = %{} do
-    x |> map(fn {k, v} -> {to_atom(k), with_atoms(v)} end) |> into(%{})
+  def atomic x = %{} do
+    x |> map(fn {k, v} -> {atomic(k), atomic(v)} end) |> into(%{})
   end
-  def with_atoms x do x end
+  def atomic(x) when is_binary(x) do to_existing_atom x rescue _ -> x end
+  def atomic x do x end
 
   def merge map, {k, v} do merge map, %{k => v} end
   def merge left, right do Map.merge left, right, &deep/3 end

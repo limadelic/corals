@@ -7,6 +7,10 @@ defmodule Corals do
     Rules.define name, spec
   end
 
+  def resolve %{rules: rules} = opts do
+    resolve opts, rules
+  end
+
   def resolve opts, rules, user_opts \\ %{} do
     Rules.resolve opts, rules, user_opts
   end
