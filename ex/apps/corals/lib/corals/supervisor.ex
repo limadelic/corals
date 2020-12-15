@@ -9,6 +9,7 @@ defmodule Corals.Supervisor do
   def init :ok do
     children = [
       {DynamicSupervisor, name: Corals.RulesSupervisor, strategy: :one_for_one},
+      {Task.Supervisor, name: Corals.TaskSupervisor}
     ]
     Supervisor.init children, strategy: :one_for_all
   end

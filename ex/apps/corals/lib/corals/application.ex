@@ -3,7 +3,7 @@ defmodule Corals.Application do
 
   @impl true
   def start _, _ do
-    Corals.Supervisor.start_link name: Corals.Supervisor
+    Corals.Loader.start Corals.Supervisor.start_link name: Corals.Supervisor
   end
 
 end
