@@ -21,6 +21,7 @@ defmodule Corals.Helpers do
     x |> map(fn {k, v} -> {atomic(k), atomic(v)} end) |> into(%{})
   end
   def atomic(x) when is_binary(x) do to_existing_atom x rescue _ -> x end
+  def atomic [h|t] do [atomic(h)|atomic(t)] end
   def atomic x do x end
 
   def merge map, {k, v} do merge map, %{k => v} end
