@@ -5,7 +5,7 @@ defmodule GoL do
   import IEx.Helpers, only: [clear: 0]
   import Enum, only: [map: 2]
 
-  define __MODULE__, %{
+  define :gol, %{
     require: [GoL.Out]
   }
 
@@ -13,7 +13,7 @@ defmodule GoL do
   def evolve %{times: _} = game do game |> do_evolve |> info |> evolve end
   def evolve game do do_evolve game end
 
-  defp do_evolve game do resolve game, __MODULE__ end
+  defp do_evolve game do resolve game, :gol end
   defp info %{cells: cells} = game do clear(); map cells, &(p &1); game end
 
 end
