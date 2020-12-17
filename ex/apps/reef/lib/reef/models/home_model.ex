@@ -6,10 +6,10 @@ defmodule Reef.HomeModel do
     %{
       home: %{
         links: [
-          %{id: "self", href: url()},
-          %{id: "home", href: url()},
+          %{id: "self", method: "GET", href: url()},
+          %{id: "home", method: "GET", href: url()},
           %{id: "resolve", method: "POST", href: url()},
-          %{id: "rules", href: link("rules")}
+          %{id: "rules", method: "GET", href: link("rules")}
         ]
       }
     }
