@@ -13,7 +13,7 @@ defmodule Reef.RulesModel do
     %{
       name: name,
       links: [
-        %{id: "self", method: "GET", href: link(name)},
+        %{id: "self", method: "GET", href: link("rules/#{name}")},
         %{id: "resolve", method: "POST", href: link(name)},
       ]
     }
