@@ -10,4 +10,6 @@ defmodule Corals.Utils do
 
   def clean result do drop_deep result, ~r/^_/ end
 
+  def is_corals? p do match? {Corals.Server, _, _}, p[:dictionary][:"$initial_call"] end
+
 end
