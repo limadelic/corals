@@ -10,6 +10,7 @@ defmodule Reef.Router do
 
     get "/", HomeController, :index
     get "/rules", RulesController, :index
+    get "/rules/:name", RulesController, :show
     post "/", RulesController, :resolve
     post "/:rules", RulesController, :resolve
   end

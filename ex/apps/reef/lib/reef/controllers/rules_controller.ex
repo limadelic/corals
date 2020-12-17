@@ -8,6 +8,10 @@ defmodule Reef.RulesController do
     json conn, Model.index
   end
 
+  def show conn, %{"name" => name} do
+    text conn, Corals.Loader.content name
+  end
+
   def resolve conn, params do
     json conn, Corals.resolve(atomic params)
   end
