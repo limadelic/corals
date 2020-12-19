@@ -11,4 +11,4 @@ FROM elixir:slim
 WORKDIR /app
 COPY --from=builder /app/_build/prod/rel/reef/ .
 
-CMD bin/reef start
+CMD bin/mix phx.server
