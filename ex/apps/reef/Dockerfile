@@ -1,4 +1,4 @@
-FROM elixir:latest as builder
+FROM elixir:alpine as builder
 COPY apps/reef/ /app
 WORKDIR /app
 
