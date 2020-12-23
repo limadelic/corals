@@ -6,7 +6,8 @@ defmodule Ex.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -18,6 +19,17 @@ defmodule Ex.MixProject do
   defp deps do
     [
       {:distillery, "2.1.1"}
+    ]
+  end
+
+  defp releases do
+    [
+      main: [
+        version: "0.0.1",
+        applications: [
+          reef: :permanent
+        ]
+      ]
     ]
   end
 end

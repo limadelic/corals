@@ -9,7 +9,7 @@ COPY mix.* /app/
 RUN mix local.hex --force && \
     mix local.rebar --force && \
     mix deps.get
-RUN MIX_ENV=prod mix release
+RUN MIX_ENV=prod mix release main
 
 
 FROM elixir:alpine
