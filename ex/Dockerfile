@@ -17,6 +17,6 @@ RUN MIX_ENV=prod mix release corals
 
 FROM elixir:alpine
 WORKDIR /app
-COPY --from=builder /app/_build/prod/rel/reef/ .
+COPY --from=builder /app/_build/prod/rel/corals .
 
 CMD bin/mix phx.server
