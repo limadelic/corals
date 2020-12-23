@@ -24,7 +24,7 @@ defmodule Ex.MixProject do
 
   defp releases do
     [
-      main: [
+      corals: [
         version: "0.0.1",
         applications: [
           reef: :permanent
